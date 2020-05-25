@@ -44,4 +44,6 @@ categories: [RTOS]
 
 学习日期:2015.6.3
 
+学习笔记:![草图](small-RTOS.jpg)
+
 学习笔记:![草图](../posts/2019/04/07/small-RTOS.jpg)
