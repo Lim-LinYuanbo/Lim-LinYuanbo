@@ -4,8 +4,6 @@ title: proxychains
 categories: [科学上网,Linux]
 ---
 
-## [proxychains](https://github.com/haad/proxychains)
-
 ### 步骤(参考[proxychains readme](https://github.com/haad/proxychains/blob/master/README.adoc))
 
 1. 安装

@@ -4,8 +4,6 @@ title: Xshell/secureCRT脚本
 categories: [编码笔记,Xshell,secureCRT]
 ---
 
-### Script MISC
-
 1. xshell vbs script
 
     建议使用本地帮助文档，如果没有本地文档可以使用在线文档：[online](https://netsarang.atlassian.net/wiki/spaces/ENSUP/overview)。

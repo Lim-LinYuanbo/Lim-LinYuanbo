@@ -4,13 +4,9 @@ title: 高效程序员的45个习惯
 categories: [博览群书]
 ---
 
-中文版：
+中文版：[豆瓣读书](https://book.douban.com/subject/4164024/)
 
-[豆瓣读书](https://book.douban.com/subject/4164024/)
-
-英文版：
-
-[豆瓣读书](https://book.douban.com/subject/1767907/)
+英文版：[豆瓣读书](https://book.douban.com/subject/1767907/)
 
 ### 第1章　敏捷——高效软件开发之道
 
