@@ -1,12 +1,10 @@
 ---
 layout: mypost
-title: 高效能程序员的修炼
-categories: [编码笔记,xshell,secureCRT]
+title: Xshell/secureCRT脚本
+categories: [编码笔记,Xshell,secureCRT]
 ---
 
-## Script MISC
-
----
+### Script MISC
 
 1. xshell vbs script
 

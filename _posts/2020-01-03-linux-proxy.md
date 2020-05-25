@@ -1,6 +1,6 @@
 ---
 layout: mypost
-title: Linux Proxy
+title: proxychains
 categories: [科学上网,Linux]
 ---
 
