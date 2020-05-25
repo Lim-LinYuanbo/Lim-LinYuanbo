@@ -10,13 +10,13 @@ categories: [运维,nginx]
 >
 > 客户端环境：Windows 10
 
-## 目标
+### 目标
 
 1. 搭建两个虚拟主机，域名分别为：hello.com，world.com
 
 2. 两台虚拟主机网页内容分别显示:hello，world
 
-## 实操记录
+### 实操记录
 
 1. 虚拟主机 hello：
 
@@ -88,7 +88,7 @@ categories: [运维,nginx]
 
 3. 配置完成，重新读取配置：`sudo systemctl reload nginx.service`
 
-## 测试
+### 测试
 
 1. 修改客户端hosts
 

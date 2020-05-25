@@ -18,9 +18,9 @@ Vim版本: VIM - Vi IMproved 8.0
 
 仓库地址：[vim-init](https://github.com/Lim-LinYuanbo/vim-init)
 
-## 代码阅读篇
+### 代码阅读篇
 
-### 从 source insight 到 vim
+#### 从 source insight 到 vim
 
 1. 搭建属于自己的环境，出于偷懒，可以直接使用 [vim-init](https://github.com/skywind3000/vim-init) 快速完成这个过程。
 
@@ -135,11 +135,11 @@ Vim版本: VIM - Vi IMproved 8.0
 
 ---
 
-## 代码编写篇
+### 代码编写篇
 
-### 第一阶段：参考 [简明 VIM 练级攻略](https://coolshell.cn/articles/5426.html) （耗子叔的这篇文章真的很棒）
+#### 第一阶段：参考 [简明 VIM 练级攻略](https://coolshell.cn/articles/5426.html) （耗子叔的这篇文章真的很棒）
 
-### 第二阶段：使用 ~~spf13-vim~~ 中的插件提升编码效率
+#### 第二阶段：使用 ~~spf13-vim~~ 中的插件提升编码效率
 
 1. 注释
 
@@ -155,9 +155,9 @@ Vim版本: VIM - Vi IMproved 8.0
 
    贴个动图...
 
-## 遇到的问题
+### 遇到的问题
 
-### YouCompleteMe
+#### YouCompleteMe
 
 1. 使用 vi 打开 .c 文件之后提示：
 
