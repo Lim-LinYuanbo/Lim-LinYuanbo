@@ -4,8 +4,6 @@ title: Deepin 安装后的操作笔记
 categories: [deepin]
 ---
 
-## 基础操作（安装之后需要做的工作）
-
 ### 当前操作系统版本
 
 ```shell
