@@ -1,6 +1,6 @@
 ---
 layout: mypost
-title: git 常用基础操作
+title: git ls remote
 categories: [运维,git]
 ---
 
