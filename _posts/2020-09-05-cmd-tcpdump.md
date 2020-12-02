@@ -1,6 +1,6 @@
 ---
 layout: mypost
-title: update-alternatives（python版本替换实例）
+title: tcpdump 基础使用笔记
 categories: [运维,ubuntu]
 ---
 
