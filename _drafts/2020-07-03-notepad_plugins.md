@@ -15,3 +15,7 @@ xxx
 ## 实操记录
 
 xxx
+
+## [compare-plugin](https://github.com/pnedev/compare-plugin)
+
+xxx
