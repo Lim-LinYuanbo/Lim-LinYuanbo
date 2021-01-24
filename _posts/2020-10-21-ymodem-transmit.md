@@ -1,7 +1,7 @@
 ---
 layout: mypost
 title: Xshell/secureCRT Ymodem 发送文件笔记
-categories: [编码笔记,Xshell,secureCRT]
+categories: [编码笔记,tools]
 ---
 
 > 使用 Xshell 和 secureCRT 发送文件的时候，发相同的文件，但是效果不太一样，所以使用逻辑分析仪抓了一下波形，记录一下。

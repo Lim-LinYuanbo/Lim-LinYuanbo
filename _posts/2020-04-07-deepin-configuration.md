@@ -1,7 +1,7 @@
 ---
 layout: mypost
 title: Deepin 安装后的操作笔记
-categories: [deepin]
+categories: [运维]
 ---
 
 ### 当前操作系统版本

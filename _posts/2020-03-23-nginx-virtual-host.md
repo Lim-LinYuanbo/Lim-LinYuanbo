@@ -1,7 +1,7 @@
 ---
 layout: mypost
 title: Nginx 虚拟主机搭建记录
-categories: [运维,nginx]
+categories: [运维]
 ---
 
 > Nginx版本：nginx/1.14.0 (Ubuntu)

@@ -1,7 +1,7 @@
 ---
 layout: mypost
 title: Xshell/secureCRT脚本
-categories: [编码笔记,Xshell,secureCRT]
+categories: [编码笔记,tools]
 ---
 
 1. xshell vbs script

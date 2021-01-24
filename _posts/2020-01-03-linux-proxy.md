@@ -1,7 +1,7 @@
 ---
 layout: mypost
 title: proxychains
-categories: [科学上网,Linux]
+categories: [科学上网]
 ---
 
 ### 步骤(参考[proxychains readme](https://github.com/haad/proxychains/blob/master/README.adoc))
