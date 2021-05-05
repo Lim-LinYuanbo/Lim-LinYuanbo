@@ -41,6 +41,8 @@ static int nand_write_oob_std(struct mtd_info *mtd, struct nand_chip *chip,
 }
 ```
 
+---
+
 理解总结：
 
 1. 对于一些流程相同的逻辑，把共同的部分抽象出来，把不同的地方暴露给外部，由具体情况具体实现，每次调用这个接口都执行相同的流程。

@@ -36,6 +36,8 @@ static int notifier_chain_register(struct notifier_block **nl,
 }
 ```
 
+---
+
 函数名：`notifier_call_chain`
 
 函数理解：通知链触发响应事件接口
@@ -86,6 +88,8 @@ static int notifier_call_chain(struct notifier_block **nl,
 }
 NOKPROBE_SYMBOL(notifier_call_chain);
 ```
+
+---
 
 理解总结：
 
