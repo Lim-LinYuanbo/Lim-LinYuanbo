@@ -6,7 +6,7 @@ categories: [设计模式,RTOS,编码笔记]
 
 维基百科说明：[享元模式](https://en.wikipedia.org/wiki/Flyweight_pattern)
 
-享元模式（英语：Flyweight Pattern）是一种软件设计模式。它使用物件用来尽可能减少内存使用量；于相似物件中分享尽可能多的资讯。当大量物件近乎重复方式存在，因而使用大量内存时，此法适用。通常物件中的部分状态(state)能够共享。常见做法是把它们放在数据结构外部，当需要使用时再将它们传递给享元。
+> 享元模式（英语：Flyweight Pattern）是一种软件设计模式。它使用物件用来尽可能减少内存使用量；于相似物件中分享尽可能多的资讯。当大量物件近乎重复方式存在，因而使用大量内存时，此法适用。通常物件中的部分状态(state)能够共享。常见做法是把它们放在数据结构外部，当需要使用时再将它们传递给享元。
 
 参考项目：[https://github.com/Pithikos/C-Thread-Pool.git](https://github.com/Pithikos/C-Thread-Pool.git)
 
