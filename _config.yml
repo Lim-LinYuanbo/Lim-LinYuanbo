@@ -58,3 +58,5 @@ extMath: false
 links:
   - title: TMaize Blog
     url: http://blog.tmaize.net/
+
+theme: jekyll-theme-minimal
