@@ -1,6 +1,6 @@
 ---
 layout: mypost
-title: 软技能-第五章
+title: 软技能-第三十六章
 categories: [博览群书]
 ---
 
