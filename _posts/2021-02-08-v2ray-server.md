@@ -1,6 +1,6 @@
 ---
 layout: mypost
-title: proxychains
+title: v2ray Linux 服务端配置
 categories: [科学上网]
 ---
 
