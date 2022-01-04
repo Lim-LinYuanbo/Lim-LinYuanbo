@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="JLink GDB Server 常用操作记录JLink 安装主机系统：Ubuntu 20.04.3 LTS 目标主板：stm32f103战舰开发板 下载地址：https:&#x2F;&#x2F;www.segger.com&#x2F;downloads&#x2F;jlink&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JLink GDB Server 常用操作记录">
+<meta property="og:url" content="http://example.com/2021/12/04/jlink-gdb-server/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="JLink GDB Server 常用操作记录JLink 安装主机系统：Ubuntu 20.04.3 LTS 目标主板：stm32f103战舰开发板 下载地址：https:&#x2F;&#x2F;www.segger.com&#x2F;downloads&#x2F;jlink&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-12-04T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T13:18:12.649Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="tools">
+<meta property="article:tag" content="GDB">
+<meta property="article:tag" content="JLink">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/12/04/jlink-gdb-server/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>JLink GDB Server 常用操作记录 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/04/jlink-gdb-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JLink GDB Server 常用操作记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-04T00:00:00+00:00">2021-12-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="JLink-GDB-Server-常用操作记录"><a href="#JLink-GDB-Server-常用操作记录" class="headerlink" title="JLink GDB Server 常用操作记录"></a>JLink GDB Server 常用操作记录</h2><h3 id="JLink-安装"><a href="#JLink-安装" class="headerlink" title="JLink 安装"></a>JLink 安装</h3><p>主机系统：Ubuntu 20.04.3 LTS</p>
+<p>目标主板：<a target="_blank" rel="noopener" href="http://www.openedv.com/docs/boards/stm32/zdyz_stm32f103_warship.html">stm32f103战舰开发板</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.segger.com/downloads/jlink/">https://www.segger.com/downloads/jlink/</a></p>
+<span id="more"></span>>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下载 &amp; 安装 (略)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认安装路径：/opt/SEGGER</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看安装文件 GDB 相关程序</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls -al JLinkGDBServer*</span></span><br><span class="line">lrwxrwxrwx 1 root root     19 10月 26  2018 JLinkGDBServer -&gt; JLinkGDBServerCLExe</span><br><span class="line">-rwxr-xr-x 1 root root 589640 10月 26  2018 JLinkGDBServerCLExe</span><br><span class="line">-rwxr-xr-x 1 root root 718072 10月 26  2018 JLinkGDBServerExe # 这玩意目前不知道是干嘛的</span><br><span class="line"><span class="meta">#</span><span class="bash"> 连接 JLink V2 之后查看,查看 USB 列表</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lsusb</span></span><br><span class="line">Bus 003 Device 016: ID 1366:0105 SEGGER J-Link_J-Link V9.3 Plus</span><br></pre></td></tr></table></figure>
+
+<h3 id="JLinkGDBServerCL-常用选项与备注"><a href="#JLinkGDBServerCL-常用选项与备注" class="headerlink" title="JLinkGDBServerCL 常用选项与备注"></a>JLinkGDBServerCL 常用选项与备注</h3><p>参考：<a target="_blank" rel="noopener" href="https://wiki.segger.com/J-Link_GDB_Server#Command_line_options">J-Link GDB Server Command line options</a></p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>解释</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-device</td>
+<td>Selects the connected target device.</td>
+<td>例如：-device STM32F103RC</td>
+</tr>
+<tr>
+<td>-endian</td>
+<td>Selects the device endianness.</td>
+<td>例如：-endian little</td>
+</tr>
+<tr>
+<td>-if</td>
+<td>Selects the interface to connect to the target.</td>
+<td>例如：-if SWD</td>
+</tr>
+<tr>
+<td>-speed</td>
+<td>Selects the target communication speed.</td>
+<td>例如：-speed 4000</td>
+</tr>
+<tr>
+<td>-port</td>
+<td>Select the port to listen for GDB clients.</td>
+<td>例如：-port 12345</td>
+</tr>
+<tr>
+<td>-localhostonly</td>
+<td>Allow only localhost connections (Windows default)</td>
+<td>Windows 默认只支持本地连接<br>关闭只支持本地连接<code>-localhostonly 0</code></td>
+</tr>
+<tr>
+<td>-nolocalhostonly</td>
+<td>Allow connections from outside localhost (Linux default)</td>
+<td>Windows 常用，同<code>-localhostonly 0</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Windows 常用选项</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> .\JLinkGDBServerCL.exe -select USB -device STM32F103RC -endian little -<span class="keyword">if</span> SWD -speed 4000 -noir -noLocalhostOnly</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Linux 常用选项</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./JLinkGDBServerCLExe -device STM32F103RC -endian little -<span class="keyword">if</span> SWD -speed 4000</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="JLinkGDBServerCL-常用指令与备注"><a href="#JLinkGDBServerCL-常用指令与备注" class="headerlink" title="JLinkGDBServerCL 常用指令与备注"></a>JLinkGDBServerCL 常用指令与备注</h3><p>参考：<a target="_blank" rel="noopener" href="https://wiki.segger.com/J-Link_GDB_Server#Supported_remote_.28monitor.29_commands">Supported remote (monitor) commands</a></p>
+<table>
+<thead>
+<tr>
+<th>命令(long)</th>
+<th>命令(short)</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>flash erase</td>
+<td>Erases the flash memory of the target device.</td>
+<td>使用前需要halt（暂停）CPU</td>
+</tr>
+<tr>
+<td>go</td>
+<td>Starts the target CPU.</td>
+<td>配合setbp（设置断点）使用</td>
+</tr>
+<tr>
+<td>halt</td>
+<td>Halts the target CPU.</td>
+<td>某些操作需要停止CPU，目前很少使用</td>
+</tr>
+<tr>
+<td>memU8</td>
+<td>Reads or writes a byte from/to given address.</td>
+<td>读写地址，似乎只能单字节操作？？？</td>
+</tr>
+<tr>
+<td>reg</td>
+<td>Reads or writes from/to given register.</td>
+<td>不常用？？？</td>
+</tr>
+<tr>
+<td>regs</td>
+<td>Reads and displays all CPU registers.</td>
+<td>查看CPU寄存器</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>Resets and halts the target CPU.</td>
+<td>复位（见实操测试记录）</td>
+</tr>
+<tr>
+<td>setbp</td>
+<td>Sets an instruction breakpoint at a given address.</td>
+<td>设置断点配合go使用</td>
+</tr>
+<tr>
+<td>clrbp</td>
+<td>Removes an instruction breakpoint.</td>
+<td>没看懂文档？？？</td>
+</tr>
+<tr>
+<td>step</td>
+<td>Performs one or more single instruction steps.</td>
+<td>单步运行（机器/汇编指令）</td>
+</tr>
+</tbody></table>
+<h3 id="实操测试记录"><a href="#实操测试记录" class="headerlink" title="实操测试记录"></a>实操测试记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 连接目标开发板</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./JLinkGDBServerCLExe -device STM32F103RC -endian little -<span class="keyword">if</span> SWD -speed 4000</span></span><br><span class="line">SEGGER J-Link GDB Server V6.40 Command Line Version</span><br><span class="line"></span><br><span class="line">JLinkARM.dll V6.40 (DLL compiled Oct 26 2018 15:08:28)</span><br><span class="line"></span><br><span class="line">Command line: -device STM32F103RC -endian little -if SWD -speed 4000</span><br><span class="line">-----GDB Server start settings-----</span><br><span class="line">GDBInit file:                  none</span><br><span class="line">GDB Server Listening port:     2331</span><br><span class="line">SWO raw output listening port: 2332</span><br><span class="line">Terminal I/O port:             2333</span><br><span class="line">Accept remote connection:      yes</span><br><span class="line">Generate logfile:              off</span><br><span class="line">Verify download:               off</span><br><span class="line">Init regs on start:            off</span><br><span class="line">Silent mode:                   off</span><br><span class="line">Single run mode:               off</span><br><span class="line">Target connection timeout:     0 ms</span><br><span class="line">------J-Link related settings------</span><br><span class="line">J-Link Host interface:         USB</span><br><span class="line">J-Link script:                 none</span><br><span class="line">J-Link settings file:          none</span><br><span class="line">------Target related settings------</span><br><span class="line">Target device:                 STM32F103RC</span><br><span class="line">Target interface:              SWD</span><br><span class="line">Target interface speed:        4000kHz</span><br><span class="line">Target endian:                 little</span><br><span class="line"></span><br><span class="line">Connecting to J-Link...</span><br><span class="line">J-Link is connected.</span><br><span class="line">Firmware: J-Link V9 compiled May  7 2021 16:26:12</span><br><span class="line">Hardware: V9.60</span><br><span class="line">S/N: 59610373</span><br><span class="line">Feature(s): RDI, GDB, FlashDL, FlashBP, JFlash</span><br><span class="line">Checking target voltage...</span><br><span class="line">Target voltage: 3.36 V</span><br><span class="line">Listening on TCP/IP port 2331</span><br><span class="line">Connecting to target...Connected to target</span><br><span class="line">Waiting for GDB connection...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> GDB 连接目标</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> /opt/gcc-arm-none-eabi-6_2-2016q4/bin/arm-none-eabi-gdb rt-thread.elf</span></span><br><span class="line">(gdb) target remote localhost:2331</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 暂停</span></span><br><span class="line">(gdb) monitor halt</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 擦除</span></span><br><span class="line">(gdb) monitor flash erase</span><br><span class="line">Flash erase: O.K.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 加载</span></span><br><span class="line">(gdb) load</span><br><span class="line">Loading section .text, size 0xde04 lma 0x8000000</span><br><span class="line">Loading section .init, size 0x4 lma 0x800de04</span><br><span class="line">Loading section .fini, size 0x4 lma 0x800de08</span><br><span class="line">Loading section .data, size 0x5a8 lma 0x800de0c</span><br><span class="line">Start address 0x800060c, load size 58292</span><br><span class="line">Transfer rate: 11385 KB/sec, 8327 bytes/write.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 复位</span></span><br><span class="line">(gdb) monitor reset</span><br><span class="line">Resetting target</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 CPU 寄存器</span></span><br><span class="line">(gdb) monitor regs</span><br><span class="line">R0 = 00000000, R1 = 00000000, R2 = 20000D88, R3 = 20000D88</span><br><span class="line">R4 = DEADBEEF, R5 = DEADBEEF, R6 = DEADBEEF, R7 = 20000908</span><br><span class="line">R8 = DEADBEEF, R9 = DEADBEEF, R10= DEADBEEF, R11= DEADBEEF</span><br><span class="line">R12= 00000000, R13= 200007A8, MSP= 200007A8, PSP= 20000908</span><br><span class="line">R14(LR) = FFFFFFFF, R15(PC) = 0800060C</span><br><span class="line">XPSR 01000000, APSR 00000000, EPSR 01000000, IPSR 00000000</span><br><span class="line">CFBP 00000000, CONTROL 00, FAULTMASK 00, BASEPRI 00, PRIMASK 00</span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时 R15(PC) = 0800060C，反汇编之后查看该地址内容</span></span><br><span class="line">0800060c &lt;Reset_Handler&gt;:</span><br><span class="line"> 800060c:       2100            movs    r1, #0</span><br><span class="line"> 800060e:       e003            b.n     8000618 &lt;LoopCopyDataInit&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 连续执行单步运行之后</span></span><br><span class="line">(gdb) monitor step</span><br><span class="line">(gdb) monitor step</span><br><span class="line">(gdb) monitor step</span><br><span class="line">(gdb) monitor regs</span><br><span class="line">R0 = 00000000, R1 = 00000000, R2 = 20000D88, R3 = 20000D88</span><br><span class="line">R4 = DEADBEEF, R5 = DEADBEEF, R6 = DEADBEEF, R7 = 20000908</span><br><span class="line">R8 = DEADBEEF, R9 = DEADBEEF, R10= DEADBEEF, R11= DEADBEEF</span><br><span class="line">R12= 00000000, R13= 200007A8, MSP= 200007A8, PSP= 20000908</span><br><span class="line">R14(LR) = FFFFFFFF, R15(PC) = 08000618</span><br><span class="line">XPSR 41000000, APSR 40000000, EPSR 01000000, IPSR 00000000</span><br><span class="line">CFBP 00000000, CONTROL 00, FAULTMASK 00, BASEPRI 00, PRIMASK 00</span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时 R15(PC) = 0800060C，反汇编之后查看该地址内容</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 确实跳转 LoopCopyDataInit 函数运行</span></span><br><span class="line">08000618 &lt;LoopCopyDataInit&gt;:</span><br><span class="line"> 8000618:       4809            ldr     r0, [pc, #36]   ; (8000640 &lt;LoopFillZerobss+0x14&gt;)</span><br><span class="line"> 800061a:       4b0a            ldr     r3, [pc, #40]   ; (8000644 &lt;LoopFillZerobss+0x18&gt;)</span><br><span class="line"> 800061c:       1842            adds    r2, r0, r1</span><br><span class="line"> 800061e:       429a            cmp     r2, r3</span><br><span class="line"> 8000620:       d3f6            bcc.n   8000610 &lt;CopyDataInit&gt;</span><br><span class="line"> 8000622:       4a09            ldr     r2, [pc, #36]   ; (8000648 &lt;LoopFillZerobss+0x1c&gt;)</span><br><span class="line"> 8000624:       e002            b.n     800062c &lt;LoopFillZerobss&gt;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tools/" rel="tag"># tools</a>
+              <a href="/tags/GDB/" rel="tag"># GDB</a>
+              <a href="/tags/JLink/" rel="tag"># JLink</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/29/jlink-commander/" rel="prev" title="JLink Commander 常用操作记录">
+      <i class="fa fa-chevron-left"></i> JLink Commander 常用操作记录
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JLink-GDB-Server-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">JLink GDB Server 常用操作记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JLink-%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">JLink 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JLinkGDBServerCL-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E4%B8%8E%E5%A4%87%E6%B3%A8"><span class="nav-number">1.2.</span> <span class="nav-text">JLinkGDBServerCL 常用选项与备注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JLinkGDBServerCL-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%A4%87%E6%B3%A8"><span class="nav-number">1.3.</span> <span class="nav-text">JLinkGDBServerCL 常用指令与备注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E6%B5%8B%E8%AF%95%E8%AE%B0%E5%BD%95"><span class="nav-number">1.4.</span> <span class="nav-text">实操测试记录</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

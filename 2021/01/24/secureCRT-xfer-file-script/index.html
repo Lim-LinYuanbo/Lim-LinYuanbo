@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="由于一次 ECN 引发的事故，工厂生产手动的输入升级命令和选中升级文件以及校对版本实在低效，为了弥补错误，提高效率，需要实现自动化的升级。  设备手动流程 设备开机，等待输入命令 输入升级指令 选择升级文件 等待升级结果 升级完成自动重启，查看升级版本  设备自动升级流程 设备开机，每隔1s，自动发送回车等待反馈提示符 收到提示符确认成功通信，发送版本查询指令 版本校验，版本与目标版本一致，提示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="secureCRT 通过脚本发送文件">
+<meta property="og:url" content="http://example.com/2021/01/24/secureCRT-xfer-file-script/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="由于一次 ECN 引发的事故，工厂生产手动的输入升级命令和选中升级文件以及校对版本实在低效，为了弥补错误，提高效率，需要实现自动化的升级。  设备手动流程 设备开机，等待输入命令 输入升级指令 选择升级文件 等待升级结果 升级完成自动重启，查看升级版本  设备自动升级流程 设备开机，每隔1s，自动发送回车等待反馈提示符 收到提示符确认成功通信，发送版本查询指令 版本校验，版本与目标版本一致，提示">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-24T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T13:18:12.649Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="tools">
+<meta property="article:tag" content="脚本">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/01/24/secureCRT-xfer-file-script/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>secureCRT 通过脚本发送文件 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/24/secureCRT-xfer-file-script/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          secureCRT 通过脚本发送文件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-24 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-24T00:00:00+00:00">2021-01-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>由于一次 ECN 引发的事故，工厂生产手动的输入升级命令和选中升级文件以及校对版本实在低效，为了弥补错误，提高效率，需要实现自动化的升级。</p>
+</blockquote>
+<h2 id="设备手动流程"><a href="#设备手动流程" class="headerlink" title="设备手动流程"></a>设备手动流程</h2><ol>
+<li>设备开机，等待输入命令</li>
+<li>输入升级指令</li>
+<li>选择升级文件</li>
+<li>等待升级结果</li>
+<li>升级完成自动重启，查看升级版本</li>
+</ol>
+<h2 id="设备自动升级流程"><a href="#设备自动升级流程" class="headerlink" title="设备自动升级流程"></a>设备自动升级流程</h2><ol>
+<li>设备开机，每隔1s，自动发送回车等待反馈提示符</li>
+<li>收到提示符确认成功通信，发送版本查询指令</li>
+<li>版本校验，版本与目标版本一致，提示当前固件为最新固件</li>
+<li>否则自动输入升级指令，等待接收升级文件反馈</li>
+<li>收到接收升级文件反馈，发送升级文件</li>
+<li>发送完成回到步骤 1，每隔1s，自动发送回车等待反馈提示符</li>
+</ol>
+<h2 id="secureCRT-帮助文档"><a href="#secureCRT-帮助文档" class="headerlink" title="secureCRT 帮助文档"></a>secureCRT 帮助文档</h2><ol>
+<li><p>消息提示框</p>
+<blockquote>
+<p>Description</p>
+<pre><code>  The Dialog object provides access to simple user-interface features     provided by SecureCRT.
+</code></pre>
+<p>Syntax</p>
+<p><code>crt.Dialog.Method([arglist])</code></p>
+<p>Remarks</p>
+<pre><code>  SecureCRT&#39;s Dialog object is accessed through the top-level object’s    Dialog property.
+</code></pre>
+<p>Dialog Object Methods</p>
+<pre><code>  Methods
+
+      FileOpenDialog
+
+      MessageBox
+
+      Prompt
+</code></pre>
+<p>Methods</p>
+<pre><code>  ......
+</code></pre>
+<p>MessageBox</p>
+<p>Description</p>
+<p>Display a message</p>
+<p>Remarks</p>
+<p>The MessageBox function displays a message string to the user. The optional   title string sets the title or caption of the MessageBox. The buttons that    appear on the MessageBox can be configured by passing a combination of numeric     values in the optional ‘buttons’ parameter. By default MessageBox will display  the message string with an OK button. However, many possibilities exist for  displaying message boxes with different icons, and buttons.</p>
+<p>The MessageBox function returns a numeric value that can be used to identify  which button was clicked.</p>
+<p>VBScript</p>
+<p>Syntax</p>
+<p><code>crt.Dialog.MessageBox(message [, title [, buttons]])</code></p>
+<p>Example</p>
+<p>The following code sample defines the constants that can be combined to form  the “button” parameter as well as the possible numeric return values:</p>
+<p><code>result = crt.Dialog.MessageBox(&quot;Login Failed, Retry?&quot;, &quot;Error&quot;,   ICON_QUESTION Or BUTTON_YESNO Or DEFBUTTON2 )</code></p>
+<p>Prompt</p>
+<pre><code>  ......
+</code></pre>
+</blockquote>
+<p> 使用方法非常简单：<code>crt.Dialog.MessageBox(&quot;字符串&quot;)</code></p>
+</li>
+<li><p>文件发送</p>
+<blockquote>
+<p>Description</p>
+<pre><code>  The FileTransfer object provides methods for performing file transfers  initiated by scripts.
+</code></pre>
+<p>Syntax</p>
+<p><code>crt.FileTransfer.Method([arglist])</code></p>
+<p><code>crt.FileTransfer.Property [ = varname ]</code></p>
+<p>Remarks</p>
+<pre><code>  SecureCRT&#39;s FileTransfer object is accessed through the top-level   object’s FileTransfer property. The FileTransfer object is not supported with     with sessions that use TN3270 emulation.
+</code></pre>
+<p>FileTransfer Object Properties and Methods</p>
+<pre><code>  Methods
+
+      SendYmodem
+</code></pre>
+<p>SendYmodem</p>
+<p>Description</p>
+<pre><code>  Sends specified file.
+</code></pre>
+<p>Remarks</p>
+<pre><code>  SendYmodem sends the specified file using the Ymodem protocol. Note,    the appropriate Ymodem receive command should be sent or initiated on the  remote system before executing SendYmodem for the transfer to begin properly.
+</code></pre>
+<p>Errors:</p>
+<ol>
+<li>If the SendYmodem method is executed while not connected the following     script error is generated:<code>&quot;FileTransfer.SendYmodem: not connected&quot;</code></li>
+<li>If the file list is empty, the following script error is   generated:<code>&quot;FileTransfer.SendYmodem: No files were specified for transfer.&quot;</code></li>
+<li>If a transfer is already in progress when this is called, the following    script error is generated:<code>&quot;FileTransfer.SendYmodem: A file transfer cannot  be started while another transfer is in progress&quot;</code></li>
+</ol>
+<p>VBScript</p>
+<p>Syntax</p>
+<p><code>crt.FileTransfer.SendYmodem</code></p>
+<p>Example</p>
+<p>‘ upload several files using Ymodem</p>
+<p><code>crt.FileTransfer.AddToUploadList &quot;c:\temp\File1.txt&quot;</code></p>
+<p><code>crt.FileTransfer.AddToUploadList &quot;c:\temp\File2.txt&quot;</code></p>
+<p><code>crt.FileTransfer.AddToUploadList &quot;c:\temp\File3.txt&quot;</code></p>
+<p><code>crt.FileTransfer.SendYmodem</code></p>
+</blockquote>
+<p> 使用说明：</p>
+<ol>
+<li>清空发送列表：<code>crt.FileTransfer.ClearUploadList</code></li>
+<li>添加文件加入发送列表：<code>crt.FileTransfer.AddToUploadList 文件路径</code></li>
+<li>发送文件：<code>crt.FileTransfer.SendYmodem</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="脚本实例"><a href="#脚本实例" class="headerlink" title="脚本实例"></a>脚本实例</h2><pre><code><figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#$language = <span class="string">&quot;VBScript&quot;</span></span><br><span class="line">#$<span class="keyword">interface</span> = <span class="string">&quot;1.0&quot;</span></span><br><span class="line"></span><br><span class="line">crt.Screen.Synchronous = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; This automatically generated script may need to be</span></span><br><span class="line"><span class="comment">&#x27; edited in order to work correctly.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> Main</span><br><span class="line">    ` 命令行提示符</span><br><span class="line">    str_propt = <span class="string">&quot;$&quot;</span></span><br><span class="line">    ` 版本查询指令</span><br><span class="line">    cmd_version = <span class="string">&quot;version&quot;</span></span><br><span class="line">    ` 升级指令</span><br><span class="line">    cmd_upgrade = <span class="string">&quot;upgrade&quot;</span></span><br><span class="line">    ` 目标版本反馈字符串</span><br><span class="line">    last_version = <span class="string">&quot;version:1.0&quot;</span></span><br><span class="line">    ` 文件路径</span><br><span class="line">    file_path = <span class="string">&quot;C:test.bin&quot;</span></span><br><span class="line">    <span class="keyword">While</span> <span class="literal">True</span></span><br><span class="line">        crt.Screen.Send chr(<span class="number">13</span>)</span><br><span class="line">        ret = crt.Screen.WaitForString(str_propt, <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">If</span> ret &lt;&gt; <span class="number">0</span> <span class="keyword">Then</span></span><br><span class="line">            crt.Screen.Send cmd_version &amp; chr(<span class="number">13</span>)</span><br><span class="line">            ret = crt.Screen.WaitForString(last_version, <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">If</span> ret &lt;&gt; <span class="number">0</span> <span class="keyword">Then</span></span><br><span class="line">                crt.Dialog.MessageBox(<span class="string">&quot;The firmware is last version&quot;</span>)</span><br><span class="line">            <span class="keyword">Else</span></span><br><span class="line">                crt.Screen.Send cmd_upgrade &amp; chr(<span class="number">13</span>)</span><br><span class="line">                ret = crt.Screen.WaitForString(<span class="string">&quot;CCC&quot;</span>, <span class="number">10</span>)</span><br><span class="line">                <span class="keyword">If</span> ret &lt;&gt; <span class="number">0</span> <span class="keyword">Then</span></span><br><span class="line">                    crt.FileTransfer.ClearUploadList</span><br><span class="line">                    crt.FileTransfer.AddToUploadList file_path</span><br><span class="line">                    crt.FileTransfer.SendYmodem</span><br><span class="line">                    ret = crt.Screen.WaitForString(last_version, <span class="number">20</span>)</span><br><span class="line">                    <span class="keyword">If</span> ret &lt;&gt; <span class="number">0</span> <span class="keyword">Then</span></span><br><span class="line">                        crt.Sleep <span class="number">1000</span></span><br><span class="line">                    <span class="keyword">Else</span></span><br><span class="line">                        crt.Dialog.MessageBox(<span class="string">&quot;Upgrade fail ???&quot;</span>)</span><br><span class="line">                    <span class="keyword">End</span> <span class="keyword">if</span></span><br><span class="line">                <span class="keyword">End</span> <span class="keyword">if</span></span><br><span class="line">            <span class="keyword">End</span> <span class="keyword">if</span></span><br><span class="line">        <span class="keyword">End</span> <span class="keyword">if</span></span><br><span class="line">    Wend</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tools/" rel="tag"># tools</a>
+              <a href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag"># 脚本</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/14/vim-ycm-generator-install/" rel="prev" title="vim 插件 YCM-Generator 安装使用记录">
+      <i class="fa fa-chevron-left"></i> vim 插件 YCM-Generator 安装使用记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/08/v2ray-server/" rel="next" title="v2ray Linux 服务端配置">
+      v2ray Linux 服务端配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E6%89%8B%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">设备手动流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E8%87%AA%E5%8A%A8%E5%8D%87%E7%BA%A7%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">设备自动升级流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#secureCRT-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3"><span class="nav-number">3.</span> <span class="nav-text">secureCRT 帮助文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E5%AE%9E%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">脚本实例</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Evernote Export                 body, td {       font-family: Tahoma;       font-size: 10pt;     }        linux&#x2F;Timer.h  **创建时间：**_2016&#x2F;1&#x2F;3 11:22_ **更新时间：**_2016&#x2F;4&#x2F;9 16:33_     struct timer_list {">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 源码阅读">
+<meta property="og:url" content="http://example.com/2019/04/07/linux-kernel-study-notes/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Evernote Export                 body, td {       font-family: Tahoma;       font-size: 10pt;     }        linux&#x2F;Timer.h  **创建时间：**_2016&#x2F;1&#x2F;3 11:22_ **更新时间：**_2016&#x2F;4&#x2F;9 16:33_     struct timer_list {">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-04-07T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T13:18:12.645Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="源码阅读">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2019/04/07/linux-kernel-study-notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Linux 源码阅读 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/07/linux-kernel-study-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux 源码阅读
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2019-04-07T00:00:00+00:00">2019-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MISC/" itemprop="url" rel="index"><span itemprop="name">MISC</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <html>
+<head>
+  <title>Evernote Export</title>
+  <basefont face="Tahoma" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/308100 (zh-CN, DDL); Windows/6.1.1 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Tahoma;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2025"/>
+
+<h1 id="linux-Timer-h"><a href="#linux-Timer-h" class="headerlink" title="linux/Timer.h"></a>linux/Timer.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/1/3 11:22_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/4/9 16:33_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><font color="#FF0000">struct timer_list</font> {
+
+<p>     /*</p>
+<p>     * All fields that change during normal runtime grouped to the</p>
+<p>     * same cacheline</p>
+<p>     */</p>
+<p>     struct list_head entry; // 定时器链表入口</p>
+<p>     unsigned long expires; // 以jiffies为单位的过期时间</p>
+<p>     struct tvec_base *base; // 定时器内部值，用户不要使用</p>
+<p>     <font color="#FF0000">void (*function)(unsigned long);</font> // 定时处理函数（回调）</p>
+<p>     <font color="#FF0000">unsigned long data;</font> // 定时处理函数参数</p>
+<p>     int slack;</p>
+<p>#ifdef CONFIG_TIMER_STATS</p>
+<p>     int start_pid;</p>
+<p>     void *start_site;</p>
+<p>     char start_comm[16];</p>
+<p>#endif</p>
+<p>#ifdef CONFIG_LOCKDEP</p>
+<p>     struct lockdep_map lockdep_map;</p>
+<p>#endif</p>
+<p>};</p>
+<div>
+</div><div>
+</div><div>#define <font color="#FF0000">init_timer(timer)</font> // 初始化定时器 参数：1-struct timer_list类型变量</div><div>#define <font color="#FF0000">setup_timer(timer, fn, data)</font> // 设置定时器 参数：1-struct timer_list类型变量；2-方法（回调）；3-方法参数</div><div>
+</div><div>extern int <font color="#FF0000">del_timer(struct timer_list * timer)</font>; // 在定时过期之前删除定时器 参数：1-struct timer_list类型变量</div><div>extern int <font color="#FF0000">mod_timer(struct timer_list *timer, unsigned long expires)</font>; // 设置定时过期时间，并且期待定时 参数：1-struct timer_list类型变量；2-过期时间（单位：jiffies）</div><div>
+</div><div>
+</div><div>#ifdef CONFIG_SMP
+
+<p>  extern int <font color="#FF0000">del_timer_sync</font>(struct timer_list *timer); // del_timer的同步版本，目前不太理解，谨慎使用。</p>
+<p>#else</p>
+<h1 id="define-del-timer-sync-t-del-timer-t-SMP情况下调用上面，非SMP情况下调用这里。"><a href="#define-del-timer-sync-t-del-timer-t-SMP情况下调用上面，非SMP情况下调用这里。" class="headerlink" title="define del_timer_sync(t)          del_timer(t) // SMP情况下调用上面，非SMP情况下调用这里。"></a>define <font color="#FF0000">del_timer_sync</font>(t)          del_timer(t) // SMP情况下调用上面，非SMP情况下调用这里。</h1><p>#endif</div></span></p>
+</div>
+
+<hr>
+<a name="2027"/>
+
+<h1 id="linux-jiffies-h"><a href="#linux-jiffies-h" class="headerlink" title="linux/jiffies.h"></a>linux/jiffies.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/1/3 11:38_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/4/9 16:33_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+extern u64 __jiffy_data jiffies_64;
+
+<p>extern unsigned long volatile __jiffy_data <font color="#FF0000">jiffies</font>; // <span style="color: rgb(255, 0, 0);">jiffies - 系统总节拍数目</span></p>
+<div>#define <font color="#FF0000">time_after</font>(a,b)          \ <font color="#FF0000">// 时间前后判断</font> 例：time_after(jiffies, later); // 参数：总节拍数目
+
+<p>     (typecheck(unsigned long, a) &amp;&amp; \</p>
+<p>     typecheck(unsigned long, b) &amp;&amp; \</p>
+<p>     ((long)(b) - (long)(a) &lt; 0))</p>
+<p>#define <font color="#FF0000">time_before</font>(a,b)     time_after(b,a) <span style="color: rgb(255, 0, 0);">// 时间前后判断</span></p>
+<p>#define <font color="#FF0000">time_after_eq</font>(a,b)     \ <span style="color: rgb(255, 0, 0);">// 时间前后判断</span></p>
+<p>     (typecheck(unsigned long, a) &amp;&amp; \</p>
+<p>     typecheck(unsigned long, b) &amp;&amp; \</p>
+<p>     ((long)(a) - (long)(b) &gt;= 0))</p>
+<p>#define <font color="#FF0000">time_before_eq</font>(a,b)     time_after_eq(b,a) <span style="color: rgb(255, 0, 0);">// 时间前后判断</span></div></span></p>
+</div>
+
+<hr>
+<a name="2062"/>
+
+<h1 id="linux-input-h"><a href="#linux-input-h" class="headerlink" title="linux/input.h"></a>linux/input.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/4/6 19:43_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/4/6 21:45_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div align="left"><font face="Tahoma">/*
+
+<ul>
+<li>Event types</li>
+</ul>
+<p>*/</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_SYN            </font> <font face="Tahoma">   0x00</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_KEY            </font> <font face="Tahoma">   0x01</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_REL            </font> <font face="Tahoma">   0x02</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_ABS            </font> <font face="Tahoma">   0x03</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_MSC           </font> <font face="Tahoma">    0x04</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_SW             </font> <font face="Tahoma">  0x05</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_LED            </font> <font face="Tahoma">   0x11</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_SND           </font> <font face="Tahoma">    0x12</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_REP            </font> <font face="Tahoma">   0x14</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_FF              </font> <font face="Tahoma">0x15</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_PWR           </font> <font face="Tahoma">    0x16</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_FF_STATUS </font><font face="Tahoma">         0x17</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_MAX           </font> <font face="Tahoma">    0x1f</p>
+<p>#define</font> <font color="#FF0000" face="Tahoma">EV_CNT           </font> <font face="Tahoma">    (EV_MAX+1)</font></div><div align="left"><font face="Tahoma"><br></font></div><div align="left">/*</p>
+<ul>
+<li>Absolute axes</li>
+</ul>
+<p>*/</p>
+<p>#define <font color="#FF0000">ABS_X</font>               0x00</p>
+<p>#define <font color="#FF0000">ABS_Y</font>               0x01</div><div align="left">…</div><div align="left"><font face="Tahoma"><br></font></div><div align="left"><font color="#FF0000">struct input_dev</font> {</p>
+<p>     const char *name; // ？？</p>
+<p>     const char *phys; // ？？</p>
+<p>     const char *uniq; // ？？</p>
+<p>     struct input_id <font color="#FF0000">id</font>; // 输入设备标识ID，用于适配handler，需要手动设置，也可以不设置？？</p>
+<p>     unsigned long propbit[BITS_TO_LONGS(INPUT_PROP_CNT)];</p>
+<p>     unsigned long <font color="#FF0000">evbit</font>[BITS_TO_LONGS(EV_CNT)]; // 事件类型位图，需要手动设置。</p>
+<p>     unsigned long <font color="#FF0000">keybit</font>[BITS_TO_LONGS(KEY_CNT)]; // 按键键值位图，需要手动设置。</p>
+<p>     unsigned long <font color="#FF0000">relbit</font>[BITS_TO_LONGS(REL_CNT)]; // 绝对坐标位图，需要手动设置。</div><div align="left">     unsigned long <font color="#FF0000">absbit</font>[BITS_TO_LONGS(ABS_CNT)]; // 相对坐标位图，需要手动设置。</p>
+<p>     unsigned long mscbit[BITS_TO_LONGS(MSC_CNT)];</p>
+<p>     unsigned long ledbit[BITS_TO_LONGS(LED_CNT)];</p>
+<p>     unsigned long sndbit[BITS_TO_LONGS(SND_CNT)];</p>
+<p>     unsigned long ffbit[BITS_TO_LONGS(FF_CNT)];</p>
+<p>     unsigned long swbit[BITS_TO_LONGS(SW_CNT)];</p>
+<p>     unsigned int hint_events_per_packet;</p>
+<p>     unsigned int keycodemax; // 设备支持最大按键个数？？</p>
+<p>     unsigned int keycodesize; // 每个按键字节大小？？</p>
+<p>     void *keycode;</p>
+<p>     int (*setkeycode)(struct input_dev *dev,</p>
+<p>                 const struct input_keymap_entry *ke,</p>
+<p>                 unsigned int *old_keycode);</p>
+<p>     int (*getkeycode)(struct input_dev *dev,</p>
+<p>                 struct input_keymap_entry *ke);</p>
+<p>     struct ff_device *ff;</p>
+<p>     unsigned int repeat_key; // 最近一次按键键值，用于连击？？该成员只读？？</p>
+<p>     struct timer_list timer; // 自动连击定时器，位于input_register_device初始化，无需手动设置。</p>
+<p>     int rep[REP_CNT]; // 自动连击参数？？</p>
+<p>     struct input_mt_slot *mt;</p>
+<p>     int mtsize;</p>
+<p>     int slot;</p>
+<p>     int trkid;</p>
+<p>     struct input_absinfo *<font color="#FF0000">absinfo</font>; // 用于存储Absolute axes属性？可以通过<span style="text-align: -webkit-auto;">input_set_abs_params/</span><span style="text-align: -webkit-auto;">input_alloc_absinfo分配。</span></div><div align="left"></p>
+<p>     unsigned long key[BITS_TO_LONGS(KEY_CNT)]; // 当前KEY状态位图？？</p>
+<p>     unsigned long led[BITS_TO_LONGS(LED_CNT)]; // 当前LED状态位图？？</p>
+<p>     unsigned long snd[BITS_TO_LONGS(SND_CNT)]; // 当前SOUND状态位图？？</div><div align="left">     unsigned long sw[BITS_TO_LONGS(SW_CNT)]; // 当前SWITCH状态位图？？</p>
+<p>     int (*open)(struct input_dev *dev); // 输入设备打开函数？？</p>
+<p>     void (*close)(struct input_dev *dev); // 输入设备关闭函数？？</p>
+<p>     int (*flush)(struct input_dev *dev, struct file *file); // 输入设备刷新函数？？</p>
+<p>     int (*event)(struct input_dev *dev, unsigned int type, unsigned int code, int value); // 输入设备时间处理函数？？</p>
+<p>     struct input_handle __rcu *grab;</p>
+<p>     spinlock_t event_lock;</p>
+<p>     struct mutex mutex;</p>
+<p>     unsigned int users;</p>
+<p>     bool going_away;</p>
+<p>     bool sync;</p>
+<p>     struct device dev;</p>
+<p>     struct list_head     h_list; // handle链表，通过input_register_device函数匹配对应handler之后调用connect分配获得。</p>
+<p>     struct list_head     node; // input_dev链表，通过input_dev_list串联。</p>
+<p>};</p>
+<p>#define <font color="#FF0000">to_input_dev</font>(d) container_of(d, struct input_dev, dev) // 通过input中的dev得到input地址</div><div></p>
+</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_event</font>); // 报告指定type、code的输入事件</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_alloc_absinfo</font>); // 分配一个struct input_absinfo结构（存在struct input_dev当中）。</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_release_device</font>); // 通常用于handler？实现输入子设备驱动不常用？</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_open_device</font>); // 调用struct input_dev中open函数指针，通常用于handler？实现输入子设备驱动不常用？</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_flush_device</font>); // 调用struct input_dev中flush函数指针，通常用于handler？实现输入子设备驱动不常用？</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_close_device</font>); // 调用struct input_dev中close函数指针，通常用于handler？实现输入子设备驱动不常用？</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_get_keycode</font>); // 调用struct input_dev中<span style="text-align: -webkit-left;">setkeycode</span>函数指针，通常用于handler？实现输入子设备驱动不常用？</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_set_keycode</font>); // 调用struct input_dev中getkeycode函数指针，通常用于handler？实现输入子设备驱动不常用？</div><div>
+</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_set_abs_params</font>); // 设置<span style="text-align: -webkit-left;">Absolute axes</span>属性？通常用于触摸屏？</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_allocate_device</font>); // 分配一个设备结构</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_free_device</font>); // 释放一个设备结构</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_register_device</font>); // 注册设备</div><div>EXPORT_SYMBOL(<font color="#FF0000">input_unregister_device</font>); // 注销设备</div><div>static inline void <font color="#FF0000">input_report_key</font>(struct input_dev *dev, unsigned int code, int value) // 报告键值
+</div><div>static inline void <font color="#FF0000">input_report_rel</font>(struct input_dev *dev, unsigned int code, int value) // 报告相对坐标</div><div>static inline void <font color="#FF0000">input_report_abs</font>(struct input_dev *dev, unsigned int code, int value) // 报告绝对坐标
+</div><div>static inline void <font color="#FF0000">input_sync</font>(struct input_dev *dev) // 报告同步事件</div></span>
+</div>
+
+<hr>
+<a name="2064"/>
+
+<h1 id="linux-bitops-h"><a href="#linux-bitops-h" class="headerlink" title="linux/bitops.h"></a>linux/bitops.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/4/9 16:33_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/4/9 17:18_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+#define <font color="#FF0000">BIT</font>(nr)               (1UL &lt;&lt; (nr))
+
+<p>#define <font color="#FF0000">BIT_MASK</font>(nr)          (1UL &lt;&lt; ((nr) % BITS_PER_LONG))</p>
+<p>#define <font color="#FF0000">BIT_WORD</font>(nr)          ((nr) / BITS_PER_LONG)</p>
+<p>#define BITS_PER_BYTE          8</p>
+<p>#define <font color="#FF0000">BITS_TO_LONGS</font>(nr)     DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))<br></span></p>
+</div>
+
+<hr>
+<a name="2076"/>
+
+<h1 id="asm-bitops-h"><a href="#asm-bitops-h" class="headerlink" title="asm/bitops.h"></a>asm/bitops.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/4/9 17:24_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/4/9 17:24_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+#define <font color="#FF0000">set_bit</font>(nr,p)               ATOMIC_BITOP(set_bit,nr,p)
+
+<p>#define <font color="#FF0000">clear_bit</font>(nr,p)               ATOMIC_BITOP(clear_bit,nr,p)</p>
+<p>#define <font color="#FF0000">change_bit</font>(nr,p)          ATOMIC_BITOP(change_bit,nr,p)</p>
+<p>#define <font color="#FF0000">test_and_set_bit</font>(nr,p)          ATOMIC_BITOP(test_and_set_bit,nr,p)</p>
+<p>#define <font color="#FF0000">test_and_clear_bit</font>(nr,p)     ATOMIC_BITOP(test_and_clear_bit,nr,p)</p>
+<p>#define <font color="#FF0000">test_and_change_bit</font>(nr,p)     ATOMIC_BITOP(test_and_change_bit,nr,p)</p>
+<div>
+</div><div>#ifndef __ARMEB__
+
+<p>/*</p>
+<ul>
+<li>These are the little endian, atomic definitions.</li>
+</ul>
+<p>*/</p>
+<p>#define find_first_zero_bit(p,sz)     _find_first_zero_bit_le(p,sz)</p>
+<p>#define find_next_zero_bit(p,sz,off)     _find_next_zero_bit_le(p,sz,off)</p>
+<p>#define find_first_bit(p,sz)          _find_first_bit_le(p,sz)</p>
+<p>#define find_next_bit(p,sz,off)          _find_next_bit_le(p,sz,off)</p>
+<p>#else</p>
+<p>/*</p>
+<ul>
+<li>These are the big endian, atomic definitions.</li>
+</ul>
+<p>*/</p>
+<p>#define find_first_zero_bit(p,sz)     _find_first_zero_bit_be(p,sz)</p>
+<p>#define find_next_zero_bit(p,sz,off)     _find_next_zero_bit_be(p,sz,off)</p>
+<p>#define find_first_bit(p,sz)          _find_first_bit_be(p,sz)</p>
+<p>#define find_next_bit(p,sz,off)          _find_next_bit_be(p,sz,off)</p>
+<p>#endif</p>
+</div></span>
+</div>
+
+<hr>
+<a name="2088"/>
+
+<h1 id="杂"><a href="#杂" class="headerlink" title="杂"></a>杂</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/4/10 23:04_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/7/13 19:56_</td></tr>
+<tr><td>**作者：**</td><td>_linyuanbo2004@163.com_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>1、获得.config方式</div><div>1.1 通过 make xxx_defconfig 命令通过读取 .\arch\arm\configs\xxx_defconfig 获得 .\.config</div><div>2.2 通过 make menuconfig 命令通过读取 arch\$ARCH\Kconfig 和 ... 等文件生成界面配置之后获得 .\.config</div><div>
+</div><div>2、通过.config编译</div><div>通过 make 命令执行顶层 makefile 读取 .\.config 文件获得 .\include\linux\autoconf.h 和 .\include\config\auto.conf</div></span>
+</div>
+
+<hr>
+<a name="2130"/>
+
+<h1 id="linux-kobject-h"><a href="#linux-kobject-h" class="headerlink" title="linux/kobject.h"></a>linux/kobject.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/5/21 14:36_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/7/2 14:41_</td></tr>
+<tr><td>**来源：**</td><td><a target="_blank" rel="noopener" href="http://blog.csdn.net/qb_2008/article/details/6846779">_http://blog.csdn.net/qb_2008/article/details/6846779_</a></td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>// **总结：使用kobject、kset时候，脑海必须时刻浮现kobject、kset模型图像，了解他们之间关系。**</div><div>// **通过example_kobject.c、example_kset.c可以快速学习与使用kobject、kset。**</div><div>**
+**</div><div>// **API总结：**</div><div>// **1、kobject_add、kobject_init_and_add、kobject_create_and_add、kset_register****、**</div><div>// **<font color="#FF0000">kset_create_and_add </font>****会调 create_dir****函数，从而创建目录；**</div><div><font color="#FF0000"><font color="#FF0000">
+</font></font></div><font color="#FF0000">struct kobject</font> {                            // 必须动态申请，当计数量为零时自动释放，通常嵌入其他更大结构，很少单独使用
+
+<p>     const char          *name;                                   // 名字</p>
+<p>     struct list_head     entry;                                    // 用于kobject所属kset下的子kobject链表</p>
+<p>     struct kobject          *parent;                             // 指向kobject的父节点</p>
+<div>     struct kset          *kset;                                     // 指向kobject所属的kset
+
+<p>     struct kobj_type     *ktype;                                // 定义了kobject所属的类型</p>
+<p>     struct sysfs_dirent     *sd;                                 // 指向kobject对应的sysfs目录</p>
+<p>     struct kref          kref;                                       // 记录kobject的引用计数</p>
+<p>     unsigned int state_initialized:1;</p>
+<p>     unsigned int state_in_sysfs:1;</p>
+<p>     unsigned int state_add_uevent_sent:1;</p>
+<p>     unsigned int state_remove_uevent_sent:1;</p>
+<p>     unsigned int uevent_suppress:1;</p>
+<p>};</div><div></p>
+</div><div>static int populate_dir(struct kobject *kobj);             // 内部函数根据kobj-&gt;ktype-&gt;default_attrs创建文件</div><div>static int create_dir(struct kobject *kobj);                // 内部函数根据kobj创建目录与文件（内调populate_dir）</div><div>static int get_kobj_path_length(struct kobject *kobj); // 内部函数根据kobj获取绝对路径字符长度</div><div>static void fill_kobj_path(struct kobject *kobj, char *path, int length); // 内部函数根据kobj获取绝对路径</div><div>static void kobject_init_internal(struct kobject *kobj);// 初始化kobj成员entry、kref、位领成员</div><div>EXPORT_SYMBOL(<font color="#FF0000">kobject_init</font>);                               // 初始化kobj成员ktype、内调kobject_init_internal</div><div>EXPORT_SYMBOL(<font color="#FF0000">kobject_add</font>);                              // 初始化kobj成员（内调kobject_init_internal）</div><div>                                                                            // 并确定关联parent（但是没有关联kset！！）</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">kobject_init_and_add</font>);          // 初始化kobj成员（内调kobject_init_internal）</div><div>                                                                            // 并添加入kset（在其parent已经确定情况下！！）</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">kobject_create_and_add</font>);     // 申请空间，1-内调kobject_init指定ktype为dynamic_kobj_ktype，</div><div>                                                                            // 2-内调kobject_add确定parent，学习测试非常实用！！</div><div>EXPORT_SYMBOL(<font color="#FF0000">kobject_del</font>);                               // 删除kobj（会不会自动释放空间？？）</div><div>EXPORT_SYMBOL(<font color="#FF0000">kobject_set_name</font>);                     // 设置名字（内部自动申请释放存储名字空间）</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">kobject_rename</font>);                 // 更改名字，同时还向用户通知这一消息？？</div><div>static inline const char *<font color="#FF0000">kobject_name</font>(const struct kobject *kobj); // 获取名字</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">kobject_get_path</font>);               // 获取完整路径（内调kzalloc、get_kobj_path_length和fill_kobj_path）</div><div>EXPORT_SYMBOL(<font color="#FF0000">kobject_get</font>);                              // 引用计数量加一，返回指针对象
+
+<p>EXPORT_SYMBOL(<font color="#FF0000">kobject_put</font>);                              // 引用计数量减一，计数为0时</div><div>                                                                            // 调用release方法释放kobject与name的空间</p>
+</div><div>static ssize_t kobj_attr_show(struct kobject *kobj, struct attribute *attr,
+
+<p>                     char *buf);</div><div>static ssize_t kobj_attr_store(struct kobject *kobj, struct attribute *attr,</p>
+<p>                      const char *buf, size_t count);</div><div>const struct sysfs_ops kobj_sysfs_ops = {                // 系统默认attr函数，类型：struct sysfs_ops</p>
+<p>     .show     = kobj_attr_show,</p>
+<p>     .store     = kobj_attr_store,</p>
+<p>};</div><div>static struct kobj_type dynamic_kobj_ktype = {         // 使用kobject_create函数默认赋值kobj-&gt;ktype</p>
+<p>     .release     = dynamic_kobj_release,</p>
+<p>     .sysfs_ops     = &amp;kobj_sysfs_ops,</p>
+<p>};</div><div></p>
+</div><div><font color="#FF0000">struct kobj_type</font> {                                                  // 定义了kobject的公共类型，包含操作函数和共有属性
+
+<p>     void (*release)(struct kobject *kobj);</p>
+<p>     const struct sysfs_ops *sysfs_ops;                     // 定义了读写属性文件时调用的函数</p>
+<p>     struct attribute **default_attrs;                         // 定义了这类kobject公共属性</p>
+<p>     const struct kobj_ns_type_operations *(*child_ns_type)(struct kobject *kobj);</p>
+<p>     const void *(*namespace)(struct kobject *kobj);</p>
+<p>};</div><div></p>
+</div><div><font color="#FF0000">struct kobj_attribute</font> {
+
+<p>     struct attribute attr;                                          // 公共属性</p>
+<p>     ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr,</p>
+<p>               char *buf);</p>
+<p>     ssize_t (*store)(struct kobject *kobj, struct kobj_attribute *attr,</p>
+<p>               const char *buf, size_t count);</p>
+<p>};</div><div></p>
+</div><div><font color="#FF0000">struct kset</font> {
+
+<p>     struct list_head list;              // 所属kobject的链表头</p>
+<p>     spinlock_t list_lock;               // 链表访问锁</p>
+<p>     struct kobject kobj;               // kset内部的kobject，要表现为sysfs中的目录就必须拥有kobject的功能</p>
+<p>     const struct kset_uevent_ops *uevent_ops;</p>
+<p>};</div><div></p>
+</div><div>extern void kset_init(struct kset *kset);               // 初始化kset成员list、list_lock、kobject（内调kobject_init_internal）</div><div>EXPORT_SYMBOL(<font color="#FF0000">kset_register</font>);                       // 把kset-&gt;kobj接入系统，发布KOBJ_ADD消息（首先确保设置</div><div>                                                                      // kset-&gt;kobj.name、kset-&gt;kobj.parent、kset-&gt;kobj.kset）
+
+<p>EXPORT_SYMBOL(<font color="#FF0000">kset_unregister</font>);                   // 看源码，很简单。</p>
+</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">kset_create_and_add</font>);   // kset快速创建函数，学习测试非常实用！！</div><div>static void kset_release(struct kobject *kobj);    // 释放kset函数，内部函数，供kset_type调用</div><div>static struct kobj_type kset_ktype = {                // 使用kset_create函数默认赋值kset-&gt;kobj.ktype
+
+<p>     .sysfs_ops     = &amp;kobj_sysfs_ops,</p>
+<p>     .release = kset_release,</p>
+<p>};</div><div></p>
+</div><div>/* The global /sys/kernel/ kobject for people to chain off of */
+
+<p>extern struct kobject *<font color="#FF0000">kernel_kobj</font>;</p>
+<p>/* The global /sys/kernel/mm/ kobject for people to chain off of */</p>
+<p>extern struct kobject *<font color="#FF0000">mm_kobj</font>;</p>
+<p>/* The global /sys/hypervisor/ kobject for people to chain off of */</p>
+<p>extern struct kobject *<font color="#FF0000">hypervisor_kobj</font>;</p>
+<p>/* The global /sys/power/ kobject for people to chain off of */</p>
+<p>extern struct kobject *<font color="#FF0000">power_kobj</font>;</p>
+<p>/* The global /sys/firmware/ kobject for people to chain off of */</p>
+<p>extern struct kobject *<font color="#FF0000">firmware_kobj</font>;</div><div></p>
+</div></span>
+</div>
+
+<hr>
+<a name="2138"/>
+
+<h1 id="linux-kref-h"><a href="#linux-kref-h" class="headerlink" title="linux/kref.h"></a>linux/kref.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/5/21 15:35_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/5/21 15:46_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>/******************</div><div> *kref是一个引用计数器，它被嵌套进其它的结构中，记录所嵌套结构的引用</div><div> *计数，并在计数清零时调用相应的清理函数。</div><div> *****************/</div><div><font color="#FF0000">struct kref</font> {
+
+<p>     atomic_t refcount;</p>
+<p>};</p>
+<div>
+</div><div>EXPORT_SYMBOL(<font color="#FF0000">kref_init</font>);          // 计数量初始化为一
+
+<p>EXPORT_SYMBOL(<font color="#FF0000">kref_get</font>);          // 计数量加一</p>
+<p>EXPORT_SYMBOL(<font color="#FF0000">kref_put</font>);          // 计数量减一</p>
+<p>EXPORT_SYMBOL(<font color="#FF0000">kref_sub</font>);          // 计数量减N</div></div></span></p>
+</div>
+
+<hr>
+<a name="2150"/>
+
+<h1 id="linux-sysfs-h"><a href="#linux-sysfs-h" class="headerlink" title="linux/sysfs.h"></a>linux/sysfs.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/5/22 17:12_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/6/2 20:53_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><font color="#FF0000">struct attribute</font> {                              // 通用属性结构，通常内嵌到更大的属性中，比如：struct kobj_attribute
+
+<p>     const char          *name;             // 文件名字</p>
+<p>     mode_t               mode;              // 文件权限</p>
+<p>#ifdef CONFIG_DEBUG_LOCK_ALLOC</p>
+<p>     struct lock_class_key     *key;</p>
+<p>     struct lock_class_key     skey;</p>
+<p>#endif</p>
+<p>};</p>
+<div>
+</div><div><font color="#FF0000">struct attribute_group</font> {                                             // 通用属性集合，似乎需要配合kobject使用？
+
+<p>     const char          *name;                                      // 貌似指针为空没有名字？</p>
+<p>     mode_t               (*is_visible)(struct kobject *,</p>
+<p>                               struct attribute *, int);</p>
+<p>     struct attribute     **attrs;                                    // 目前只是看见对该成员赋值</p>
+<p>};</div><div></p>
+</div><div>#define <font color="#FF0000">__ATTR</font>(_name,_mode,_show,_store) { \       // 赋值宏，一般赋值此类结构，比如：struct kobj_attribute
+
+<p>     .attr = {.name = __stringify(_name), .mode = _mode },     \</p>
+<p>     .show     = _show,                         \</p>
+<p>     .store     = _store,                         \</p>
+<p>}</div><div></p>
+</div><div>#define <font color="#FF0000">__ATTR_RO</font>(_name) { \                               // 赋值宏，read only版本
+
+<p>     .attr     = { .name = __stringify(_name), .mode = 0444 },     \</p>
+<p>     .show     = _name##_show,                         \</p>
+<p>}</div><div></p>
+</div><div><font color="#FF0000">struct bin_attribute</font> {                                               // 专为二进制属性文件设计，在sysfs中表现为二进制文件
+
+<p>     struct attribute     attr;                                       // 通用属性</p>
+<p>     size_t               size;</p>
+<p>     void               *private;</p>
+<p>     ssize_t (*read)(struct file *, struct kobject *, struct bin_attribute *,</p>
+<p>               char *, loff_t, size_t);</p>
+<p>     ssize_t (*write)(struct file *,struct kobject *, struct bin_attribute *,</p>
+<p>               char *, loff_t, size_t);</p>
+<p>     int (*mmap)(struct file *, struct kobject *, struct bin_attribute *attr,</p>
+<p>              struct vm_area_struct *vma);</p>
+<p>};</div><div></p>
+</div><div>struct <font color="#FF0000">sysfs_ops</font> {                                                   // 被struct kobj_type包含
+
+<p>     ssize_t     (*show)(struct kobject *, struct attribute *,char *);</p>
+<p>     ssize_t     (*store)(struct kobject *,struct attribute *,const char *, size_t);</p>
+<p>};</div><div></p>
+</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_schedule_callback</font>);</div><div>
+</div><div>**<font color="#FF0000">注意：sysfs_xxx_dir的函数似乎没有EXPORT，所以不能直接调用，仅供阅读而已。</font>**</div><div>int __must_check <font color="#FF0000">sysfs_create_dir</font>(struct kobject *kobj);    // 创建一个kobject对应的目录，名字kobj-&gt;name</div><div>void <font color="#FF0000">sysfs_remove_dir</font>(struct kobject *kobj);                     // 删除kobj对应目录以及其子目录与文件</div><div>int __must_check <font color="#FF0000">sysfs_rename_dir</font>(struct kobject *kobj, const char *new_name);      // kobj改名
+
+<p>int __must_check <font color="#FF0000">sysfs_move_dir</font>(struct kobject *kobj,                                              // kobj移动至new_parent_kobj</p>
+<p>                    struct kobject *new_parent_kobj);</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_get_dirent</font>);                        // 增加目录parent_sd中名为name文件或目录的引用计数</div><div></p>
+</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_create_file</font>);                                                                // 在kobj对应目录创建attr属性文件</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_create_files</font>);</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_chmod_file</font>);</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_remove_file</font>);
+
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_remove_files</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_create_bin_file</font>);                                                          // …二进制…</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_remove_bin_file</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_create_link</font>);                                                               // …软链接…</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_remove_link</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_rename_link</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_create_group</font>);                                                            // …属性集合…</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_update_group</font>);</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_remove_group</font>);</p>
+<div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_add_file_to_group</font>);</div>
+EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_remove_file_from_group</font>);</div><div>
+</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_notify_dirent</font>);</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_notify</font>);</div><div>
+
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_get</font>);                    // 增加文件或目录引用计数</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">sysfs_put</font>);                    // 减少…，同时减少上层引用计数，为零时删除响应文件或目录</div><div>int __must_check sysfs_init(void);                     // 系统初始化时调用</div></span></p>
+</div>
+
+<hr>
+<a name="2244"/>
+
+<h1 id="linux-klist-h"><a href="#linux-klist-h" class="headerlink" title="linux/klist.h"></a>linux/klist.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/6/18 11:53_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/6/18 15:26_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>// 链表表头</div>
+struct klist_node;
+<font color="#FF0000">struct klist</font> {
+
+<p>     spinlock_t          k_lock;</p>
+<p>     struct list_head     k_list;</p>
+<p>     void               (*get)(struct klist_node *);</p>
+<p>     void               (*put)(struct klist_node *);</p>
+<p>} <strong>attribute</strong> ((aligned (sizeof(void *))));</p>
+<div>
+</div><div>// 链表节点</div><div>// 特别说明:void *n_klist; // 指向表头且第0位表示是否该节点已被请求删除,1-死亡,0-仍可使用</div><div><div><font color="#FF0000">struct klist_node</font> {
+
+<p>     void               <em>n_klist;     /</em> never access directly */</p>
+<p>     struct list_head     n_node;</p>
+<p>     struct kref          n_ref;</p>
+<p>};</div></p>
+<p>// 静态初始化struct klist结构</p>
+<p>#define <font color="#FF0000">KLIST_INIT</font>(_name, _get, _put)                         \</p>
+<p>     { .k_lock     = __SPIN_LOCK_UNLOCKED(_name.k_lock),          \</p>
+<p>       .k_list     = LIST_HEAD_INIT(_name.k_list),               \</p>
+<p>       .get          = _get,                              \</p>
+<p>       .put          = _put, }</p>
+<p>// 静态定义并初始化struct klist结构</p>
+<p>#define <font color="#FF0000">DEFINE_KLIST</font>(_name, _get, _put)                         \</p>
+<p>     struct klist _name = KLIST_INIT(_name, _get, _put)</p>
+<p>// 动态初始化klist结构</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_init</font>);</div><div></p>
+</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_add_head</font>);                      // 从头添加</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_add_tail</font>);                        // 从尾添加
+
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_add_after</font>);                     // 从特定节点前面添加</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_add_before</font>);                  // 从特定节点后面添加<br><font color="#FF0000"><br></font>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_del</font>);                              // <font color="#FF0000"><br></font><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_remove</font>);                       // 删除节点</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_node_attached</font>);            //</div><div></p>
+</div></div><div>
+</div><div><font color="#FF0000">struct klist_iter</font> {
+
+<p>     struct klist          *i_klist;</p>
+<p>     struct klist_node     *i_cur;</p>
+<p>};</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_iter_init_node</font>);              // 初始化klist_iter指向klist和klist_node</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_iter_init</font>);                      // 初始化klist_iter指向klist</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_iter_exit</font>);                     // 断开klist_iter所指klist_node</div><div>EXPORT_SYMBOL_GPL(<font color="#FF0000">klist_next</font>);                          // 寻找下一个存活节点???</p>
+</div><div>
+</div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="2269"/>
+
+<h1 id="drivers-base-core-c"><a href="#drivers-base-core-c" class="headerlink" title="/drivers/base/core.c"></a>/drivers/base/core.c</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/6/27 19:27_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/7/17 16:32_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>
+</div><div>int (*platform_notify)(struct device *dev) = NULL;
+
+<p>int (*platform_notify_remove)(struct device *dev) = NULL;</div><div></p>
+</div><div>
+</div><div>static struct kobject *<font color="#FF0000">dev_kobj</font>;                  // 创建/sys/dev目录的kobject
+
+<p>struct kobject *<font color="#FF0000">sysfs_dev_char_kobj</font>;          // 创建/sys/dev/char目录的kobject</p>
+<p>struct kobject *<font color="#FF0000">sysfs_dev_block_kobj</font>;         // 创建/sys/dev/block目录的kobject</div><div>struct kset *<font color="#FF0000">devices_kset</font>;                          // 创建/sys/devices目录的kset</div><div>// 创建目录位于devices_init,调用源码:</div><div>// devices_kset = kset_create_and_add(&quot;devices&quot;, &amp;device_uevent_ops, NULL);</div><div>// dev_kobj = kobject_create_and_add(&quot;dev&quot;, NULL);</div><div>// sysfs_dev_block_kobj = kobject_create_and_add(&quot;block&quot;, dev_kobj);</div><div>// sysfs_dev_char_kobj = kobject_create_and_add(&quot;char&quot;, dev_kobj);</div><div></p>
+</div><div>
+</div><div>const char *<font color="#FF0000">dev_driver_string</font>(const struct device *dev);</div><div>// 返回设备名字,优先级:drv-&gt;name,dev-&gt;bus-&gt;name,dev-&gt;class-&gt;name</div><div>int <font color="#FF0000">dev_set_name</font>(struct device *dev, const char *fmt, ...);</div><div>// 设置dev名字,实际设置dev-&gt;kobj名字</div><div>struct device *<font color="#FF0000">get_device</font>(struct device *dev);</div><div>void <font color="#FF0000">put_device</font>(struct device *dev);</div><div>
+</div><div>
+</div><div>static ssize_t dev_attr_show(struct kobject *kobj, struct attribute *attr,
+
+<p>                    char *buf);</p>
+</div><div>static ssize_t dev_attr_store(struct kobject *kobj, struct attribute *attr,
+
+<p>                     const char *buf, size_t count);</p>
+</div><div>static const struct sysfs_ops dev_sysfs_ops = {
+
+<p>     .show     = dev_attr_show,</p>
+<p>     .store     = dev_attr_store,</p>
+<p>};</div><div>static void device_release(struct kobject *kobj);</p>
+</div><div>static const void *device_namespace(struct kobject *kobj);
+</div><div>static struct kobj_type <font color="#FF0000">device_ktype</font> = {
+
+<p>     .release     = device_release,</p>
+<p>     .sysfs_ops     = &amp;dev_sysfs_ops,</p>
+<p>     .namespace     = device_namespace,</p>
+<p>};</div><div>// 创建device之后device_initialize中dev-&gt;kobj默认使用的ktype(源码:kobject_init(&amp;dev-&gt;kobj, &amp;device_ktype);)</div><div>// 每次访问device目录内部属性均通过dev_attr_show和dev_attr_store调用</div><div></p>
+</div><div>
+</div><div>const char *device_get_devnode(struct device *dev,
+
+<p>                      mode_t *mode, const char **tmp);</div><div>// 返回设备路径名,不过似乎可以通过device_type或者class定义一些独特返回名称</div><div>static int dev_uevent_filter(struct kset *kset, struct kobject *kobj);</p>
+</div><div>// 是否过滤需要判断kobj-&gt;ktype与默认device_ktype是否相同</div><div>static const char *dev_uevent_name(struct kset *kset, struct kobject *kobj);
+</div><div>static int dev_uevent(struct kset *kset, struct kobject *kobj,
+
+<p>                struct kobj_uevent_env *env);</p>
+</div><div>static const struct kset_uevent_ops <font color="#FF0000">device_uevent_ops</font> = {
+
+<p>     .filter =     dev_uevent_filter,</p>
+<p>     .name =          dev_uevent_name,</p>
+<p>     .uevent =     dev_uevent,</p>
+<p>};</div><div>// 通知用户空间回调函数 filter-过滤 name-返回kset名字 uevent-通过参数返回增加的环境变量</div><div>// 每次操作(操作包括：添加 删除 更改 等等)devices_kset均会触发函数,位于调用</div><div>// 调用源码:devices_kset = kset_create_and_add(&quot;devices&quot;, &amp;device_uevent_ops, NULL);</div><div>// 以上这句话同时创建sys/device目录,管理目录为devices_kset</div><div></p>
+</div><div>
+</div><div>static ssize_t show_uevent(struct device *dev, struct device_attribute *attr,
+
+<p>                  char *buf);</div><div>static ssize_t store_uevent(struct device *dev, struct device_attribute *attr,</p>
+<p>                   const char *buf, size_t count);</div><div>static struct device_attribute <font color="#FF0000">uevent_attr</font> =</p>
+<p>     __ATTR(<font color="#FF0000">uevent</font>, S_IRUGO | S_IWUSR, show_uevent, store_uevent);</div><div>// 创建devices之后默认自带的默认属性,文件名uevent,位于device_add调用</div><div>// 调用:error = device_create_file(dev, &amp;uevent_attr);</div><div>// 例如:sys/devices/virtual/misc/pwm/<font color="#FF0000">uevent</font></div><div></p>
+</div><div>
+</div><div>static ssize_t show_dev(struct device *dev, struct device_attribute *attr,
+
+<p>               char *buf);</p>
+</div><div>static struct device_attribute <font color="#FF0000">devt_attr</font> =
+
+<p>     __ATTR(<font color="#FF0000">dev</font>, S_IRUGO, show_dev, NULL);</div><div>// 创建devices之后如果dev-&gt;devt存在则创建这个显示设备号的属性,文件名dev,位于device_add调用</div><div>// 调用:error = device_create_file(dev, &amp;devt_attr);</div><div>// 例如:sys/devices/virtual/misc/pwm/<font color="#FF0000">dev</font></div><div></p>
+</div><div>
+</div><div>int device_create_file(struct device *dev,
+
+<p>                 const struct device_attribute *attr);                            // 添加dev一个普通文件属性</div><div>void device_remove_file(struct device *dev,</p>
+<p>               const struct device_attribute *attr);                              // 删除dev一个普通文件属性</div><div>int device_create_bin_file(struct device *dev,</p>
+<p>                  const struct bin_attribute *attr);                               // 添加dev一个二进制文件属性</div><div>void device_remove_bin_file(struct device *dev,</p>
+<p>                   const struct bin_attribute *attr);                              // 删除dev一个二进制文件属性</div><div>static int device_add_attributes(struct device *dev,</p>
+<p>                    struct device_attribute *attrs);                               // 添加dev多个普通文件属性</div><div>static void device_remove_attributes(struct device *dev,</p>
+<p>                         struct device_attribute *attrs);                          // 删除dev多个普通文件属性</div><div>static int device_add_bin_attributes(struct device *dev,</p>
+<p>                         struct bin_attribute *attrs);                               // 添加dev多个二进制文件属性</div><div>static void device_remove_bin_attributes(struct device *dev,</p>
+<p>                         struct bin_attribute *attrs);                               // 删除dev多个二进制文件属性</div><div>static int device_add_groups(struct device *dev,</p>
+<p>                    const struct attribute_group **groups);                 // 添加dev一组普通文件属性集合</div><div>static void device_remove_groups(struct device *dev,</p>
+<p>                    const struct attribute_group **groups);                 // 删除dev一组普通文件属性集合</div><div>static int <font color="#FF0000">device_add_attrs</font>(struct device *dev);</div><div>static void <font color="#FF0000">device_remove_attrs</font>(struct device *dev);</div><div>// device_add_attr和device_remove_attrs均调用其上函数实现增加dev-&gt;kobj属性</div><div>// 增加属性包括(如果存在class或type或自带attr_gourp):</div><div>// class:dev-&gt;class-&gt;dev_attrs 和 dev-&gt;class-&gt;dev_bin_attrs</div><div>// type:dev-&gt;type-&gt;groups</div><div>// 自带attr_gourp:dev-&gt;groups</div><div></p>
+</div><div>
+</div><div><strike>int device_schedule_callback_owner(struct device *dev,
+
+<p>          void (*func)(struct device *), struct module *owner);</strike></div><div><strike>// 这里没有调用,所有划掉了.</strike></div><div></p>
+</div><div>
+</div><div>// virtual_device_parent函数功能:如果/sys/devices没有virtual目录则创建并返回其kobj</div><div>static struct kobject *virtual_device_parent(struct device *dev)</div><div>static void class_dir_release(struct kobject *kobj);</div><div>static const
+
+<p>struct kobj_ns_type_operations *class_dir_child_ns_type(struct kobject *kobj);</div><div>static struct kobj_type class_dir_ktype = {</p>
+<p>     .release     = class_dir_release,</p>
+<p>     .sysfs_ops     = &amp;kobj_sysfs_ops,</p>
+<p>     .child_ns_type     = class_dir_child_ns_type</p>
+<p>};</div><div>static struct kobject *</p>
+<p>class_dir_create_and_add(struct class *class, struct kobject *parent_kobj);</div><div>static struct kobject *<font color="#FF0000">get_device_parent</font>(struct device *dev,</p>
+<p>                         struct device *parent);</div><div>// 根据一系列规则返回dev的父kobj,个人感觉比较复杂,但是只有四种情况?目前不确定</div><div>// 1.传入参数parent-&gt;kobj</div><div>// 2.传入参数…</div><div>// 3.传入参数…</div><div>// 4.NULL</div><div>static void <font color="#FF0000">setup_parent</font>(struct device *dev, struct device *parent);</div><div>// 通过调用传入dev和parent确定赋值dev-&gt;kobj-&gt;parent,具体调用源码:</div><div>// kobj = get_device_parent(dev, parent);</div><div>// if (kobj) dev-&gt;kobj.parent = kobj;</div><div>static void cleanup_glue_dir(struct device *dev, struct kobject *glue_dir);</p>
+</div><div>static void cleanup_device_parent(struct device *dev);</div><div>// 这两个函数似乎与setup_parent功能相反</div><div>
+</div><div>static int <font color="#FF0000">device_add_class_symlinks</font>(struct device *dev);
+</div><div>static void <font color="#FF0000">device_remove_class_symlinks</font>(struct device *dev);</div><div>// 创建/删除 这个dev-&gt;kobj目录下名为&quot;subsystem&quot;指向这个dev-&gt;class-&gt;p-&gt;subsys.kobj的软链接</div><div>// 例如:/sys/devices/virtual/misc/pwm/<font color="#5DDAFF">subsystem</font> ---&gt; /sys/class/misc</div><div>// 创建/删除 这个dev-&gt;class-&gt;p-&gt;subsys.kob目录下名为&quot;与device同名&quot;指向这个dev-&gt;kobj的软链接</div><div>// 例如:/sys/class/misc/<font color="#5DDAFF">pwm</font> ---&gt; /sys/devices/virtual/misc/pwm</div><div>// 如果dev-&gt;parent存在 则有dev-&gt;kobj目录下名为&quot;device&quot;指向dev-&gt;parent-&gt;kobj的软链接</div><div>// 例如:/sys/devices/virtual/input/input0/mouse0/<font color="#5DDAFF">device</font> ---&gt; /sys/devices/virtual/input/input0</div><div>// 最终位于device_add调用,创建每个device都会在sys/...中创建这些软链接</div><div>
+</div><div>static struct kobject *device_to_dev_kobj(struct device *dev);</div><div>static int <font color="#FF0000">device_create_sys_dev_entry</font>(struct device *dev);</div><div>static void <font color="#FF0000">device_remove_sys_dev_entry</font>(struct device *dev);</div><div>// 创建/删除 这个device_to_dev_kobj(dev)目录下名为&quot;MAJOR:MINOR&quot;指向这个dev-&gt;kobj的软链接</div><div>// 你会看到sys/dev/char有很多&quot;MAJOR:MINOR&quot;软链接,原因由上,以上又device_add调用</div><div>// 例如:/sys/dev/char/<font color="#5DDAFF">10:130</font> ---&gt; /sys/devices/virtual/misc/watchdog</div><div>
+</div><div>static void klist_children_get(struct klist_node *n);
+</div><div>static void klist_children_put(struct klist_node *n);
+</div><div>int <font color="#FF0000">device_private_init</font>(struct device *dev);</div><div>// 申请分配struct device_private空间,赋值dev-&gt;p,同时初始化dev-&gt;p-&gt;klist_children</div><div>
+</div><div>
+</div><div>void device_initialize(struct device *dev)
+
+<p>{</p>
+<p>     <font color="#FF0000">dev-&gt;kobj.kset = devices_kset;</font></p>
+<p>     <font color="#FF0000">kobject_init(&amp;dev-&gt;kobj, &amp;device_ktype);</font></p>
+<p>     INIT_LIST_HEAD(&amp;dev-&gt;dma_pools);</p>
+<p>     mutex_init(&amp;dev-&gt;mutex);</p>
+<p>     lockdep_set_novalidate_class(&amp;dev-&gt;mutex);</p>
+<p>     spin_lock_init(&amp;dev-&gt;devres_lock);</p>
+<p>     INIT_LIST_HEAD(&amp;dev-&gt;devres_head);</p>
+<p>     device_pm_init(dev);</p>
+<p>     set_dev_node(dev, -1);</p>
+<p>}</div><div></p>
+</div><div>
+</div><div>int device_add(struct device *dev)
+
+<p>{</p>
+<p>     struct device *parent = NULL;</p>
+<p>     struct class_interface *class_intf;</p>
+<p>     int error = -EINVAL;</p>
+<p>     <font color="#FF0000">dev = get_device(dev);</font></p>
+<p>     if (!dev)</p>
+<p>          goto done;</p>
+<p>     if (<font color="#FF0000">!dev-&gt;p</font>) {</p>
+<p>          <font color="#FF0000">error = device_private_init(dev);</font></p>
+<p>          if (error)</p>
+<p>               goto done;</p>
+<p>     }</p>
+<p>     /*</p>
+<p>     * for statically allocated devices, which should all be converted</p>
+<p>     * some day, we need to initialize the name. We prevent reading back</p>
+<p>     * the name, and force the use of dev_name()</p>
+<p>     */</p>
+<p>     if (<font color="#FF0000">dev-&gt;init_name</font>) {</p>
+<p>          <font color="#FF0000">dev_set_name(dev, &quot;%s&quot;, dev-&gt;init_name);</font></p>
+<p>          <font color="#FF0000">dev-&gt;init_name = NULL;</font></p>
+<p>     }</p>
+<p>     if (!dev_name(dev)) {</p>
+<p>          error = -EINVAL;</p>
+<p>          goto name_error;</p>
+<p>     }</p>
+<p>     pr_debug(&quot;device: ‘%s’: %s\n&quot;, dev_name(dev), <strong>func</strong>);</p>
+<p>     <font color="#FF0000">parent = get_device(dev-&gt;parent);</font></p>
+<p>     <font color="#FF0000">setup_parent(dev, parent);</font></p>
+<p>     /* use parent numa_node */</p>
+<p>     if (parent)</p>
+<p>          set_dev_node(dev, dev_to_node(parent));</p>
+<p>     /* first, register with generic layer. */</p>
+<p>     /* we require the name to be set before, and pass NULL */</p>
+<p>     <font color="#FF0000">error = kobject_add(&amp;dev-&gt;kobj, dev-&gt;kobj.parent, NULL);</font></p>
+<p>     if (error)</p>
+<p>          goto Error;</p>
+<p>     /* notify platform of device entry */</p>
+<p>     if (platform_notify)</p>
+<p>          platform_notify(dev);</p>
+<p>     <font color="#FF0000">error = device_create_file(dev, &amp;uevent_attr);</font></p>
+<p>     if (error)</p>
+<p>          goto attrError;</p>
+<p>     if (<font color="#FF0000">MAJOR(dev-&gt;devt)</font>) {</p>
+<p>          <font color="#FF0000">error = device_create_file(dev, &amp;devt_attr);</font></p>
+<p>          if (error)</p>
+<p>               goto ueventattrError;</p>
+<p>          <font color="#FF0000">error = device_create_sys_dev_entry(dev);</font></p>
+<p>          if (error)</p>
+<p>               goto devtattrError;</p>
+<p>          <font color="#FF0000">devtmpfs_create_node(dev);</font></p>
+<p>     }</p>
+<p>     <font color="#FF0000">error = device_add_class_symlinks(dev);</font></p>
+<p>     if (error)</p>
+<p>          goto SymlinkError;</p>
+<p>     <font color="#FF0000">error = device_add_attrs(dev);</font></p>
+<p>     if (error)</p>
+<p>          goto AttrsError;</p>
+<p>     <font color="#FF0000">error = bus_add_device(dev);</font></p>
+<p>     if (error)</p>
+<p>          goto BusError;</p>
+<p>     <font color="#FF0000">error = dpm_sysfs_add(dev);</font></p>
+<p>     if (error)</p>
+<p>          goto DPMError;</p>
+<p>     <font color="#FF0000">device_pm_add(dev);</font></p>
+<p>     /* Notify clients of device addition.  This call must come</p>
+<p>     * after dpm_sysf_add() and before kobject_uevent().</p>
+<p>     */</p>
+<p>     if (dev-&gt;bus)</p>
+<p>          blocking_notifier_call_chain(&amp;dev-&gt;bus-&gt;p-&gt;bus_notifier,</p>
+<p>                              BUS_NOTIFY_ADD_DEVICE, dev);</p>
+<p>     <font color="#FF0000">kobject_uevent(&amp;dev-&gt;kobj, KOBJ_ADD);</font></p>
+<p>     <font color="#FF0000">bus_probe_device(dev);</font></p>
+<p>     if (<font color="#FF0000">parent</font>)</p>
+<p>          <font color="#FF0000">klist_add_tail(&amp;dev-&gt;p-&gt;knode_parent,</p>
+<p>                      &amp;parent-&gt;p-&gt;klist_children);</font></p>
+<p>     if (<font color="#FF0000">dev-&gt;class</font>) {</p>
+<p>          mutex_lock(&amp;dev-&gt;class-&gt;p-&gt;class_mutex);</p>
+<p>          /* tie the class to the device */</p>
+<p>          <font color="#FF0000">klist_add_tail(&amp;dev-&gt;knode_class,</p>
+<p>                      &amp;dev-&gt;class-&gt;p-&gt;klist_devices);</font></p>
+<p>          /* notify any interfaces that the device is here */</p>
+<p>          list_for_each_entry(class_intf,</p>
+<p>                        &amp;dev-&gt;class-&gt;p-&gt;class_interfaces, node)</p>
+<p>               if (class_intf-&gt;add_dev)</p>
+<p>                    class_intf-&gt;add_dev(dev, class_intf);</p>
+<p>          mutex_unlock(&amp;dev-&gt;class-&gt;p-&gt;class_mutex);</p>
+<p>     }</p>
+<p>done:</p>
+<p>     <font color="#FF0000">put_device(dev);</font></p>
+<p>     return error;</p>
+<p>DPMError:</p>
+<p>     bus_remove_device(dev);</p>
+<p>BusError:</p>
+<p>     device_remove_attrs(dev);</p>
+<p>AttrsError:</p>
+<p>     device_remove_class_symlinks(dev);</p>
+<p>SymlinkError:</p>
+<p>     if (MAJOR(dev-&gt;devt))</p>
+<p>          devtmpfs_delete_node(dev);</p>
+<p>     if (MAJOR(dev-&gt;devt))</p>
+<p>          device_remove_sys_dev_entry(dev);</p>
+<p>devtattrError:</p>
+<p>     if (MAJOR(dev-&gt;devt))</p>
+<p>          device_remove_file(dev, &amp;devt_attr);</p>
+<p>ueventattrError:</p>
+<p>     device_remove_file(dev, &amp;uevent_attr);</p>
+<p>attrError:</p>
+<p>     kobject_uevent(&amp;dev-&gt;kobj, KOBJ_REMOVE);</p>
+<p>     kobject_del(&amp;dev-&gt;kobj);</p>
+<p>Error:</p>
+<p>     cleanup_device_parent(dev);</p>
+<p>     if (parent)</p>
+<p>          put_device(parent);</p>
+<p>name_error:</p>
+<p>     kfree(dev-&gt;p);</p>
+<p>     dev-&gt;p = NULL;</p>
+<p>     goto done;</p>
+<p>}</div><div>void device_del(struct device *dev);</div><div>// 目前没有看懂devtmpfs_create_node,百度解释:…</div><div>// 添加/删除 device </div><div></p>
+</div><div>
+</div><div>int device_register(struct device *dev)
+
+<p>{</p>
+<p>     <font color="#FF0000">device_initialize</font>(dev);</p>
+<p>     return <font color="#FF0000">device_add</font>(dev);</p>
+<p>}</div><div>void device_unregister(struct device *dev);</div><div>// 注册/注销 设备</div><div>// 以上device_add,deivce_register函数必须确定位置与属性,包括以下:</div><div>// dev-&gt;parent,dev-&gt;bus,dev-&gt;class</div><div>// dev-&gt;init_name,dev-&gt;devt,dev-&gt;groups,dev-&gt;release</div><div></p>
+</div><div>
+</div><div>int __init devices_init(void)
+
+<p>{</p>
+<p>     <font color="#FF0000">devices_kset = kset_create_and_add(&quot;devices&quot;, &amp;device_uevent_ops, NULL);</font></p>
+<p>     if (!devices_kset)</p>
+<p>          return -ENOMEM;</p>
+<p>     <font color="#FF0000">dev_kobj = kobject_create_and_add(&quot;dev&quot;, NULL);</font></p>
+<p>     if (!dev_kobj)</p>
+<p>          goto dev_kobj_err;</p>
+<p>     <font color="#FF0000">sysfs_dev_block_kobj = kobject_create_and_add(&quot;block&quot;, dev_kobj);</font></p>
+<p>     if (!sysfs_dev_block_kobj)</p>
+<p>          goto block_kobj_err;</p>
+<p>     <font color="#FF0000">sysfs_dev_char_kobj = kobject_create_and_add(&quot;char&quot;, dev_kobj);</font></p>
+<p>     if (!sysfs_dev_char_kobj)</p>
+<p>          goto char_kobj_err;</p>
+<p>     return 0;</p>
+<p>char_kobj_err:</p>
+<p>     kobject_put(sysfs_dev_block_kobj);</p>
+<p>block_kobj_err:</p>
+<p>     kobject_put(dev_kobj);</p>
+<p>dev_kobj_err:</p>
+<p>     kset_unregister(devices_kset);</p>
+<p>     return -ENOMEM;</p>
+<p>}</div><div>// 创建/sys/dev目录的kobject</p>
+<p>// 创建/sys/dev/char目录的kobject</p>
+<p>// 创建/sys/dev/block目录的kobject</p>
+<p>// 创建/sys/devices目录的kset</div><div></p>
+</div><div>
+</div><div>static struct device *next_device(struct klist_iter *i);</div><div>int <font color="#FF0000">device_for_each_child</font>(struct device *parent, void *data,
+
+<p>                 int (*fn)(struct device *dev, void *data));</div><div>// 对dev下的每个子device调用指定函数一次,子device即dev-&gt;p-&gt;klist_children</div><div>struct device *<font color="#FF0000">device_find_child</font>(struct device *parent, void *data,</p>
+<p>                    int (*match)(struct device *dev, void *data));</div><div>// 对dev下的每个子device调用匹配函数找到匹配device,子device即dev-&gt;p-&gt;klist_children</div><div></p>
+</div><div>
+</div><div>inline struct root_device *to_root_device(struct device *d);
+</div><div>static void root_device_release(struct device *dev);
+</div><div>struct device *__root_device_register(const char *name, struct module *owner);
+</div><div>void root_device_unregister(struct device *dev);
+</div><div>// 注册/注销 root_device,很少用,忽略这里.</div><div>
+</div><div>
+</div><div>
+</div><div>static void device_create_release(struct device *dev);
+</div><div>struct device *<font color="#FF0000">device_create_vargs</font>(struct class *class, struct device *parent,
+
+<p>                       dev_t devt, void *drvdata, const char *fmt,</p>
+<p>                       va_list args);</div><div>struct device *<font color="#FF0000">device_create</font>(struct class *class, struct device *parent,</p>
+<p>                    dev_t devt, void *drvdata, const char *fmt, …);</div><div>static int __match_devt(struct device *dev, void *data);</div><div>void <font color="#FF0000">device_destroy</font>(struct class *class, dev_t devt);</div><div>int <font color="#FF0000">device_rename</font>(struct device *dev, const char *new_name);</div><div>static int device_move_class_links(struct device *dev,</p>
+<p>                       struct device *old_parent,</p>
+<p>                       struct device *new_parent);</div><div>int <font color="#FF0000">device_move</font>(struct device *dev, struct device *new_parent,</p>
+<p>          enum dpm_order dpm_order);</div><div>// 申请分配/释放销毁/改名移动 struct device相关函数,应该这里是最常用的API</div><div>void device_shutdown(void);</div><div>// 系统关闭调用</div><div></p>
+</div></span>
+</div>
+
+<hr>
+<a name="2281"/>
+
+<h1 id="linux-device-h"><a href="#linux-device-h" class="headerlink" title="linux/device.h"></a>linux/device.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/6/30 19:27_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/6/30 19:40_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+struct device_type {
+
+<p>     const char *name;</p>
+<p>     const struct attribute_group **groups;</p>
+<p>     int (*uevent)(struct device *dev, struct kobj_uevent_env *env);</p>
+<p>     char *(*devnode)(struct device *dev, mode_t *mode);</p>
+<p>     void (*release)(struct device *dev);</p>
+<p>     const struct dev_pm_ops *pm;</p>
+<p>};</p>
+<div>
+</div><div>struct device_attribute {
+
+<p>     struct attribute     attr;</p>
+<p>     ssize_t (*show)(struct device *dev, struct device_attribute *attr,</p>
+<p>               char *buf);</p>
+<p>     ssize_t (*store)(struct device *dev, struct device_attribute *attr,</p>
+<p>               const char *buf, size_t count);</p>
+<p>};</div><div></p>
+</div><div>#define DEVICE_ATTR(_name, _mode, _show, _store) \
+
+<p>struct device_attribute dev_attr_##_name = __ATTR(_name, _mode, _show, _store)</div><div></p>
+</div><div>
+</div><div>
+</div><div>
+</div><div>struct device {
+
+<p>     struct device          *parent;</p>
+<p>     struct device_private     *p;</p>
+<p>     struct kobject kobj;</p>
+<p>     const char          <em>init_name; /</em> initial name of the device */</p>
+<p>     const struct device_type *type;</p>
+<p>     struct mutex          mutex;     /* mutex to synchronize calls to</p>
+<p>                         * its driver.</p>
+<p>                         */</p>
+<p>     struct bus_type     <em>bus;          /</em> type of bus device is on */</p>
+<p>     struct device_driver <em>driver;     /</em> which driver has allocated this</p>
+<p>                            device */</p>
+<p>     void          <em>platform_data;     /</em> Platform specific data, device</p>
+<p>                            core doesn’t touch it */</p>
+<p>     struct dev_pm_info     power;</p>
+<p>     struct dev_power_domain     *pwr_domain;</p>
+<p>#ifdef CONFIG_NUMA</p>
+<p>     int          numa_node;     /* NUMA node this device is close to */</p>
+<p>#endif</p>
+<p>     u64          <em>dma_mask;     /</em> dma mask (if dma’able device) */</p>
+<p>     u64          coherent_dma_mask;/* Like dma_mask, but for</p>
+<p>                              alloc_coherent mappings as</p>
+<p>                              not all hardware supports</p>
+<p>                              64 bit addresses for consistent</p>
+<p>                              allocations such descriptors. */</p>
+<p>     struct device_dma_parameters *dma_parms;</p>
+<p>     struct list_head     dma_pools;     /* dma pools (if dma’ble) */</p>
+<p>     struct dma_coherent_mem     <em>dma_mem; /</em> internal for coherent mem</p>
+<p>                              override */</p>
+<p>     /* arch specific additions */</p>
+<p>     struct dev_archdata     archdata;</p>
+<p>     struct device_node     <em>of_node; /</em> associated device tree node */</p>
+<p>     dev_t               devt;     /* dev_t, creates the sysfs &quot;dev&quot; */</p>
+<p>     spinlock_t          devres_lock;</p>
+<p>     struct list_head     devres_head;</p>
+<p>     struct klist_node     knode_class;</p>
+<p>     struct class          *class;</p>
+<p>     const struct attribute_group *<em>groups;     /</em> optional groups */</p>
+<p>     void     (*release)(struct device *dev);</p>
+<p>};</div><div></p>
+</div><div>EXPORT_SYMBOL_GPL(device_schedule_callback_owner);
+
+<p>#define device_schedule_callback(dev, func)               \</p>
+<p>     device_schedule_callback_owner(dev, func, THIS_MODULE)</div><div></p>
+</div><div>typedef void (*dr_release_t)(struct device *dev, void *res);
+
+<p>typedef int (*dr_match_t)(struct device *dev, void *res, void *match_data);</div><div></p>
+</div><div>static inline const char *dev_name(const struct device *dev);
+</div><div>EXPORT_SYMBOL_GPL(dev_set_name);</div><div>EXPORT_SYMBOL(dev_driver_string);</div><div>static inline unsigned int dev_get_uevent_suppress(const struct device *dev);</div><div>static inline void dev_set_uevent_suppress(struct device *dev, int val);</div><div>static inline int device_is_registered(struct device *dev);</div><div>static inline void device_enable_async_suspend(struct device *dev);</div><div>static inline void device_disable_async_suspend(struct device *dev);</div><div>static inline bool device_async_suspend_enabled(struct device *dev);
+</div><div>static inline void device_lock(struct device *dev);</div><div>static inline int device_trylock(struct device *dev);
+</div><div>static inline void device_unlock(struct device *dev);
+</div><div>EXPORT_SYMBOL_GPL(device_initialize);
+
+<p>EXPORT_SYMBOL_GPL(device_add);</p>
+<p>EXPORT_SYMBOL_GPL(device_register);</p>
+<p>EXPORT_SYMBOL_GPL(device_del);</p>
+<p>EXPORT_SYMBOL_GPL(device_unregister);</div><div>EXPORT_SYMBOL_GPL(device_for_each_child);</p>
+<p>EXPORT_SYMBOL_GPL(device_find_child);</div><div>EXPORT_SYMBOL_GPL(device_create_vargs);</p>
+<p>EXPORT_SYMBOL_GPL(device_create);</p>
+<p>EXPORT_SYMBOL_GPL(device_destroy);</p>
+<p>EXPORT_SYMBOL_GPL(device_rename);</p>
+<p>EXPORT_SYMBOL_GPL(device_move);</div><div>EXPORT_SYMBOL_GPL(get_device);</p>
+<p>EXPORT_SYMBOL_GPL(put_device);</div><div>EXPORT_SYMBOL_GPL(device_create_file);</p>
+<p>EXPORT_SYMBOL_GPL(device_remove_file);</p>
+<p>EXPORT_SYMBOL_GPL(device_create_bin_file);</p>
+<p>EXPORT_SYMBOL_GPL(device_remove_bin_file);</div><div>EXPORT_SYMBOL_GPL(__root_device_register);</p>
+<p>EXPORT_SYMBOL_GPL(root_device_unregister);</div><div></p>
+</div></span>
+</div>
+
+<hr>
+<a name="2313"/>
+
+<h1 id="drivers-base-bus-c"><a href="#drivers-base-bus-c" class="headerlink" title="/drivers/base/bus.c"></a>/drivers/base/bus.c</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/7/3 14:59_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/7/17 17:19_</td></tr>
+<tr><td>**来源：**</td><td><a target="_blank" rel="noopener" href="http://blog.csdn.net/qb_2008/article/details/6851394">_http://blog.csdn.net/qb_2008/article/details/6851394_</a></td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>// **<font color="#FF0000">总结:struct bus_type *bus的私有数据为struct subsys_private</font>**</div><div>// **bus的实例不是kobj而是kset(即bus-&gt;p-&gt;subsys)!!!**</div><div>// **driver的实例是kobj,加入某种bus,即bus-&gt;p-&gt;subsys管理driver-&gt;p-&gt;kobj**</div><div>
+</div><div>static struct bus_type *<font color="#FF0000">bus_get</font>(struct bus_type *bus);</div><div>static void <font color="#FF0000">bus_put</font>(struct bus_type *bus);</div><div>// 增加/减少 bus-&gt;p-&gt;subsys 引用计数</div><div>
+</div><div>
+</div><div>static void klist_devices_get(struct klist_node *n);</div><div>static void klist_devices_put(struct klist_node *n);</div><div>// 涉及struct bus_type *bus的私有成员struct subsys_private *priv;的成员struct klist klist_devices;</div><div>// 调用源码klist_init(&amp;priv-&gt;klist_devices, klist_devices_get, klist_devices_put);</div><div>
+</div><div>
+</div><div>struct kset *bus_get_kset(struct bus_type *bus);</div><div>struct klist *bus_get_device_klist(struct bus_type *bus);</div><div>// 返回所需指针,看函数名描述</div><div>static int __must_check bus_rescan_devices_helper(struct device *dev,
+
+<p>                                void *data);</div><div>int bus_rescan_devices(struct bus_type *bus);</div><div>int device_reprobe(struct device *dev);</div><div></p>
+</div><div>
+</div><div>#define to_drv_attr(_attr) container_of(_attr, struct driver_attribute, attr)</div><div>static ssize_t drv_attr_show(struct kobject *kobj, struct attribute *attr,
+
+<p>                    char *buf);</div><div>static ssize_t drv_attr_store(struct kobject *kobj, struct attribute *attr,</p>
+<p>                     const char *buf, size_t count);</div><div>static const struct sysfs_ops driver_sysfs_ops = {</p>
+<p>     .show     = drv_attr_show,</p>
+<p>     .store     = drv_attr_store,</p>
+<p>};</div><div>static void driver_release(struct kobject *kobj);</div><div>static struct kobj_type <font color="#FF0000">driver_ktype</font> = {</p>
+<p>     .sysfs_ops     = &amp;driver_sysfs_ops,</p>
+<p>     .release     = driver_release,</p>
+<p>};</div><div>// 某个<font color="#FF0000">驱动</font>kobj(<font color="#FF0000">注意是驱动！！</font>)的kobj_type,访问这个驱动目录下属性文件时均会调drv_attr_show和drv_attr_store</div><div>// 位于bus_add_driver函数调用kobject_init_and_add(&amp;priv-&gt;kobj, &amp;driver_ktype, NULL, &quot;%s&quot;, drv-&gt;name);</div><div></p>
+</div><div>
+</div><div>#define to_bus_attr(_attr) container_of(_attr, struct bus_attribute, attr)
+</div><div>static ssize_t bus_attr_show(struct kobject *kobj, struct attribute *attr,
+
+<p>                    char *buf);</div><div>static ssize_t bus_attr_store(struct kobject *kobj, struct attribute *attr,</p>
+<p>                     const char *buf, size_t count);</div><div>static const struct sysfs_ops bus_sysfs_ops = {</p>
+<p>     .show     = bus_attr_show,</p>
+<p>     .store     = bus_attr_store,</p>
+<p>};</div><div>static struct kobj_type <font color="#FF0000">bus_ktype</font> = {</p>
+<p>     .sysfs_ops     = &amp;bus_sysfs_ops,</p>
+<p>};</div><div>// 某种<font color="#FF0000">总线</font>bus-&gt;p-&gt;subsys-&gt;kobj(<font color="#FF0000">注意bus的不是kobj是kset！！</font>)的kobj_type,访问这个…时均会调bus_attr_show和bus_attr_store</div><div>// 位于bus_register调用,默认赋值这个bus-&gt;p-&gt;subsys.kobj.ktype</div><div></p>
+</div><div>
+</div><div>static int bus_uevent_filter(struct kset *kset, struct kobject *kobj);
+</div><div>static const struct kset_uevent_ops bus_uevent_ops = {
+
+<p>     .filter = bus_uevent_filter,</p>
+<p>};</div><div>static struct kset *<font color="#FF0000">bus_kset</font>;</div><div>int __init <font color="#FF0000">buses_init</font>(void);</div><div>// 通过buses_init创建/sys/bus目录,由bus_kset管理(它是一个kobj集合,即kset),还有他的uevent</div><div>// 调用源码:bus_kset = kset_create_and_add(&quot;bus&quot;, &amp;bus_uevent_ops, NULL);</div><div></p>
+</div><div>
+</div><div>int <font color="#FF0000">bus_create_file</font>(struct bus_type *bus, struct bus_attribute *attr);</div><div>void <font color="#FF0000">bus_remove_file</font>(struct bus_type *bus, struct bus_attribute *attr);</div><div>// 添加/删除 目标 bus-&gt;p-&gt;subsys 属性文件</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>static struct device *next_device(struct klist_iter *i);</div><div>int <font color="#FF0000">bus_for_each_dev</font>(struct bus_type *bus, struct device *start,
+
+<p>               void *data, int (*fn)(struct device *, void *));</div><div>struct device *<font color="#FF0000">bus_find_device</font>(struct bus_type *bus,</p>
+<p>                      struct device *start, void *data,</p>
+<p>                      int (*match)(struct device *dev, void *data));</div><div>static int match_name(struct device *dev, void *data);</div><div>struct device *<font color="#FF0000">bus_find_device_by_name</font>(struct bus_type *bus,</p>
+<p>                           struct device *start, const char *name)</p>
+<p>{</p>
+<p>     return bus_find_device(bus, start, (void *)name, match_name);</p>
+<p>}</div><div>// bus_for_each_dev是以bus的设备链表中每个设备为参数,调用指定的处理函数</div><div>// bus_find_device是寻找bus设备链表中的某个设备,使用指定的匹配函数</div><div>// bus_find_device_by_name使用match_name配合bus_find_device寻找匹配设备</div><div>// <font color="#FF0000">bus-&gt;p-&gt;klist_devices是struct klist结构</font><font color="#FF0000">,即归属这个bus的device的链表节点表头</font></div><div>static struct device_driver *next_driver(struct klist_iter *i);</div><div>int <font color="#FF0000">bus_for_each_drv</font>(struct bus_type *bus, struct device_driver *start,</p>
+<p>               void *data, int (*fn)(struct device_driver *, void *));</div><div>// bus_for_each_drv对bus的驱动链表中的每个驱动调用指定的函数</div><div></p>
+</div><div>
+</div><div>static int device_add_attrs(struct bus_type *bus, struct device *dev);</div><div>static void device_remove_attrs(struct bus_type *bus, struct device *dev);</div><div>// 往struct device *dev的kobj中添加bus-&gt;dev_attrs属性文件</div><div>int <font color="#FF0000">bus_add_device</font>(struct device *dev)</div><div>{
+
+<p>     <font color="#FF0000">struct bus_type *bus = bus_get(dev-&gt;bus);</font></p>
+<p>     int error = 0;</p>
+<p>     if (<font color="#FF0000">bus</font>) {</p>
+<p>          pr_debug(&quot;bus: ‘%s’: add device %s\n&quot;, bus-&gt;name, dev_name(dev));</p>
+<p>          <font color="#FF0000">error = device_add_attrs(bus, dev);</font></p>
+<p>          if (error)</p>
+<p>               goto out_put;</p>
+<p>          <font color="#FF0000">error = sysfs_create_link(&amp;bus-&gt;p-&gt;devices_kset-&gt;kobj,</p>
+<p>                              &amp;dev-&gt;kobj, dev_name(dev));</font></p>
+<p>          if (error)</p>
+<p>               goto out_id;</p>
+<p>          <font color="#FF0000">error = sysfs_create_link(&amp;dev-&gt;kobj,</p>
+<p>                    &amp;dev-&gt;bus-&gt;p-&gt;subsys.kobj, &quot;subsystem&quot;);</font></p>
+<p>          if (error)</p>
+<p>               goto out_subsys;</p>
+<p>          <font color="#FF0000">klist_add_tail(&amp;dev-&gt;p-&gt;knode_bus, &amp;bus-&gt;p-&gt;klist_devices);</font></p>
+<p>     }</p>
+<p>     return 0;</p>
+<p>out_subsys:</p>
+<p>     sysfs_remove_link(&amp;bus-&gt;p-&gt;devices_kset-&gt;kobj, dev_name(dev));</p>
+<p>out_id:</p>
+<p>     device_remove_attrs(bus, dev);</p>
+<p>out_put:</p>
+<p>     bus_put(dev-&gt;bus);</p>
+<p>     return error;</p>
+<p>}</div><div>void <font color="#FF0000">bus_remove_device</font>(struct device *dev);</div><div>// 添加/删除 这个dev所属bus的属性到这个dev的kobj中,即添加/删除dev-&gt;bus-&gt;dev_attrs到dev-&gt;kobj中</div><div>// 添加/删除 这个dev所属bus-&gt;p-&gt;devices_kset-&gt;kobj指向这个dev-&gt;kobj的软链接,名字为设备名</div><div>// 例如:/sys/bus/i2c/devices/<font color="#5DDAFF">i2c-0</font> —&gt; /sys/devices/platform/s3c2440-i2c.0/i2c-0</div><div>// 添加/删除 这个dev指向其所属bus软链接,文件名subsystem</div><div>// 例如:/sys/devices/platform/s3c2440-i2c.0/<font color="#5DDAFF">subsystem</font> —&gt; /sys/bus/i2c</div><div></p>
+</div><div>
+</div><div>void <font color="#FF0000">bus_probe_device</font>(struct device *dev)
+
+<p>{</p>
+<p>     struct bus_type *bus = dev-&gt;bus;</p>
+<p>     int ret;</p>
+<p>     if (bus &amp;&amp; bus-&gt;p-&gt;drivers_autoprobe) {</p>
+<p>          ret = device_attach(dev);</p>
+<p>          WARN_ON(ret &lt; 0);</p>
+<p>     }</p>
+<p>}</div><div>// 根据device所属bus判断是否运行自动探测driver,一般情况bus-&gt;p-&gt;drivers_autoprobe均置一,即:允许</div><div>// 位于device_add调用,说明添加设备之后会自动探测驱动</div><div></p>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>static int <font color="#FF0000">driver_add_attrs</font>(struct bus_type *bus, struct device_driver *drv);</div><div>static void <font color="#FF0000">driver_remove_attrs</font>(struct bus_type *bus,
+
+<p>                    struct device_driver *drv);</div><div>// 添加/删除 至drv-&gt;p-&gt;kobj中bus-&gt;drv_attrs的属性文件</div><div>// 位于bus_add_driver调用,源码:driver_add_attrs(bus, drv);</div><div></p>
+</div><div>
+</div><div>#ifdef CONFIG_HOTPLUG</div><div>// 以下这些应该支持热插拔设备才拥有的属性,即插拔自动装载/卸载设备</div><div>static ssize_t driver_unbind(struct device_driver *drv,
+
+<p>                    const char *buf, size_t count);</div><div>static DRIVER_ATTR(<font color="#FF0000">unbind</font>, S_IWUSR, NULL, driver_unbind);</div><div>static ssize_t driver_bind(struct device_driver *drv,</p>
+<p>                  const char *buf, size_t count);</div><div>static DRIVER_ATTR(<font color="#FF0000">bind</font>, S_IWUSR, NULL, driver_bind);</div><div>static int __must_check <font color="#FF0000">add_bind_files</font>(struct device_driver *drv);</div><div>static void <font color="#FF0000">remove_bind_files</font>(struct device_driver *drv);</div><div>// 类型struct driver_attribute的驱动属性文件,文件名bind和unbind</div><div>// 以上属性文件由add_bind_files和remove_bind_files调用添加/删除</div><div>// 而这两个函数由bus_add_driver和bus_remove_driver调用 添加/删除</div><div>// <font color="#FF0000">bind和unbind位于sys/bus/总线类型/drivers/xxx/下各有一个</font>,例如:sys/bus/i2c/drivers/s5p_ddc/<font color="#FF0000">bind</font></div><div></p>
+</div><div>static ssize_t show_drivers_autoprobe(struct bus_type *bus, char *buf);</div><div>static ssize_t store_drivers_autoprobe(struct bus_type *bus,
+
+<p>                           const char *buf, size_t count);</div><div>static BUS_ATTR(<font color="#FF0000">drivers_autoprobe</font>, S_IWUSR | S_IRUGO,</p>
+<p>          show_drivers_autoprobe, store_drivers_autoprobe);</div><div>static ssize_t store_drivers_probe(struct bus_type *bus,</p>
+<p>                       const char *buf, size_t count);</div><div>static BUS_ATTR(<font color="#FF0000">drivers_probe</font>, S_IWUSR, NULL, store_drivers_probe);</div><div>static int <font color="#FF0000">add_probe_files</font>(struct bus_type *bus);</div><div>static void <font color="#FF0000">remove_probe_files</font>(struct bus_type *bus);</div><div>// 类型struct bus_attribute的总线属性文件,文件名drivers_probe和drivers_autoprobe</div><div>// 以上属性文件由add_probe_files和remove_probe_files调用添加/删除</div><div>// 而这两个函数由bus_register和bus_unregister调用 添加/删除</div><div>// <font color="#FF0000">drivers_probe和drivers_autoprobe位于sys/bus/总线类型/各有一个</font>,例如:sys/bus/i2c/<font color="#FF0000">drivers_probe</font></div><div>#endif</div><div></p>
+</div><div>
+</div><div>static ssize_t driver_uevent_store(struct device_driver *drv,
+
+<p>                       const char *buf, size_t count);</p>
+<p>static DRIVER_ATTR(<font color="#FF0000">uevent</font>, S_IWUSR, NULL, driver_uevent_store);</p>
+<p>// 类型struct driver_attribute的驱动属性文件,<font color="#FF0000">文件名uevent</font></p>
+<p>// 位于bus_add_driver调用<font color="#FF0000">往struct device_driver *drv中添加uevent属性文件</font></p>
+<p>// 例如:/sys/bus/i2c/drivers/s5p_ddc/uevent</div><div></p>
+</div><div>
+</div><div>int bus_add_driver(struct device_driver *drv)
+
+<p>{</p>
+<p>     struct bus_type *bus;</p>
+<p>     struct driver_private *priv;</p>
+<p>     int error = 0;</p>
+<p>     <font color="#FF0000">bus = bus_get(drv-&gt;bus);</font></p>
+<p>     if (!bus)</p>
+<p>          return -EINVAL;</p>
+<p>     pr_debug(&quot;bus: ‘%s’: add driver %s\n&quot;, bus-&gt;name, drv-&gt;name);</p>
+<p>     <font color="#FF0000">priv = kzalloc(sizeof(*priv), GFP_KERNEL);</font></p>
+<p>     if (!priv) {</p>
+<p>          error = -ENOMEM;</p>
+<p>          goto out_put_bus;</p>
+<p>     }</p>
+<p>     <font color="#FF0000">klist_init(&amp;priv-&gt;klist_devices, NULL, NULL);</font></p>
+<p>     <font color="#FF0000">priv-&gt;driver = drv;</font></p>
+<p>     <font color="#FF0000">drv-&gt;p = priv;</font></p>
+<p>     <font color="#FF0000">priv-&gt;kobj.kset = bus-&gt;p-&gt;drivers_kset;</font></p>
+<p>     <font color="#FF0000">error = kobject_init_and_add(&amp;priv-&gt;kobj, &amp;driver_ktype, NULL,</p>
+<p>                         &quot;%s&quot;, drv-&gt;name);</font></p>
+<p>     if (error)</p>
+<p>          goto out_unregister;</p>
+<p>     if (<font color="#FF0000">drv-&gt;bus-&gt;p-&gt;drivers_autoprobe</font>) {</p>
+<p>          <font color="#FF0000">error = driver_attach(drv);</font></p>
+<p>          if (error)</p>
+<p>               goto out_unregister;</p>
+<p>     }</p>
+<p>     <font color="#FF0000">klist_add_tail(&amp;priv-&gt;knode_bus, &amp;bus-&gt;p-&gt;klist_drivers);</font></p>
+<p>     <font color="#FF0000">module_add_driver(drv-&gt;owner, drv);</font></p>
+<p>     <font color="#FF0000">error = driver_create_file(drv, &amp;driver_attr_uevent);</font></p>
+<p>     if (error) {</p>
+<p>          printk(KERN_ERR &quot;%s: uevent attr (%s) failed\n&quot;,</p>
+<p>               <strong>func</strong>, drv-&gt;name);</p>
+<p>     }</p>
+<p>     <font color="#FF0000">error = driver_add_attrs(bus, drv);</font></p>
+<p>     if (error) {</p>
+<p>          /* How the hell do we get out of this pickle? Give up */</p>
+<p>          printk(KERN_ERR &quot;%s: driver_add_attrs(%s) failed\n&quot;,</p>
+<p>               <strong>func</strong>, drv-&gt;name);</p>
+<p>     }</p>
+<p>     if (<font color="#FF0000">!drv-&gt;suppress_bind_attrs</font>) {</p>
+<p>          <font color="#FF0000">error = add_bind_files(drv);</font></p>
+<p>          if (error) {</p>
+<p>               /* Ditto */</p>
+<p>               printk(KERN_ERR &quot;%s: add_bind_files(%s) failed\n&quot;,</p>
+<p>                    <strong>func</strong>, drv-&gt;name);</p>
+<p>          }</p>
+<p>     }</p>
+<p>     <font color="#FF0000">kobject_uevent(&amp;priv-&gt;kobj, KOBJ_ADD);</font></p>
+<p>     return 0;</p>
+<p>out_unregister:</p>
+<p>     kobject_put(&amp;priv-&gt;kobj);</p>
+<p>     kfree(drv-&gt;p);</p>
+<p>     drv-&gt;p = NULL;</p>
+<p>out_put_bus:</p>
+<p>     bus_put(bus);</p>
+<p>     return error;</p>
+<p>}</div><div>void bus_remove_driver(struct device_driver *drv);</div><div>// 原来添加driver的目录在这里,居然在bus.c文件里面实现</div><div>// 注册/注销 这个driver至bus-&gt;p-&gt;subsys,这个driver必须确定自己所属哪种bus</div><div></p>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div><div>static int <font color="#FF0000">bus_add_attrs</font>(struct bus_type *bus);</div><div>static void <font color="#FF0000">bus_remove_attrs</font>(struct bus_type *bus);</div><div>// 添加/删除 这个bus自己的属性文件到自己目录,即:把bus-&gt;bus_attrs至bus-&gt;p-&gt;subsys.kobj</div><div>
+</div><div>
+</div><div>static void klist_devices_get(struct klist_node *n);</div><div>static void klist_devices_put(struct klist_node *n);</div><div>// 添加/删除 节点所属deivce的引用计数</div><div>// 位于bus_register调用,用于管理bus-&gt;p-&gt;klist_devices链表上设备get/put函数</div><div>
+</div><div>
+</div><div>static ssize_t bus_uevent_store(struct bus_type *bus,
+
+<p>                    const char *buf, size_t count);</p>
+<p>static BUS_ATTR(<font color="#FF0000">uevent</font>, S_IWUSR, NULL, bus_uevent_store);</p>
+<p>// 某种总线的属性文件,例如:/sys/bus/i2c/<font color="#FF0000">uevent</font></p>
+<p>// 位于bus_register函数调用,<font color="#FF0000">所以是给某种bus添加uevent的属性</font></div><div>// 源码:retval = bus_create_file(bus, &amp;bus_attr_uevent);</div><div></p>
+</div><div>
+</div><div>int <font color="#FF0000">bus_register</font>(struct bus_type *bus)</div><div>{
+
+<p>     int retval;</p>
+<p>     struct subsys_private *priv;</p>
+<p>     <font color="#FF0000">priv = kzalloc(sizeof(struct subsys_private), GFP_KERNEL);</font></p>
+<p>     if (!priv)</p>
+<p>          return -ENOMEM;</p>
+<p>     <font color="#FF0000">priv-&gt;bus = bus;</font></p>
+<p>     <font color="#FF0000">bus-&gt;p = priv;</font></p>
+<p>     BLOCKING_INIT_NOTIFIER_HEAD(&amp;priv-&gt;bus_notifier);</p>
+<p>     <font color="#FF0000">retval = kobject_set_name(&amp;priv-&gt;subsys.kobj, &quot;%s&quot;, bus-&gt;name);</font></p>
+<p>     if (retval)</p>
+<p>          goto out;</p>
+<p>     <font color="#FF0000">priv-&gt;subsys.kobj.kset = bus_kset;</font></p>
+<p>     <font color="#FF0000">priv-&gt;subsys.kobj.ktype = &amp;bus_ktype;</font></p>
+<p>     <font color="#FF0000">priv-&gt;drivers_autoprobe = 1;</font></p>
+<p>     <font color="#FF0000">retval = kset_register(&amp;priv-&gt;subsys);</font></p>
+<p>     if (retval)</p>
+<p>          goto out;</p>
+<p>     <font color="#FF0000">retval = bus_create_file(bus, &amp;bus_attr_uevent);</font></p>
+<p>     if (retval)</p>
+<p>          goto bus_uevent_fail;</p>
+<p>     <font color="#FF0000">priv-&gt;devices_kset = kset_create_and_add(&quot;devices&quot;, NULL,</p>
+<p>                              &amp;priv-&gt;subsys.kobj);</font></p>
+<p>     if (!priv-&gt;devices_kset) {</p>
+<p>          retval = -ENOMEM;</p>
+<p>          goto bus_devices_fail;</p>
+<p>     }</p>
+<p>     <font color="#FF0000">priv-&gt;drivers_kset = kset_create_and_add(&quot;drivers&quot;, NULL,</p>
+<p>                              &amp;priv-&gt;subsys.kobj);</font></p>
+<p>     if (!priv-&gt;drivers_kset) {</p>
+<p>          retval = -ENOMEM;</p>
+<p>          goto bus_drivers_fail;</p>
+<p>     }</p>
+<p>     <font color="#FF0000">klist_init(&amp;priv-&gt;klist_devices, klist_devices_get, klist_devices_put);</font></p>
+<p>     <font color="#FF0000">klist_init(&amp;priv-&gt;klist_drivers, NULL, NULL);</font></p>
+<p>     <font color="#FF0000">retval = add_probe_files(bus);</font></p>
+<p>     if (retval)</p>
+<p>          goto bus_probe_files_fail;</p>
+<p>     <font color="#FF0000">retval = bus_add_attrs(bus);</font></p>
+<p>     if (retval)</p>
+<p>          goto bus_attrs_fail;</p>
+<p>     pr_debug(&quot;bus: ‘%s’: registered\n&quot;, bus-&gt;name);</p>
+<p>     return 0;</p>
+<p>bus_attrs_fail:</p>
+<p>     remove_probe_files(bus);</p>
+<p>bus_probe_files_fail:</p>
+<p>     kset_unregister(bus-&gt;p-&gt;drivers_kset);</p>
+<p>bus_drivers_fail:</p>
+<p>     kset_unregister(bus-&gt;p-&gt;devices_kset);</p>
+<p>bus_devices_fail:</p>
+<p>     bus_remove_file(bus, &amp;bus_attr_uevent);</p>
+<p>bus_uevent_fail:</p>
+<p>     kset_unregister(&amp;bus-&gt;p-&gt;subsys);</p>
+<p>out:</p>
+<p>     kfree(bus-&gt;p);</p>
+<p>     bus-&gt;p = NULL;</p>
+<p>     return retval;</p>
+<p>}</div><div>void <font color="#FF0000">bus_unregister</font>(struct bus_type *bus);</div><div>// 注册/注销 bus到系统当中</div><div>// 在这个bus-&gt;p-&gt;subsys.kobj创建devices和driver目录、bus-&gt;bus_attrs和uevent属性文件</div><div>// drivers_autoprobe和drivers_probe文件只有支持热插拔情况下才存在</div><div></p>
+</div><div>
+</div><div>int bus_register_notifier(struct bus_type *bus, struct notifier_block *nb);</div><div>int bus_unregister_notifier(struct bus_type *bus, struct notifier_block *nb);
+</div><div>static void device_insertion_sort_klist(struct device *a, struct list_head *list,
+
+<p>                         int (*compare)(const struct device *a,</p>
+<p>                                   const struct device *b));</div><div>void bus_sort_breadthfirst(struct bus_type *bus,</p>
+<p>                  int (*compare)(const struct device *a,</p>
+<p>                           const struct device *b));</div><div>// 不懂,暂时不管</div></span></p>
+</div>
+
+<hr>
+<a name="2355"/>
+
+<h1 id="drivers-base-base-h"><a href="#drivers-base-base-h" class="headerlink" title="/drivers/base/base.h"></a>/drivers/base/base.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/7/10 10:47_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/7/31 11:23_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>
+</div><div>struct <font color="#FF0000">subsys_private</font> {
+
+<p>     struct kset subsys;                                                  // bus在sysfs中体现是kset,而不是kobj</p>
+<p>     struct kset *devices_kset;                                       // 在sysfs中体现是这个bus目录下devices目录</p>
+<p>     struct kset *drivers_kset;                                        // 在sysfs中体现是这个bus目录下drivers目录</p>
+<p>     struct klist klist_devices;                                          // 管理属于这个bus的devices的链表表头</p>
+<p>     struct klist klist_drivers;                                           // 管理属于这个bus的drivers的链表表头</p>
+<p>     struct blocking_notifier_head bus_notifier;</p>
+<p>     unsigned int drivers_autoprobe:1;                           // 表示该bus是否支持驱动自动装载</p>
+<p>     struct bus_type *bus;                                             // 指向这个bus</p>
+<p>     struct list_head class_interfaces;</p>
+<p>     struct kset glue_dirs;</p>
+<p>     struct mutex class_mutex;</p>
+<p>     struct class *class;</p>
+<p>};</div><div>// bus的私有数据结构类型</div><div>#define <font color="#FF0000">to_subsys_private</font>(obj) container_of(obj, struct subsys_private, subsys.kobj)</div><div></p>
+</div><div>
+</div><div>struct <font color="#FF0000">driver_private</font> {
+
+<p>     struct kobject kobj;                                                // 这个driver的kobj</p>
+<p>     struct klist klist_devices;                                         // 归属这个driver的device的链表表头</p>
+<p>     struct klist_node knode_bus;                                   // driver所属bus的链表节点</p>
+<p>     struct module_kobject *mkobj;</p>
+<p>     struct device_driver *driver;                                   // 指向这个driver</p>
+<p>};</div><div>// drivers的私有数据结构类型</p>
+<p>#define <font color="#FF0000">to_driver</font>(obj) container_of(obj, struct driver_private, kobj)</div><div></p>
+</div><div>
+</div><div>struct <font color="#FF0000">device_private</font> {
+
+<p>     struct klist klist_children;                                        // 管理归属他的device的链表表头</p>
+<p>     struct klist_node knode_parent;                              // 这个device所属父device的链表节点</p>
+<p>     struct klist_node knode_driver;                               // 这个device所属driver的链表节点</p>
+<p>     struct klist_node knode_bus;                                  // 这个device所属bus的链表节点</p>
+<p>     void *driver_data;</p>
+<p>     struct device *device;                                           // 指向这个device</p>
+<p>};</div><div>// device的私有数据类型,他的kobj没有放在struct device_private而是struct device之中</p>
+<p>#define <font color="#FF0000">to_device_private_parent</font>(obj)     \</p>
+<p>     container_of(obj, struct device_private, knode_parent)</p>
+<p>#define <font color="#FF0000">to_device_private_driver</font>(obj)     \</p>
+<p>     container_of(obj, struct device_private, knode_driver)</p>
+<p>#define <font color="#FF0000">to_device_private_bus</font>(obj)     \</p>
+<p>     container_of(obj, struct device_private, knode_bus)</div><div></p>
+</div><div>
+</div><div>extern int device_private_init(struct device *dev);
+
+<p>/* initialisation functions */</p>
+<p>extern int <font color="#FF0000">devices_init</font>(void);</div><div><div>// 创建/sys/dev目录的kobject</p>
+<p>// 创建/sys/dev/char目录的kobject</p>
+<p>// 创建/sys/dev/block目录的kobject</p>
+<p>// 创建/sys/devices目录的kset</div><br>extern int <font color="#FF0000">buses_init</font>(void);</p>
+<p>extern int <font color="#FF0000">classes_init</font>(void);</p>
+<p>extern int <font color="#FF0000">firmware_init</font>(void);</div><div>#ifdef CONFIG_SYS_HYPERVISOR</p>
+<p>extern int <font color="#FF0000">hypervisor_init</font>(void);</p>
+<p>#else</p>
+<p>static inline int <font color="#FF0000">hypervisor_init</font>(void) { return 0; }</p>
+<p>#endif</div><div>extern int <font color="#FF0000">platform_bus_init</font>(void);</p>
+<p>extern int <font color="#FF0000">system_bus_init</font>(void);</p>
+<p>extern int <font color="#FF0000">cpu_dev_init</font>(void);</div><div><div>// 大多数函数都是系统启动时候调用,创建/sys/xxx目录的kobject或者kset</div></p>
+<p>extern int bus_add_device(struct device *dev);</p>
+<p>extern void bus_probe_device(struct device *dev);</p>
+<p>extern void bus_remove_device(struct device *dev);</p>
+<p>extern int bus_add_driver(struct device_driver *drv);</p>
+<p>extern void bus_remove_driver(struct device_driver *drv);</p>
+<p>extern void driver_detach(struct device_driver *drv);</p>
+<p>extern int driver_probe_device(struct device_driver *drv, struct device *dev);</p>
+<p>static inline int driver_match_device(struct device_driver *drv,</p>
+<p>                          struct device *dev)</p>
+<p>{</p>
+<p>     return drv-&gt;bus-&gt;match ? drv-&gt;bus-&gt;match(dev, drv) : 1;</p>
+<p>}</p>
+<p>extern char *make_class_name(const char *name, struct kobject *kobj);</p>
+<p>extern int devres_release_all(struct device *dev);</p>
+<p>extern struct kset *devices_kset;</p>
+<p>#if defined(CONFIG_MODULES) &amp;&amp; defined(CONFIG_SYSFS)</p>
+<p>extern void module_add_driver(struct module *mod, struct device_driver *drv);</p>
+<p>extern void module_remove_driver(struct device_driver *drv);</p>
+<p>#else</p>
+<p>static inline void module_add_driver(struct module *mod,</p>
+<p>                         struct device_driver *drv) { }</p>
+<p>static inline void module_remove_driver(struct device_driver *drv) { }</p>
+<p>#endif</p>
+<p>#ifdef CONFIG_DEVTMPFS</p>
+<p>extern int devtmpfs_init(void);</p>
+<p>#else</p>
+<p>static inline int devtmpfs_init(void) { return 0; }</p>
+<p>#endif</p>
+</div><div>
+</div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="2367"/>
+
+<h1 id="drivers-base-driver-c"><a href="#drivers-base-driver-c" class="headerlink" title="/drivers/base/driver.c"></a>/drivers/base/driver.c</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/7/10 11:19_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/7/17 16:37_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>// <font color="#FF0000">**总结:driver_register/driver_unregister通常被某一类驱动调用**</font></div><div>
+</div><div>
+</div><div>static struct device *next_device(struct klist_iter *i);
+</div><div>int <font color="#FF0000">driver_for_each_device</font>(struct device_driver *drv, struct device *start,
+
+<p>                  void *data, int (*fn)(struct device *, void *));</div><div>// 对drv管理的device链表中每个设备调用一次函数</div><div>struct device *<font color="#FF0000">driver_find_device</font>(struct device_driver *drv,</p>
+<p>                      struct device *start, void *data,</p>
+<p>                      int (*match)(struct device *dev, void *data));</div><div>// 对drv管理的device链表中通过匹配函数找到匹配设备</div><div></p>
+</div><div>
+</div><div>int <font color="#FF0000">driver_create_file</font>(struct device_driver *drv,
+
+<p>                 const struct driver_attribute *attr);</div><div>void <font color="#FF0000">driver_remove_file</font>(struct device_driver *drv,</p>
+<p>               const struct driver_attribute *attr);</div><div>static int <font color="#FF0000">driver_add_groups</font>(struct device_driver *drv,</p>
+<p>                    const struct attribute_group **groups);</div><div>static void <font color="#FF0000">driver_remove_groups</font>(struct device_driver *drv,</p>
+<p>                    const struct attribute_group **groups);</div><div>// 添加/删除 这个drv-&gt;p-&gt;kobj的属性/属性集合</div><div></p>
+</div><div>
+</div><div><strike>int driver_add_kobj(struct device_driver *drv, struct kobject *kobj,
+
+<p>              const char *fmt, …);</strike></div><div><strike>// 目前没有使用???</strike></div><div></p>
+</div><div>
+</div><div>struct device_driver *<font color="#FF0000">get_driver</font>(struct device_driver *drv);</div><div>void <font color="#FF0000">put_driver</font>(struct device_driver *drv);</div><div>// 增加/减少 drv使用计数</div><div>
+</div><div>
+</div><div>int <font color="#FF0000">driver_register</font>(struct device_driver *drv);</div><div>void <font color="#FF0000">driver_unregister</font>(struct device_driver *drv);</div><div>// 注册/注销 这个driver,大部分实现却在bus_add_driver/bus_remove_driver这两个函数实现</div><div>
+</div><div>
+</div><div>struct device_driver *<font color="#FF0000">driver_find</font>(const char *name, struct bus_type *bus);</div><div>// 在bus-&gt;p-&gt;drivers_kset寻找同名kobj,通过kobj返回这个driver</div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="2389"/>
+
+<h1 id="drivers-base-dd-c"><a href="#drivers-base-dd-c" class="headerlink" title="/drivers/base/dd.c"></a>/drivers/base/dd.c</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/7/16 11:01_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/7/17 17:22_</td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"><div>
+</div><div>static void driver_bound(struct device *dev);</div><div>// 将device加入driver的设备链表,源码:klist_add_tail(&amp;dev-&gt;p-&gt;knode_driver, &amp;dev-&gt;driver-&gt;p-&gt;klist_devices);</div><div>static int driver_sysfs_add(struct device *dev);</div><div>static void driver_sysfs_remove(struct device *dev);</div><div>// 创建/删除 dev-&gt;driver-&gt;p-&gt;kobj 指向 dev-&gt;kobj软链接,名字:<font color="#5DDAFF">kobject_name(&amp;dev-&gt;kobj)</font></div><div>// 例如:/sys/bus/platform/drivers/s5pv210-uart/<font color="#5DDAFF">s5pv210-uart.0</font> ---&gt; /sys/devices/platform/s5pv210-uart.0</div><div>// 创建/删除 dev-&gt;kobj 指向 dev-&gt;driver-&gt;p-&gt;kobj软链接,名字:<font color="#5DDAFF">driver</font></div><div>// 例如:/sys/devices/platform/s5pv210-uart.0/<font color="#5DDAFF">driver</font> ---&gt; /sys/bus/platform/drivers/s5pv210-uart</div><div>int <font color="#FF0000">device_bind_driver</font>(struct device *dev);</div><div>// <font color="#FF0000">当device-&gt;driver存在时</font>,调用函数,绑定device与driver,同时创建如上链接文件</div><div>static int really_probe(struct device *dev, struct device_driver *drv);</div><div>// 与device_bind_driver差不多,如果dev-&gt;bus-&gt;probe或drv-&gt;probe存在则调用</div><div>int driver_probe_device(struct device_driver *drv, struct device *dev);</div><div>static int <font color="#FF0000">__device_attach</font>(struct device_driver *drv, void *data);</div><div>// <font color="#FF0000">当device-&gt;driver没有赋值</font>,对device-&gt;bus每个驱动调用函数,使用device-&gt;bus链表每个driver-&gt;bus-&gt;match匹配</div><div>int <font color="#FF0000">device_attach</font>(struct device *dev);</div><div>// 绑定dev与driver,创建相关链接文件,通常调用顺序:device_add()-&gt;bus_probe_device()-&gt;device_attach()</div><div>
+</div><div>int driver_probe_done(void);</div><div>void wait_for_device_probe(void);</div><div>
+</div><div>static int <font color="#FF0000">__driver_attach</font>(struct device *dev, void *data);</div><div>// 依然使用drv-&gt;bus-&gt;match,之后调用driver_probe_device,<font color="#FF0000">类似__device_attach</font></div><div>int <font color="#FF0000">driver_attach</font>(struct device_driver *drv);</div><div>// 绑定drv与device,创建相关链接文件,通常调用顺序:driver_register()-&gt;bus_add_driver()-&gt;driver_attach()</div><div>
+</div><div>
+</div><div>static void __device_release_driver(struct device *dev);</div><div>void device_release_driver(struct device *dev);</div><div>void driver_detach(struct device_driver *drv);</div><div>// 解除device与driver之间绑定</div><div>
+</div><div>
+</div><div>void *<font color="#FF0000">dev_get_drvdata</font>(const struct device *dev);</div><div>int <font color="#FF0000">dev_set_drvdata</font>(struct device *dev, void *data);</div><div>// 设置/获取 device私有数据,即:dev-&gt;p-&gt;driver_data</div><div>
+</div><div>
+</div><div>
+</div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="2411"/>
+
+<h1 id="linux-platform-device-h"><a href="#linux-platform-device-h" class="headerlink" title="linux/platform_device.h"></a>linux/platform_device.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2016/7/31 11:31_</td></tr>
+<tr><td>**更新时间：**</td><td>_2016/7/31 12:00_</td></tr>
+<tr><td>**来源：**</td><td><a target="_blank" rel="noopener" href="http://www.wowotech.net/device_model/platform_device.html">_http://www.wowotech.net/device_model/platform_device.html_</a></td></tr>
+</table>
+</div>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<font color="#FF0000">struct platform_device</font> {
+
+<p>     const char     * <font color="#FF0000">name</font>;</p>
+<p>     int          <font color="#FF0000">id</font>;</p>
+<p>     struct device     dev;</p>
+<p>     u32          <font color="#FF0000">num_resources</font>;</p>
+<p>     struct resource     * <font color="#FF0000">resource</font>;</p>
+<p>     const struct platform_device_id     *id_entry;</p>
+<p>     /* MFD cell pointer */</p>
+<p>     struct mfd_cell *mfd_cell;</p>
+<p>     /* arch specific additions */</p>
+<p>     struct pdev_archdata     archdata;</p>
+<p>};</p>
+<p>#define <font color="#FF0000">platform_get_device_id</font>(pdev)     ((pdev)-&gt;id_entry)</p>
+<p>#define <font color="#FF0000">to_platform_device</font>(x) container_of((x), struct platform_device, dev)</p>
+<p>// Platform设备的注册/注销接口</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_device_register</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_device_unregister</font>);</p>
+<p>// 可以获取platform_device变量中的resource信息,以及直接获取IRQ的number等等.</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_get_resource</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_get_irq</font>);</p>
+<p>EXPORT_SYMBOL_GPL(platform_get_resource_byname);</p>
+<p>EXPORT_SYMBOL_GPL(platform_get_irq_byname);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_add_devices</font>);</p>
+<p>// 懒人调用函数,似乎使用不多.</p>
+<p>EXPORT_SYMBOL_GPL(platform_device_register_resndata);</p>
+<p>static inline struct platform_device *platform_device_register_simple(</p>
+<p>          const char *name, int id,</p>
+<p>          const struct resource *res, unsigned int num)</p>
+<p>{</p>
+<p>     return platform_device_register_resndata(NULL, name, id,</p>
+<p>               res, num, NULL, 0);</p>
+<p>}</p>
+<p>static inline struct platform_device *platform_device_register_data(</p>
+<p>          struct device *parent, const char *name, int id,</p>
+<p>          const void *data, size_t size)</p>
+<p>{</p>
+<p>     return platform_device_register_resndata(parent, name, id,</p>
+<p>               NULL, 0, data, size);</p>
+<p>}</p>
+<div>
+
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_device_alloc</font>);           // 以name和id为参数,动态分配一个struct platform_device变量.</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_device_add_resources</font>);   // 向platform device中增加资源描述</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_device_add_data</font>);        // 向platform device中添加自定义的数据(保存在pdev-&gt;dev.platform_data指针中)</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_device_add</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_device_del</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_device_put</font>);</p>
+<p><font color="#FF0000">struct platform_driver</font> {</p>
+<p>     int (*<font color="#FF0000">probe</font>)(struct platform_device *);</p>
+<p>     int (*<font color="#FF0000">remove</font>)(struct platform_device *);</p>
+<p>     void (*shutdown)(struct platform_device *);</p>
+<p>     int (*suspend)(struct platform_device *, pm_message_t state);</p>
+<p>     int (*resume)(struct platform_device *);</p>
+<p>     struct device_driver driver;</p>
+<p>     const struct platform_device_id *id_table;</p>
+<p>};</p>
+<p>// Platform驱动的注册/注销接口</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_driver_register</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_driver_unregister</font>);</p>
+<p>EXPORT_SYMBOL_GPL(<font color="#FF0000">platform_driver_probe</font>); // 主动执行probe动作</p>
+<p>// 设置或者获取driver保存在device变量中的私有数据</p>
+<p>static inline void *<font color="#FF0000">platform_get_drvdata</font>(const struct platform_device *pdev)</p>
+<p>{</p>
+<p>     return dev_get_drvdata(&amp;pdev-&gt;dev);</p>
+<p>}</p>
+<p>static inline void <font color="#FF0000">platform_set_drvdata</font>(struct platform_device *pdev, void *data)</p>
+<p>{</p>
+<p>     dev_set_drvdata(&amp;pdev-&gt;dev, data);</p>
+<p>}</p>
+<p>// 懒人API,似乎使用不多(测试时候貌似可以使用).</p>
+<p>EXPORT_SYMBOL_GPL(platform_create_bundle);</p>
+</div></span>
+</div>
+
+<hr>
+<a name="3121"/>
+
+<h1 id="include-linux-pinctrl-consumer-h"><a href="#include-linux-pinctrl-consumer-h" class="headerlink" title="/include/linux/pinctrl/consumer.h"></a>/include/linux/pinctrl/consumer.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2019/2/16 16:21_</td></tr>
+<tr><td>**更新时间：**</td><td>_2019/2/16 16:40_</td></tr>
+<tr><td>**作者：**</td><td>_linyuanbo2004@163.com_</td></tr>
+</table>
+</div>
+
+<div>
+<span><div>
+</div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.15);-en-codeblock:true;"><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">/*</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">* Consumer interface the pin control subsystem</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">*</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">* Copyright (C) 2012 ST-Ericsson SA</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">* Written on behalf of Linaro for ST-Ericsson</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">* Based on bits of regulator core, gpio core and clk core</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">*</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">* Author: Linus Walleij &lt;</span><a href="mailto:linus.walleij@linaro.org" style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">linus.walleij@linaro.org</a><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">&gt;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">*</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">* License terms: GNU General Public License (GPL) version 2</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">*/</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#ifndef __LINUX_PINCTRL_CONSUMER_H</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#define __LINUX_PINCTRL_CONSUMER_H</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#include &lt;linux/err.h&gt;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#include &lt;linux/list.h&gt;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#include &lt;linux/seq_file.h&gt;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#include &lt;linux/pinctrl/pinctrl-state.h&gt;</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">/* This struct is private to the core and should be regarded as a cookie */</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">struct pinctrl;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">struct pinctrl_state;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">struct device;</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#ifdef CONFIG_PINCTRL</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">/* External interface to pin control */</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern int pinctrl_request_gpio(unsigned gpio);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    <span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // GPIO申请函数,仅供GPIO子系统调用???</span></span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern void pinctrl_free_gpio(unsigned gpio);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // GPIO释放函数,...(与 <span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">pinctrl_request_gpio </span>互斥)</span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern int pinctrl_gpio_direction_input(unsigned gpio);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // 设置PIN方向-输入</span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern int pinctrl_gpio_direction_output(unsigned gpio);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // 设置PIN方向-输出</span></span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern struct pinctrl * __must_check pinctrl_get(struct device *dev);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // 获取PIN的句柄</span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern void pinctrl_put(struct pinctrl *p);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // 释放...(与 <span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">pinctrl_get </span>互斥)</span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern struct pinctrl_state * __must_check pinctrl_lookup_state(</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">                            struct pinctrl *p,</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">                            const char *name);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // 根据名字查找 <span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">pinctrl_state ,查找不到则创建一个</span></span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern int pinctrl_select_state(struct pinctrl *p, struct pinctrl_state *s);</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern struct pinctrl * __must_check devm_pinctrl_get(struct device *dev);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  // <span style="font-family: Arial; color: rgb(50, 50, 50);">devm_pinctrl_get是Resource managed版本的pinctrl_get，核心还是pinctrl_get函数</span></span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern void devm_pinctrl_put(struct pinctrl *p);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // <span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">释放...(与<span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">devm_pinctrl_get </span></span><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">互斥)</span></span></span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#ifdef CONFIG_PM</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern int pinctrl_pm_select_default_state(struct device *dev);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // 设置PIN状态为 default</span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern int pinctrl_pm_select_sleep_state(struct device *dev);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span> // ... sleep</span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">extern int pinctrl_pm_select_idle_state(struct device *dev);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // ... idle</span></span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#else</span></div><div><font face="Monaco">...</font></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#endif</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#else /* !CONFIG_PINCTRL */</span></div><div><font face="Monaco">...</font></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#endif /* CONFIG_PINCTRL */</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">static inline struct pinctrl * __must_check pinctrl_get_select(</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">                    struct device *dev, const char *name)</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">{</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    struct pinctrl *p;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    struct pinctrl_state *s;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    int ret;</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    p = pinctrl_get(dev);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    if (IS_ERR(p))</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        return p;</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    s = pinctrl_lookup_state(p, name);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    if (IS_ERR(s)) {</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        pinctrl_put(p);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        return ERR_CAST(s);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    }</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    ret = pinctrl_select_state(p, s);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    if (ret &lt; 0) {</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        pinctrl_put(p);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        return ERR_PTR(ret);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    }</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    return p;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">}</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">static inline struct pinctrl * __must_check pinctrl_get_select_default(</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">                    struct device *dev)</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">{</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    return pinctrl_get_select(dev, PINCTRL_STATE_DEFAULT);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">}</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">static inline struct pinctrl * __must_check devm_pinctrl_get_select(</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">                    struct device *dev, const char *name)</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">{</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    struct pinctrl *p;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    struct pinctrl_state *s;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    int ret;</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    p = devm_pinctrl_get(dev);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    if (IS_ERR(p))</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        return p;</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    s = pinctrl_lookup_state(p, name);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    if (IS_ERR(s)) {</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        devm_pinctrl_put(p);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        return ERR_CAST(s);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    }</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    ret = pinctrl_select_state(p, s);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    if (ret &lt; 0) {</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        devm_pinctrl_put(p);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">        return ERR_PTR(ret);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    }</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    return p;</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">}</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">static inline struct pinctrl * __must_check devm_pinctrl_get_select_default(</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">                    struct device *dev)</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">{</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">    return devm_pinctrl_get_select(dev, PINCTRL_STATE_DEFAULT);</span></div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">}</span></div><div>
+</div><div><span style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);">#endif /* __LINUX_PINCTRL_CONSUMER_H */</span></div><div>
+</div></div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="3130"/>
+
+<h1 id="include-linux-pinctrl-devinfo-h"><a href="#include-linux-pinctrl-devinfo-h" class="headerlink" title="/include/linux/pinctrl/devinfo.h"></a>/include/linux/pinctrl/devinfo.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2019/2/16 17:12_</td></tr>
+<tr><td>**更新时间：**</td><td>_2019/2/16 17:39_</td></tr>
+<tr><td>**作者：**</td><td>_linyuanbo2004@163.com_</td></tr>
+</table>
+</div>
+
+<div>
+<span><div>
+</div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.15);-en-codeblock:true;"><div>/*</div><div>* Per-device information from the pin control system.</div><div>* This is the stuff that get included into the device</div><div>* core.</div><div>*</div><div>* Copyright (C) 2012 ST-Ericsson SA</div><div>* Written on behalf of Linaro for ST-Ericsson</div><div>* This interface is used in the core to keep track of pins.</div><div>*</div><div>* Author: Linus Walleij &lt;linus.walleij@linaro.org&gt;</div><div>*</div><div>* License terms: GNU General Public License (GPL) version 2</div><div>*/</div><div>
+</div><div>#ifndef PINCTRL_DEVINFO_H</div><div>#define PINCTRL_DEVINFO_H</div><div>
+</div><div>#ifdef CONFIG_PINCTRL</div><div>
+</div><div>/* The device core acts as a consumer toward pinctrl */</div><div>#include &lt;linux/pinctrl/consumer.h&gt;</div><div>
+</div><div>/**</div><div>* struct dev_pin_info - pin state container for devices</div><div>* @p: pinctrl handle for the containing device</div><div>* @default_state: the default state for the handle, if found</div><div>* @init_state: the state at probe time, if found</div><div>* @sleep_state: the state at suspend time, if found</div><div>* @idle_state: the state at idle (runtime suspend) time, if found</div><div>*/</div><div>struct dev_pin_info {</div><div>    struct pinctrl *p;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // 该device对应的 PIN 的句柄</span></div><div>    struct pinctrl_state *default_state;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  // 该device默认时PIN的状态</span></div><div>    struct pinctrl_state *init_state;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // ...初始化..</span></div><div>#ifdef CONFIG_PM</div><div>    struct pinctrl_state *sleep_state;</div><div>    struct pinctrl_state *idle_state;</div><div>#endif</div><div>};</div><div>
+</div><div>extern int pinctrl_bind_pins(struct device *dev);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // 似乎有几个地方实现,比如:</span>drivers/base/pinctrl.c,根据device获取到该device的PIN,但是具体什么用,目前没有了解</div><div>extern int pinctrl_init_done(struct device *dev);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // 把该device的PIN的状态设置为默认???</span></div><div>
+</div><div>#else</div><div>
+</div><div>/* Stubs if we're not using pinctrl */</div><div>
+</div><div>static inline int pinctrl_bind_pins(struct device *dev)</div><div>{</div><div>    return 0;</div><div>}</div><div>
+</div><div>static inline int pinctrl_init_done(struct device *dev)</div><div>{</div><div>    return 0;</div><div>}</div><div>
+</div><div>#endif /* CONFIG_PINCTRL */</div><div>#endif /* PINCTRL_DEVINFO_H */</div><div>
+</div></div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="3132"/>
+
+<h1 id="include-linux-pinctrl-machine-h"><a href="#include-linux-pinctrl-machine-h" class="headerlink" title="/include/linux/pinctrl/machine.h"></a>/include/linux/pinctrl/machine.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2019/2/17 15:35_</td></tr>
+<tr><td>**更新时间：**</td><td>_2019/2/18 18:45_</td></tr>
+<tr><td>**作者：**</td><td>_linyuanbo2004@163.com_</td></tr>
+</table>
+</div>
+
+<div>
+<span><div>
+</div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.15);-en-codeblock:true;"><div>/*</div><div>* Machine interface for the pinctrl subsystem.</div><div>*</div><div>* Copyright (C) 2011 ST-Ericsson SA</div><div>* Written on behalf of Linaro for ST-Ericsson</div><div>* Based on bits of regulator core, gpio core and clk core</div><div>*</div><div>* Author: Linus Walleij &lt;linus.walleij@linaro.org&gt;</div><div>*</div><div>* License terms: GNU General Public License (GPL) version 2</div><div>*/</div><div>#ifndef __LINUX_PINCTRL_MACHINE_H</div><div>#define __LINUX_PINCTRL_MACHINE_H</div><div>
+</div><div>#include &lt;linux/bug.h&gt;</div><div>
+</div><div>#include &lt;linux/pinctrl/pinctrl-state.h&gt;</div><div>
+</div><div>enum pinctrl_map_type {</div><div>    PIN_MAP_TYPE_INVALID,</div><div>    PIN_MAP_TYPE_DUMMY_STATE,</div><div>    PIN_MAP_TYPE_MUX_GROUP,</div><div>    PIN_MAP_TYPE_CONFIGS_PIN,</div><div>    PIN_MAP_TYPE_CONFIGS_GROUP,</div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_map_mux - mapping table content for MAP_TYPE_MUX_GROUP</div><div>* @group: the name of the group whose mux function is to be configured. This</div><div>*    field may be left NULL, and the first applicable group for the function</div><div>*    will be used.</div><div>* @function: the mux function to select for the group</div><div>*/</div><div>struct pinctrl_map_mux {<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // </span>当 pinctrl_map 结构成员 type 为 MAP_TYPE_MUX_GROUP 时</div><div>    const char *group;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>      //</span></div><div>    const char *function;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // 具体复用方法的名词???</span></div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_map_configs - mapping table content for MAP_TYPE_CONFIGS_*</div><div>* @group_or_pin: the name of the pin or group whose configuration parameters</div><div>*    are to be configured.</div><div>* @configs: a pointer to an array of config parameters/values to program into</div><div>*    hardware. Each individual pin controller defines the format and meaning</div><div>*    of config parameters.</div><div>* @num_configs: the number of entries in array @configs</div><div>*/</div><div>struct pinctrl_map_configs {                                                             // 当 pinctrl_map 结构成员 type 为 MAP_TYPE_CONFIGS_* 时</div><div>    const char *group_or_pin;                                                            // pin或者pin group的名字,比如:UART/I2C/SPI???</div><div>    unsigned long *configs;                                                              // 这组pin配置成各个功能的配置项数组???由具体驱动着提供???</div><div>    unsigned num_configs;                                                                // configs的数量</div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_map - boards/machines shall provide this map for devices</div><div>* @dev_name: the name of the device using this specific mapping, the name</div><div>*    must be the same as in your struct device*. If this name is set to the</div><div>*    same name as the pin controllers own dev_name(), the map entry will be</div><div>*    hogged by the driver itself upon registration</div><div>* @name: the name of this specific map entry for the particular machine.</div><div>*    This is the parameter passed to pinmux_lookup_state()</div><div>* @type: the type of mapping table entry</div><div>* @ctrl_dev_name: the name of the device controlling this specific mapping,</div><div>*    the name must be the same as in your struct device*. This field is not</div><div>*    used for PIN_MAP_TYPE_DUMMY_STATE</div><div>* @data: Data specific to the mapping type</div><div>*/</div><div>struct pinctrl_map {</div><div>    const char *dev_name;                                                                 // 使用这个 map entry 的 struct device 的名字,比如:UART</div><div>    const char *name;                                                                     // map entry 的名字???比如:pinctrl-state.h中的几个状态:default/init/idle/sleep</div><div>    enum pinctrl_map_type type;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // </span></div><div>    const char *ctrl_dev_name;                                                            // pin controller 的名字,应该是一个device</div><div>    union {</div><div>        struct pinctrl_map_mux mux;</div><div>        struct pinctrl_map_configs configs;</div><div>    } data;</div><div>};</div><div>
+</div><div>/* Convenience macros to create mapping table entries */</div><div>
+</div><div>#define PIN_MAP_DUMMY_STATE(dev, state) \</div><div>    {                                \</div><div>        .dev_name = dev,                    \</div><div>        .name = state,                        \</div><div>        .type = PIN_MAP_TYPE_DUMMY_STATE,            \</div><div>    }</div><div>
+</div><div>#define PIN_MAP_MUX_GROUP(dev, state, pinctrl, grp, func)        \</div><div>    {                                \</div><div>        .dev_name = dev,                    \</div><div>        .name = state,                        \</div><div>        .type = PIN_MAP_TYPE_MUX_GROUP,                \</div><div>        .ctrl_dev_name = pinctrl,                \</div><div>        .data.mux = {                        \</div><div>            .group = grp,                    \</div><div>            .function = func,                \</div><div>        },                            \</div><div>    }</div><div>
+</div><div>#define PIN_MAP_MUX_GROUP_DEFAULT(dev, pinctrl, grp, func)        \</div><div>    PIN_MAP_MUX_GROUP(dev, PINCTRL_STATE_DEFAULT, pinctrl, grp, func)</div><div>
+</div><div>#define PIN_MAP_MUX_GROUP_HOG(dev, state, grp, func)            \</div><div>    PIN_MAP_MUX_GROUP(dev, state, dev, grp, func)</div><div>
+</div><div>#define PIN_MAP_MUX_GROUP_HOG_DEFAULT(dev, grp, func)            \</div><div>    PIN_MAP_MUX_GROUP(dev, PINCTRL_STATE_DEFAULT, dev, grp, func)</div><div>
+</div><div>#define PIN_MAP_CONFIGS_PIN(dev, state, pinctrl, pin, cfgs)        \</div><div>    {                                \</div><div>        .dev_name = dev,                    \</div><div>        .name = state,                        \</div><div>        .type = PIN_MAP_TYPE_CONFIGS_PIN,            \</div><div>        .ctrl_dev_name = pinctrl,                \</div><div>        .data.configs = {                    \</div><div>            .group_or_pin = pin,                \</div><div>            .configs = cfgs,                \</div><div>            .num_configs = ARRAY_SIZE(cfgs),        \</div><div>        },                            \</div><div>    }</div><div>
+</div><div>#define PIN_MAP_CONFIGS_PIN_DEFAULT(dev, pinctrl, pin, cfgs)        \</div><div>    PIN_MAP_CONFIGS_PIN(dev, PINCTRL_STATE_DEFAULT, pinctrl, pin, cfgs)</div><div>
+</div><div>#define PIN_MAP_CONFIGS_PIN_HOG(dev, state, pin, cfgs)            \</div><div>    PIN_MAP_CONFIGS_PIN(dev, state, dev, pin, cfgs)</div><div>
+</div><div>#define PIN_MAP_CONFIGS_PIN_HOG_DEFAULT(dev, pin, cfgs)            \</div><div>    PIN_MAP_CONFIGS_PIN(dev, PINCTRL_STATE_DEFAULT, dev, pin, cfgs)</div><div>
+</div><div>#define PIN_MAP_CONFIGS_GROUP(dev, state, pinctrl, grp, cfgs)        \</div><div>    {                                \</div><div>        .dev_name = dev,                    \</div><div>        .name = state,                        \</div><div>        .type = PIN_MAP_TYPE_CONFIGS_GROUP,            \</div><div>        .ctrl_dev_name = pinctrl,                \</div><div>        .data.configs = {                    \</div><div>            .group_or_pin = grp,                \</div><div>            .configs = cfgs,                \</div><div>            .num_configs = ARRAY_SIZE(cfgs),        \</div><div>        },                            \</div><div>    }</div><div>
+</div><div>#define PIN_MAP_CONFIGS_GROUP_DEFAULT(dev, pinctrl, grp, cfgs)        \</div><div>    PIN_MAP_CONFIGS_GROUP(dev, PINCTRL_STATE_DEFAULT, pinctrl, grp, cfgs)</div><div>
+</div><div>#define PIN_MAP_CONFIGS_GROUP_HOG(dev, state, grp, cfgs)        \</div><div>    PIN_MAP_CONFIGS_GROUP(dev, state, dev, grp, cfgs)</div><div>
+</div><div>#define PIN_MAP_CONFIGS_GROUP_HOG_DEFAULT(dev, grp, cfgs)        \</div><div>    PIN_MAP_CONFIGS_GROUP(dev, PINCTRL_STATE_DEFAULT, dev, grp, cfgs)</div><div>
+</div><div>#ifdef CONFIG_PINCTRL</div><div>
+</div><div>extern int pinctrl_register_mappings(struct pinctrl_map const *map,</div><div>                unsigned num_maps);                                                        // machine初始化的时候把所有的 PIN 都注册到pin subsystem里???</div><div>extern void pinctrl_provide_dummies(void);</div><div>#else</div><div>...</div><div>#endif /* !CONFIG_PINCTRL */</div><div>#endif</div><div>
+</div></div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="3134"/>
+
+<h1 id="include-linux-pinctrl-pinctrl-h"><a href="#include-linux-pinctrl-pinctrl-h" class="headerlink" title="/include/linux/pinctrl/pinctrl.h"></a>/include/linux/pinctrl/pinctrl.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2019/2/17 18:16_</td></tr>
+<tr><td>**更新时间：**</td><td>_2019/2/18 20:01_</td></tr>
+<tr><td>**作者：**</td><td>_linyuanbo2004@163.com_</td></tr>
+</table>
+</div>
+
+<div>
+<span><div>
+</div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.15);-en-codeblock:true;"><div>/*</div><div>* Interface the pinctrl subsystem</div><div>*</div><div>* Copyright (C) 2011 ST-Ericsson SA</div><div>* Written on behalf of Linaro for ST-Ericsson</div><div>* This interface is used in the core to keep track of pins.</div><div>*</div><div>* Author: Linus Walleij &lt;linus.walleij@linaro.org&gt;</div><div>*</div><div>* License terms: GNU General Public License (GPL) version 2</div><div>*/</div><div>#ifndef __LINUX_PINCTRL_PINCTRL_H</div><div>#define __LINUX_PINCTRL_PINCTRL_H</div><div>
+</div><div>#ifdef CONFIG_PINCTRL</div><div>
+</div><div>#include &lt;linux/radix-tree.h&gt;</div><div>#include &lt;linux/list.h&gt;</div><div>#include &lt;linux/seq_file.h&gt;</div><div>#include &lt;linux/pinctrl/pinctrl-state.h&gt;</div><div>
+</div><div>struct device;</div><div>struct pinctrl_dev;</div><div>struct pinctrl_map;</div><div>struct pinmux_ops;</div><div>struct pinconf_ops;</div><div>struct pin_config_item;</div><div>struct gpio_chip;</div><div>struct device_node;</div><div>
+</div><div>/**</div><div>* struct pinctrl_pin_desc - boards/machines provide information on their</div><div>* pins, pads or other muxable units in this struct</div><div>* @number: unique pin number from the global pin number space</div><div>* @name: a name for this pin</div><div>* @drv_data: driver-defined per-pin data. pinctrl core does not touch this</div><div>*/</div><div>struct pinctrl_pin_desc {                                                                           // 单个PIN的描述</div><div>    unsigned number;                                                                                // 单个PIN的编号,由具体驱动工程师确定</div><div>    const char *name;                                                                               // ...名字...</div><div>    void *drv_data;                                                                                 // 私有数据</div><div>};</div><div>
+</div><div>/* Convenience macro to define a single named or anonymous pin descriptor */</div><div>#define PINCTRL_PIN(a, b) { .number = a, .name = b }</div><div>#define PINCTRL_PIN_ANON(a) { .number = a }</div><div>
+</div><div>/**</div><div>* struct pinctrl_gpio_range - each pin controller can provide subranges of</div><div>* the GPIO number space to be handled by the controller</div><div>* @node: list node for internal use</div><div>* @name: a name for the chip in this range</div><div>* @id: an ID number for the chip in this range</div><div>* @base: base offset of the GPIO range</div><div>* @pin_base: base pin number of the GPIO range if pins == NULL</div><div>* @pins: enumeration of pins in GPIO range or NULL</div><div>* @npins: number of pins in the GPIO range, including the base number</div><div>* @gc: an optional pointer to a gpio_chip</div><div>*/</div><div>struct pinctrl_gpio_range {</div><div>    struct list_head node;                                                                          // 被所属 struct pinctrl_dev 管理</div><div>    const char *name;</div><div>    unsigned int id;</div><div>    unsigned int base;                                                                              // GPIO起始ID</div><div>    unsigned int pin_base;                                                                          // 线性(规律)PIN起始ID</div><div>    unsigned const *pins;                                                                           // 非线性(无规律)GPIO-&gt;PIN映射</div><div>    unsigned int npins;                                                                             // 该RANGE数量</div><div>    struct gpio_chip *gc;</div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_ops - global pin control operations, to be implemented by</div><div>* pin controller drivers.</div><div>* @get_groups_count: Returns the count of total number of groups registered.</div><div>* @get_group_name: return the group name of the pin group</div><div>* @get_group_pins: return an array of pins corresponding to a certain</div><div>*    group selector @pins, and the size of the array in @num_pins</div><div>* @pin_dbg_show: optional debugfs display hook that will provide per-device</div><div>*    info for a certain pin in debugfs</div><div>* @dt_node_to_map: parse a device tree &quot;pin configuration node&quot;, and create</div><div>*    mapping table entries for it. These are returned through the @map and</div><div>*    @num_maps output parameters. This function is optional, and may be</div><div>*    omitted for pinctrl drivers that do not support device tree.</div><div>* @dt_free_map: free mapping table entries created via @dt_node_to_map. The</div><div>*    top-level @map pointer must be freed, along with any dynamically</div><div>*    allocated members of the mapping table entries themselves. This</div><div>*    function is optional, and may be omitted for pinctrl drivers that do</div><div>*    not support device tree.</div><div>*/</div><div>struct pinctrl_ops {</div><div>    int (*get_groups_count) (struct pinctrl_dev *pctldev);                                          // 获取这个PIN GROUP中PIN的数量</div><div>    const char *(*get_group_name) (struct pinctrl_dev *pctldev,</div><div>                       unsigned selector);                                                          // 根据selector(索引???)获取这个PIN具体GROUP的名称</div><div>    int (*get_group_pins) (struct pinctrl_dev *pctldev,</div><div>                   unsigned selector,</div><div>                   const unsigned **pins,</div><div>                   unsigned *num_pins);                                                             // 根据selector(索引???)获取这个PIN具体GROUP的所以PIN</div><div>    void (*pin_dbg_show) (struct pinctrl_dev *pctldev, struct seq_file *s,</div><div>              unsigned offset);                                                                     // ???</div><div>    int (*dt_node_to_map) (struct pinctrl_dev *pctldev,</div><div>                   struct device_node *np_config,</div><div>                   struct pinctrl_map **map, unsigned *num_maps);                                   // ???</div><div>    void (*dt_free_map) (struct pinctrl_dev *pctldev,</div><div>                 struct pinctrl_map *map, unsigned num_maps);                                       // ???</div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_desc - pin controller descriptor, register this to pin</div><div>* control subsystem</div><div>* @name: name for the pin controller</div><div>* @pins: an array of pin descriptors describing all the pins handled by</div><div>*    this pin controller</div><div>* @npins: number of descriptors in the array, usually just ARRAY_SIZE()</div><div>*    of the pins field above</div><div>* @pctlops: pin control operation vtable, to support global concepts like</div><div>*    grouping of pins, this is optional.</div><div>* @pmxops: pinmux operations vtable, if you support pinmuxing in your driver</div><div>* @confops: pin config operations vtable, if you support pin configuration in</div><div>*    your driver</div><div>* @owner: module providing the pin controller, used for refcounting</div><div>* @num_custom_params: Number of driver-specific custom parameters to be parsed</div><div>*    from the hardware description</div><div>* @custom_params: List of driver_specific custom parameters to be parsed from</div><div>*    the hardware description</div><div>* @custom_conf_items: Information how to print @params in debugfs, must be</div><div>*    the same size as the @custom_params, i.e. @num_custom_params</div><div>*/</div><div>struct pinctrl_desc {                                                                                // PIN控制器描述符,每个特定的 PIN控制器 都用一个 struct pinctrl_desc 来描述</div><div>    const char *name;                                                                                // </div><div>    const struct pinctrl_pin_desc *pins;                                                             // 具体每个PIN的描述</div><div>    unsigned int npins;                                                                              // 这个PIN控制器控制PIN的数量</div><div>    const struct pinctrl_ops *pctlops;                                                               // </div><div>    const struct pinmux_ops *pmxops;                                                                 // PIN复用操作函数</div><div>    const struct pinconf_ops *confops;                                                               // PIN配置操作函数,比如:上拉/下拉</div><div>    struct module *owner;</div><div>#ifdef CONFIG_GENERIC_PINCONF</div><div>    unsigned int num_custom_params;</div><div>    const struct pinconf_generic_params *custom_params;</div><div>    const struct pin_config_item *custom_conf_items;</div><div>#endif</div><div>};</div><div>
+</div><div>/* External interface to pin controller */</div><div>extern struct pinctrl_dev *pinctrl_register(struct pinctrl_desc *pctldesc,</div><div>                struct device *dev, void *driver_data);</div><div>extern void pinctrl_unregister(struct pinctrl_dev *pctldev);</div><div>extern bool pin_is_valid(struct pinctrl_dev *pctldev, int pin);</div><div>extern void pinctrl_add_gpio_range(struct pinctrl_dev *pctldev,</div><div>                struct pinctrl_gpio_range *range);</div><div>extern void pinctrl_add_gpio_ranges(struct pinctrl_dev *pctldev,</div><div>                struct pinctrl_gpio_range *ranges,</div><div>                unsigned nranges);</div><div>extern void pinctrl_remove_gpio_range(struct pinctrl_dev *pctldev,</div><div>                struct pinctrl_gpio_range *range);</div><div>
+</div><div>extern struct pinctrl_dev *pinctrl_find_and_add_gpio_range(const char *devname,</div><div>        struct pinctrl_gpio_range *range);</div><div>extern struct pinctrl_gpio_range *</div><div>pinctrl_find_gpio_range_from_pin(struct pinctrl_dev *pctldev,</div><div>                 unsigned int pin);</div><div>extern int pinctrl_get_group_pins(struct pinctrl_dev *pctldev,</div><div>                const char *pin_group, const unsigned **pins,</div><div>                unsigned *num_pins);</div><div>
+</div><div>#ifdef CONFIG_OF</div><div>extern struct pinctrl_dev *of_pinctrl_get(struct device_node *np);</div><div>#else</div><div>static inline</div><div>struct pinctrl_dev *of_pinctrl_get(struct device_node *np)</div><div>{</div><div>    return NULL;</div><div>}</div><div>#endif /* CONFIG_OF */</div><div>
+</div><div>extern const char *pinctrl_dev_get_name(struct pinctrl_dev *pctldev);</div><div>extern const char *pinctrl_dev_get_devname(struct pinctrl_dev *pctldev);</div><div>extern void *pinctrl_dev_get_drvdata(struct pinctrl_dev *pctldev);</div><div>#else</div><div>
+</div><div>struct pinctrl_dev;</div><div>
+</div><div>/* Sufficiently stupid default functions when pinctrl is not in use */</div><div>static inline bool pin_is_valid(struct pinctrl_dev *pctldev, int pin)</div><div>{</div><div>    return pin &gt;= 0;</div><div>}</div><div>
+</div><div>#endif /* !CONFIG_PINCTRL */</div><div>
+</div><div>#endif /* __LINUX_PINCTRL_PINCTRL_H */</div><div>
+</div></div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="3136"/>
+
+<h1 id="include-linux-pinctrl-pinmux-h"><a href="#include-linux-pinctrl-pinmux-h" class="headerlink" title="/include/linux/pinctrl/pinmux.h"></a>/include/linux/pinctrl/pinmux.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2019/2/17 18:28_</td></tr>
+<tr><td>**更新时间：**</td><td>_2019/2/17 18:33_</td></tr>
+<tr><td>**作者：**</td><td>_linyuanbo2004@163.com_</td></tr>
+</table>
+</div>
+
+<div>
+<span><div>
+</div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.15);-en-codeblock:true;"><div>/*</div><div>* Interface the pinmux subsystem</div><div>*</div><div>* Copyright (C) 2011 ST-Ericsson SA</div><div>* Written on behalf of Linaro for ST-Ericsson</div><div>* Based on bits of regulator core, gpio core and clk core</div><div>*</div><div>* Author: Linus Walleij &lt;linus.walleij@linaro.org&gt;</div><div>*</div><div>* License terms: GNU General Public License (GPL) version 2</div><div>*/</div><div>#ifndef __LINUX_PINCTRL_PINMUX_H</div><div>#define __LINUX_PINCTRL_PINMUX_H</div><div>
+</div><div>#include &lt;linux/list.h&gt;</div><div>#include &lt;linux/seq_file.h&gt;</div><div>#include &lt;linux/pinctrl/pinctrl.h&gt;</div><div>
+</div><div>#ifdef CONFIG_PINMUX</div><div>
+</div><div>struct pinctrl_dev;</div><div>
+</div><div>/**</div><div>* struct pinmux_ops - pinmux operations, to be implemented by pin controller</div><div>* drivers that support pinmuxing</div><div>* @request: called by the core to see if a certain pin can be made</div><div>*    available for muxing. This is called by the core to acquire the pins</div><div>*    before selecting any actual mux setting across a function. The driver</div><div>*    is allowed to answer &quot;no&quot; by returning a negative error code</div><div>* @free: the reverse function of the request() callback, frees a pin after</div><div>*    being requested</div><div>* @get_functions_count: returns number of selectable named functions available</div><div>*    in this pinmux driver</div><div>* @get_function_name: return the function name of the muxing selector,</div><div>*    called by the core to figure out which mux setting it shall map a</div><div>*    certain device to</div><div>* @get_function_groups: return an array of groups names (in turn</div><div>*    referencing pins) connected to a certain function selector. The group</div><div>*    name can be used with the generic @pinctrl_ops to retrieve the</div><div>*    actual pins affected. The applicable groups will be returned in</div><div>*    @groups and the number of groups in @num_groups</div><div>* @set_mux: enable a certain muxing function with a certain pin group. The</div><div>*    driver does not need to figure out whether enabling this function</div><div>*    conflicts some other use of the pins in that group, such collisions</div><div>*    are handled by the pinmux subsystem. The @func_selector selects a</div><div>*    certain function whereas @group_selector selects a certain set of pins</div><div>*    to be used. On simple controllers the latter argument may be ignored</div><div>* @gpio_request_enable: requests and enables GPIO on a certain pin.</div><div>*    Implement this only if you can mux every pin individually as GPIO. The</div><div>*    affected GPIO range is passed along with an offset(pin number) into that</div><div>*    specific GPIO range - function selectors and pin groups are orthogonal</div><div>*    to this, the core will however make sure the pins do not collide.</div><div>* @gpio_disable_free: free up GPIO muxing on a certain pin, the reverse of</div><div>*    @gpio_request_enable</div><div>* @gpio_set_direction: Since controllers may need different configurations</div><div>*    depending on whether the GPIO is configured as input or output,</div><div>*    a direction selector function may be implemented as a backing</div><div>*    to the GPIO controllers that need pin muxing.</div><div>* @strict: do not allow simultaneous use of the same pin for GPIO and another</div><div>*    function. Check both gpio_owner and mux_owner strictly before approving</div><div>*    the pin request.</div><div>*/</div><div>struct pinmux_ops {</div><div>    int (*request) (struct pinctrl_dev *pctldev, unsigned offset);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // 需要复用之前需要请求确认</span></div><div>    int (*free) (struct pinctrl_dev *pctldev, unsigned offset);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // </span>request的逆函数</div><div>    int (*get_functions_count) (struct pinctrl_dev *pctldev);</div><div>    const char *(*get_function_name) (struct pinctrl_dev *pctldev,</div><div>                      unsigned selector);</div><div>    int (*get_function_groups) (struct pinctrl_dev *pctldev,</div><div>                  unsigned selector,</div><div>                  const char * const **groups,</div><div>                  unsigned *num_groups);</div><div>    int (*set_mux) (struct pinctrl_dev *pctldev, unsigned func_selector,</div><div>            unsigned group_selector);</div><div>    int (*gpio_request_enable) (struct pinctrl_dev *pctldev,</div><div>                    struct pinctrl_gpio_range *range,</div><div>                    unsigned offset);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // 请求并使能</span></div><div>    void (*gpio_disable_free) (struct pinctrl_dev *pctldev,</div><div>                   struct pinctrl_gpio_range *range,</div><div>                   unsigned offset);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  // </span>gpio_request_enable的逆函数</div><div>    int (*gpio_set_direction) (struct pinctrl_dev *pctldev,</div><div>                   struct pinctrl_gpio_range *range,</div><div>                   unsigned offset,</div><div>                   bool input);<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // 设置某个或多个PIN的输入/输出方向</span></div><div>    bool strict;</div><div>};</div><div>
+</div><div>#endif /* CONFIG_PINMUX */</div><div>
+</div><div>#endif /* __LINUX_PINCTRL_PINMUX_H */</div><div>
+</div></div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="3138"/>
+
+<h1 id="include-linux-pinctrl-pinconf-h"><a href="#include-linux-pinctrl-pinconf-h" class="headerlink" title="/include/linux/pinctrl/pinconf.h"></a>/include/linux/pinctrl/pinconf.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2019/2/17 18:34_</td></tr>
+<tr><td>**更新时间：**</td><td>_2019/2/17 18:35_</td></tr>
+<tr><td>**作者：**</td><td>_linyuanbo2004@163.com_</td></tr>
+</table>
+</div>
+
+<div>
+<span><div>
+</div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.15);-en-codeblock:true;"><div>/*</div><div>* Interface the pinconfig portions of the pinctrl subsystem</div><div>*</div><div>* Copyright (C) 2011 ST-Ericsson SA</div><div>* Written on behalf of Linaro for ST-Ericsson</div><div>* This interface is used in the core to keep track of pins.</div><div>*</div><div>* Author: Linus Walleij &lt;linus.walleij@linaro.org&gt;</div><div>*</div><div>* License terms: GNU General Public License (GPL) version 2</div><div>*/</div><div>#ifndef __LINUX_PINCTRL_PINCONF_H</div><div>#define __LINUX_PINCTRL_PINCONF_H</div><div>
+</div><div>#ifdef CONFIG_PINCONF</div><div>
+</div><div>#include &lt;linux/pinctrl/machine.h&gt;</div><div>
+</div><div>struct pinctrl_dev;</div><div>struct seq_file;</div><div>
+</div><div>/**</div><div>* struct pinconf_ops - pin config operations, to be implemented by</div><div>* pin configuration capable drivers.</div><div>* @is_generic: for pin controllers that want to use the generic interface,</div><div>*    this flag tells the framework that it's generic.</div><div>* @pin_config_get: get the config of a certain pin, if the requested config</div><div>*    is not available on this controller this should return -ENOTSUPP</div><div>*    and if it is available but disabled it should return -EINVAL</div><div>* @pin_config_set: configure an individual pin</div><div>* @pin_config_group_get: get configurations for an entire pin group</div><div>* @pin_config_group_set: configure all pins in a group</div><div>* @pin_config_dbg_parse_modify: optional debugfs to modify a pin configuration</div><div>* @pin_config_dbg_show: optional debugfs display hook that will provide</div><div>*    per-device info for a certain pin in debugfs</div><div>* @pin_config_group_dbg_show: optional debugfs display hook that will provide</div><div>*    per-device info for a certain group in debugfs</div><div>* @pin_config_config_dbg_show: optional debugfs display hook that will decode</div><div>*    and display a driver's pin configuration parameter</div><div>*/</div><div>struct pinconf_ops {</div><div>#ifdef CONFIG_GENERIC_PINCONF</div><div>    bool is_generic;</div><div>#endif</div><div>    int (*pin_config_get) (struct pinctrl_dev *pctldev,</div><div>                   unsigned pin,</div><div>                   unsigned long *config);</div><div>    int (*pin_config_set) (struct pinctrl_dev *pctldev,</div><div>                   unsigned pin,</div><div>                   unsigned long *configs,</div><div>                   unsigned num_configs);</div><div>    int (*pin_config_group_get) (struct pinctrl_dev *pctldev,</div><div>                     unsigned selector,</div><div>                     unsigned long *config);</div><div>    int (*pin_config_group_set) (struct pinctrl_dev *pctldev,</div><div>                     unsigned selector,</div><div>                     unsigned long *configs,</div><div>                     unsigned num_configs);</div><div>    int (*pin_config_dbg_parse_modify) (struct pinctrl_dev *pctldev,</div><div>                       const char *arg,</div><div>                       unsigned long *config);</div><div>    void (*pin_config_dbg_show) (struct pinctrl_dev *pctldev,</div><div>                     struct seq_file *s,</div><div>                     unsigned offset);</div><div>    void (*pin_config_group_dbg_show) (struct pinctrl_dev *pctldev,</div><div>                       struct seq_file *s,</div><div>                       unsigned selector);</div><div>    void (*pin_config_config_dbg_show) (struct pinctrl_dev *pctldev,</div><div>                        struct seq_file *s,</div><div>                        unsigned long config);</div><div>};</div><div>
+</div><div>#endif</div><div>
+</div><div>#endif /* __LINUX_PINCTRL_PINCONF_H */</div><div>
+</div></div><div>
+</div></span>
+</div>
+
+<hr>
+<a name="3142"/>
+
+<h1 id="drivers-pinctrl-core-h"><a href="#drivers-pinctrl-core-h" class="headerlink" title="/drivers/pinctrl/core.h"></a>/drivers/pinctrl/core.h</h1><div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td>**创建时间：**</td><td>_2019/2/18 19:39_</td></tr>
+<tr><td>**更新时间：**</td><td>_2019/2/18 20:38_</td></tr>
+<tr><td>**作者：**</td><td>_linyuanbo2004@163.com_</td></tr>
+</table>
+</div>
+
+<div>
+<span><div>
+</div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.15);-en-codeblock:true;"><div>/*</div><div>* Core private header for the pin control subsystem</div><div>*</div><div>* Copyright (C) 2011 ST-Ericsson SA</div><div>* Written on behalf of Linaro for ST-Ericsson</div><div>*</div><div>* Author: Linus Walleij &lt;linus.walleij@linaro.org&gt;</div><div>*</div><div>* License terms: GNU General Public License (GPL) version 2</div><div>*/</div><div>
+</div><div>#include &lt;linux/kref.h&gt;</div><div>#include &lt;linux/mutex.h&gt;</div><div>#include &lt;linux/radix-tree.h&gt;</div><div>#include &lt;linux/pinctrl/pinconf.h&gt;</div><div>#include &lt;linux/pinctrl/machine.h&gt;</div><div>
+</div><div>struct pinctrl_gpio_range;</div><div>
+</div><div>/**</div><div>* struct pinctrl_dev - pin control class device</div><div>* @node: node to include this pin controller in the global pin controller list</div><div>* @desc: the pin controller descriptor supplied when initializing this pin</div><div>*    controller</div><div>* @pin_desc_tree: each pin descriptor for this pin controller is stored in</div><div>*    this radix tree</div><div>* @gpio_ranges: a list of GPIO ranges that is handled by this pin controller,</div><div>*    ranges are added to this list at runtime</div><div>* @dev: the device entry for this pin controller</div><div>* @owner: module providing the pin controller, used for refcounting</div><div>* @driver_data: driver data for drivers registering to the pin controller</div><div>*    subsystem</div><div>* @p: result of pinctrl_get() for this device</div><div>* @hog_default: default state for pins hogged by this device</div><div>* @hog_sleep: sleep state for pins hogged by this device</div><div>* @mutex: mutex taken on each pin controller specific action</div><div>* @device_root: debugfs root for this device</div><div>*/</div><div>struct pinctrl_dev {<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  // PIN device</span></div><div>    struct list_head node;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // 该 PIN</span>(device) <span>控制链表节点,由全局链表 </span>pinctrldev_list(在对应core.c中) <span>管理</span></div><div>    struct pinctrl_desc *desc;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // 该 PIN(device) 对应的PIN控制器</span></div><div>    struct radix_tree_root pin_desc_tree;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     //</span> 该 PIN(device) <span>设备树描述节点???</span></div><div>    struct list_head gpio_ranges;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // 管理 </span>struct pinctrl_gpio_range 中成员node子节点</div><div>    struct device *dev;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>       // ...</span></div><div>    struct module *owner;</div><div>    void *driver_data;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>        // 私有数据</span></div><div>    struct pinctrl *p;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // </span></div><div>    struct pinctrl_state *hog_default;</div><div>    struct pinctrl_state *hog_sleep;</div><div>    struct mutex mutex;</div><div>#ifdef CONFIG_DEBUG_FS</div><div>    struct dentry *device_root;</div><div>#endif</div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl - per-device pin control state holder</div><div>* @node: global list node</div><div>* @dev: the device using this pin control handle</div><div>* @states: a list of states for this device</div><div>* @state: the current state</div><div>* @dt_maps: the mapping table chunks dynamically parsed from device tree for</div><div>*    this device, if any</div><div>* @users: reference count</div><div>*/</div><div>struct pinctrl {<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  // 一组或者一个PIN的句柄???</span></div><div>    struct list_head node;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // </span>该 PIN(device) 控制链表节点,由全局链表 pinctrl_list(在对应core.c中) 管理</div><div>    struct device *dev;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // ...</span></div><div>    struct list_head states;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  // </span>管理 struct pinctrl_state 中成员node子节点</div><div>    struct pinctrl_state *state;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>      // 当前的状态???</span></div><div>    struct list_head dt_maps;</div><div>    struct kref users;</div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_state - a pinctrl state for a device</div><div>* @node: list node for struct pinctrl's @states field</div><div>* @name: the name of this state</div><div>* @settings: a list of settings for this state</div><div>*/</div><div>struct pinctrl_state {<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    //</span></div><div>    struct list_head node;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // </span>该 STATE(device) 控制链表节点,由它所属链表 struct pinctrl中states 管理</div><div>    const char *name;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // </span></div><div>    struct list_head settings;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    // </span>管理 struct pinctrl_setting 中成员node子节点</div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_setting_mux - setting data for MAP_TYPE_MUX_GROUP</div><div>* @group: the group selector to program</div><div>* @func: the function selector to program</div><div>*/</div><div>struct pinctrl_setting_mux {<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>      // </span>当 struct pinctrl_setting中enum pinctrl_map_type type 结构成员 type 为 MAP_TYPE_MUX_GROUP 时</div><div>    unsigned group;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>       //</span></div><div>    unsigned func;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    //</span></div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_setting_configs - setting data for MAP_TYPE_CONFIGS_*</div><div>* @group_or_pin: the group selector or pin ID to program</div><div>* @configs: a pointer to an array of config parameters/values to program into</div><div>*    hardware. Each individual pin controller defines the format and meaning</div><div>*    of config parameters.</div><div>* @num_configs: the number of entries in array @configs</div><div>*/</div><div>struct pinctrl_setting_configs {<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // </span>当 struct pinctrl_setting中enum pinctrl_map_type type 结构成员 type 为 MAP_TYPE_CONFIGS_* 时</div><div>    unsigned group_or_pin;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   //</span></div><div>    unsigned long *configs;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>      //</span></div><div>    unsigned num_configs;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    //</span></div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_setting - an individual mux or config setting</div><div>* @node: list node for struct pinctrl_settings's @settings field</div><div>* @type: the type of setting</div><div>* @pctldev: pin control device handling to be programmed. Not used for</div><div>*   PIN_MAP_TYPE_DUMMY_STATE.</div><div>* @dev_name: the name of the device using this state</div><div>* @data: Data specific to the setting type</div><div>*/</div><div>struct pinctrl_setting {<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     //</span></div><div>    struct list_head node;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   // </span>该 STATE(device) 控制链表节点,由它所属链表 struct pinctrl_state中settings 管理</div><div>    enum pinctrl_map_type type;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  //</span></div><div>    struct pinctrl_dev *pctldev;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>     // 指向它所属的 </span>struct pinctrl_dev ???</div><div>    const char *dev_name;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    //</span></div><div>    union {</div><div>        struct pinctrl_setting_mux mux;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  //</span></div><div>        struct pinctrl_setting_configs configs;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>  //</span></div><div>    } data;</div><div>};</div><div>
+</div><div>/**</div><div>* struct pin_desc - pin descriptor for each physical pin in the arch</div><div>* @pctldev: corresponding pin control device</div><div>* @name: a name for the pin, e.g. the name of the pin/pad/finger on a</div><div>*    datasheet or such</div><div>* @dynamic_name: if the name of this pin was dynamically allocated</div><div>* @mux_usecount: If zero, the pin is not claimed, and @owner should be NULL.</div><div>*    If non-zero, this pin is claimed by @owner. This field is an integer</div><div>*    rather than a boolean, since pinctrl_get() might process multiple</div><div>*    mapping table entries that refer to, and hence claim, the same group</div><div>*    or pin, and each of these will increment the @usecount.</div><div>* @mux_owner: The name of device that called pinctrl_get().</div><div>* @mux_setting: The most recent selected mux setting for this pin, if any.</div><div>* @gpio_owner: If pinctrl_request_gpio() was called for this pin, this is</div><div>*    the name of the GPIO that &quot;owns&quot; this pin.</div><div>*/</div><div>struct pin_desc {<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    //</span></div><div>    struct pinctrl_dev *pctldev;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span> //</span></div><div>    const char *name;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    //</span></div><div>    bool dynamic_name;<span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>    </span><span>   //</span></div><div>    /* These fields only added when supporting pinmux drivers */</div><div>#ifdef CONFIG_PINMUX</div><div>    unsigned mux_usecount;</div><div>    const char *mux_owner;</div><div>    const struct pinctrl_setting_mux *mux_setting;</div><div>    const char *gpio_owner;</div><div>#endif</div><div>};</div><div>
+</div><div>/**</div><div>* struct pinctrl_maps - a list item containing part of the mapping table</div><div>* @node: mapping table list node</div><div>* @maps: array of mapping table entries</div><div>* @num_maps: the number of entries in @maps</div><div>*/</div><div>struct pinctrl_maps {</div><div>    struct list_head node;</div><div>    struct pinctrl_map const *maps;</div><div>    unsigned num_maps;</div><div>};</div><div>
+</div><div>struct pinctrl_dev *get_pinctrl_dev_from_devname(const char *dev_name);</div><div>struct pinctrl_dev *get_pinctrl_dev_from_of_node(struct device_node *np);</div><div>int pin_get_from_name(struct pinctrl_dev *pctldev, const char *name);</div><div>const char *pin_get_name(struct pinctrl_dev *pctldev, const unsigned pin);</div><div>int pinctrl_get_group_selector(struct pinctrl_dev *pctldev,</div><div>                   const char *pin_group);</div><div>
+</div><div>static inline struct pin_desc *pin_desc_get(struct pinctrl_dev *pctldev,</div><div>                        unsigned int pin)</div><div>{</div><div>    return radix_tree_lookup(&amp;pctldev-&gt;pin_desc_tree, pin);</div><div>}</div><div>
+</div><div>extern struct pinctrl_gpio_range *</div><div>pinctrl_find_gpio_range_from_pin_nolock(struct pinctrl_dev *pctldev,</div><div>                    unsigned int pin);</div><div>
+</div><div>int pinctrl_register_map(struct pinctrl_map const *maps, unsigned num_maps,</div><div>             bool dup);</div><div>void pinctrl_unregister_map(struct pinctrl_map const *map);</div><div>
+</div><div>extern int pinctrl_force_sleep(struct pinctrl_dev *pctldev);</div><div>extern int pinctrl_force_default(struct pinctrl_dev *pctldev);</div><div>
+</div><div>extern struct mutex pinctrl_maps_mutex;</div><div>extern struct list_head pinctrl_maps;</div><div>
+</div><div>#define for_each_maps(_maps_node_, _i_, _map_) \</div><div>    list_for_each_entry(_maps_node_, &amp;pinctrl_maps, node) \</div><div>        for (_i_ = 0, _map_ = &amp;_maps_node_-&gt;maps[_i_]; \</div><div>            _i_ &lt; _maps_node_-&gt;num_maps; \</div><div>            _i_++, _map_ = &amp;_maps_node_-&gt;maps[_i_])</div><div>
+</div></div><div>
+</div></span>
+</div></body></html> 
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" rel="tag"># 源码阅读</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/07/small-RTOS/" rel="prev" title="微型嵌入式实时操作系统">
+      <i class="fa fa-chevron-left"></i> 微型嵌入式实时操作系统
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/07/avr-RTOS/" rel="next" title="建立一个属于自己的AVR的RTOS">
+      建立一个属于自己的AVR的RTOS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-Timer-h"><span class="nav-number">1.</span> <span class="nav-text">linux&#x2F;Timer.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#define-del-timer-sync-t-del-timer-t-SMP%E6%83%85%E5%86%B5%E4%B8%8B%E8%B0%83%E7%94%A8%E4%B8%8A%E9%9D%A2%EF%BC%8C%E9%9D%9ESMP%E6%83%85%E5%86%B5%E4%B8%8B%E8%B0%83%E7%94%A8%E8%BF%99%E9%87%8C%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">define del_timer_sync(t)          del_timer(t) &#x2F;&#x2F; SMP情况下调用上面，非SMP情况下调用这里。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-jiffies-h"><span class="nav-number">3.</span> <span class="nav-text">linux&#x2F;jiffies.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-input-h"><span class="nav-number">4.</span> <span class="nav-text">linux&#x2F;input.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-bitops-h"><span class="nav-number">5.</span> <span class="nav-text">linux&#x2F;bitops.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#asm-bitops-h"><span class="nav-number">6.</span> <span class="nav-text">asm&#x2F;bitops.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%82"><span class="nav-number">7.</span> <span class="nav-text">杂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-kobject-h"><span class="nav-number">8.</span> <span class="nav-text">linux&#x2F;kobject.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-kref-h"><span class="nav-number">9.</span> <span class="nav-text">linux&#x2F;kref.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-sysfs-h"><span class="nav-number">10.</span> <span class="nav-text">linux&#x2F;sysfs.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-klist-h"><span class="nav-number">11.</span> <span class="nav-text">linux&#x2F;klist.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#drivers-base-core-c"><span class="nav-number">12.</span> <span class="nav-text">&#x2F;drivers&#x2F;base&#x2F;core.c</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-device-h"><span class="nav-number">13.</span> <span class="nav-text">linux&#x2F;device.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#drivers-base-bus-c"><span class="nav-number">14.</span> <span class="nav-text">&#x2F;drivers&#x2F;base&#x2F;bus.c</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#drivers-base-base-h"><span class="nav-number">15.</span> <span class="nav-text">&#x2F;drivers&#x2F;base&#x2F;base.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#drivers-base-driver-c"><span class="nav-number">16.</span> <span class="nav-text">&#x2F;drivers&#x2F;base&#x2F;driver.c</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#drivers-base-dd-c"><span class="nav-number">17.</span> <span class="nav-text">&#x2F;drivers&#x2F;base&#x2F;dd.c</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-platform-device-h"><span class="nav-number">18.</span> <span class="nav-text">linux&#x2F;platform_device.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-linux-pinctrl-consumer-h"><span class="nav-number">19.</span> <span class="nav-text">&#x2F;include&#x2F;linux&#x2F;pinctrl&#x2F;consumer.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-linux-pinctrl-devinfo-h"><span class="nav-number">20.</span> <span class="nav-text">&#x2F;include&#x2F;linux&#x2F;pinctrl&#x2F;devinfo.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-linux-pinctrl-machine-h"><span class="nav-number">21.</span> <span class="nav-text">&#x2F;include&#x2F;linux&#x2F;pinctrl&#x2F;machine.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-linux-pinctrl-pinctrl-h"><span class="nav-number">22.</span> <span class="nav-text">&#x2F;include&#x2F;linux&#x2F;pinctrl&#x2F;pinctrl.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-linux-pinctrl-pinmux-h"><span class="nav-number">23.</span> <span class="nav-text">&#x2F;include&#x2F;linux&#x2F;pinctrl&#x2F;pinmux.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include-linux-pinctrl-pinconf-h"><span class="nav-number">24.</span> <span class="nav-text">&#x2F;include&#x2F;linux&#x2F;pinctrl&#x2F;pinconf.h</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#drivers-pinctrl-core-h"><span class="nav-number">25.</span> <span class="nav-text">&#x2F;drivers&#x2F;pinctrl&#x2F;core.h</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="客户端操作 参考连接：https:&#x2F;&#x2F;git-scm.com&#x2F;book&#x2F;en&#x2F;v2 参考连接：https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;896043488029600   工作环境配置  工作环境：Windows 10  安装 Git-64-bit.exe 链接：https:&#x2F;&#x2F;git-scm.com&#x2F;download&#x2F;win  配置个人信息以及生成ssh密钥：  1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git client 基础操作">
+<meta property="og:url" content="http://example.com/2020/02/14/git-client/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="客户端操作 参考连接：https:&#x2F;&#x2F;git-scm.com&#x2F;book&#x2F;en&#x2F;v2 参考连接：https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;896043488029600   工作环境配置  工作环境：Windows 10  安装 Git-64-bit.exe 链接：https:&#x2F;&#x2F;git-scm.com&#x2F;download&#x2F;win  配置个人信息以及生成ssh密钥：  1234">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-14T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T13:18:12.645Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/02/14/git-client/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>git client 基础操作 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/14/git-client/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git client 基础操作
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-14 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-14T00:00:00+00:00">2020-02-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="客户端操作"><a href="#客户端操作" class="headerlink" title="客户端操作"></a>客户端操作</h3><blockquote>
+<p>参考连接：<a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2">https://git-scm.com/book/en/v2</a></p>
+<p>参考连接：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600">https://www.liaoxuefeng.com/wiki/896043488029600</a></p>
+</blockquote>
+<ol>
+<li><p>工作环境配置</p>
+<p> 工作环境：Windows 10</p>
+<p> 安装 Git-64-bit.exe 链接：<a target="_blank" rel="noopener" href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
+<p> 配置个人信息以及生成ssh密钥：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 配置用户名</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.name <span class="string">&quot;superman&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置用户邮箱</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.email <span class="string">&quot;superman@gmail.com&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 生成ssh密钥</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen.exe -t rsa -C <span class="string">&quot;superman@gmail.com&quot;</span></span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/c/Users/Administrator/.ssh/id_rsa):</span><br><span class="line">Created directory &#x27;/c/Users/Administrator/.ssh&#x27;.</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in /c/Users/Administrator/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /c/Users/Administrator/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:XCaLfu3ooJjudPwsMqzPiYRAavGYKu1FDcWlE3ejcVE superman@gmail.com</span><br><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">+---[RSA 3072]----+</span><br><span class="line">|     .o.+ =oE    |</span><br><span class="line">|     ..+ = .     |</span><br><span class="line">| o  . o o o      |</span><br><span class="line">|o =  o + =       |</span><br><span class="line">|o+ .. o S        |</span><br><span class="line">|=. o .   .       |</span><br><span class="line">|+oo + o . .      |</span><br><span class="line">|o=+*.+ o o       |</span><br><span class="line">|o=Xo..o.o .      |</span><br><span class="line">+----[SHA256]-----+</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看公钥，并将你的公钥提供给 git 仓库管理员</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat ~/.ssh/id_rsa.pub</span></span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDTLVL3+iGf6cQRBIX3TdVOGjSaYGjcygxmgSIJ2Bek99+/h91RWXpJAPckqv0Gsx+txh8rLiPCI7Q3ap3VjkAN1facX7qoWPJ1D4Dx0QqGzlFyOfIDDf0wwmarkc+ZgDMwUUKqSZ8TZgDxD7dDeK9ng7x6nTR7FFpBbilBW4S3Tn4Dtz9Qd+tp4bY9TJjh7S4cLrMvLEqc6VirLtez6JZFgaZcI9GC8a2avtt9bCZX/gY1YMU9ZFvRRI2cA3tf5O4xx1lfIQDNi+G5VT/wNT1LJhkGtzA+2FjFeBP4vhJhgBN5j25i657ZPRBMID9JLqiShPSMeMZ7aU2vMArEDKnm1sya1cbtJFOM5iHnEhrWS91zxSfIyACK+g/8WH1ABCXKgmlpxgec2bNGTQ7RJep19SpV6Ko6gfjk54w+dzn4E+PX3pGYV827Iv84v27+8A1h0b0APXs42tiXI923INMgJ3H44dR38pI6yb9NT4FX8byViLMsQXUg1R5fpOOGmwM= superman@gmail.com</span><br></pre></td></tr></table></figure></li>
+<li><p>远程仓库的管理与克隆</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 仓库地址由管理员提供</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git@106.13.211.199:/home/git/test.git</span></span><br><span class="line">Cloning into &#x27;test&#x27;...</span><br><span class="line">warning: You appear to have cloned an empty repository.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> <span class="built_in">test</span>/</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库文件列表（目前这是一个空仓库）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls -al</span></span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x 1 Administrator 197121 0  2月 19 16:04 ./</span><br><span class="line">drwxr-xr-x 1 Administrator 197121 0  2月 19 16:04 ../</span><br><span class="line">drwxr-xr-x 1 Administrator 197121 0  2月 19 16:04 .git/  # 管理git仓库的文件夹</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 <span class="string">&quot;git remote&quot;</span> 帮助（所有的 git 命令都可以使用 -h 选项查看）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote -h</span></span><br><span class="line">usage: git remote [-v | --verbose]</span><br><span class="line">    or: git remote add [-t &lt;branch&gt;] [-m &lt;master&gt;] [-f] [--tags | --no-tags] [--mirror=&lt;fetch|push&gt;] &lt;name&gt; &lt;url&gt;</span><br><span class="line">    or: git remote rename &lt;old&gt; &lt;new&gt;</span><br><span class="line">    or: git remote remove &lt;name&gt;</span><br><span class="line">    or: git remote set-head &lt;name&gt; (-a | --auto | -d | --delete | &lt;branch&gt;)</span><br><span class="line">    or: git remote [-v | --verbose] show [-n] &lt;name&gt;</span><br><span class="line">    or: git remote prune [-n | --dry-run] &lt;name&gt;</span><br><span class="line">    or: git remote [-v | --verbose] update [-p | --prune] [(&lt;group&gt; | &lt;remote&gt;)...]</span><br><span class="line">    or: git remote set-branches [--add] &lt;name&gt; &lt;branch&gt;...</span><br><span class="line">    or: git remote get-url [--push] [--all] &lt;name&gt;</span><br><span class="line">    or: git remote set-url [--push] &lt;name&gt; &lt;newurl&gt; [&lt;oldurl&gt;]</span><br><span class="line">    or: git remote set-url --add &lt;name&gt; &lt;newurl&gt;</span><br><span class="line">    or: git remote set-url --delete &lt;name&gt; &lt;url&gt;</span><br><span class="line"></span><br><span class="line">    -v, --verbose         be verbose; must be placed before a subcommand</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库分支情况</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote</span></span><br><span class="line">origin</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库详细信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote -v</span></span><br><span class="line">origin  git@106.13.211.199:/home/git/test.git (fetch)   # 拉取地址，即：git pull的地址</span><br><span class="line">origin  git@106.13.211.199:/home/git/test.git (push)    # 推送地址，即：git push的地址</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 假设此时远程仓库有更新，本地需要更新与远程仓库保持同步</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br><span class="line">remote: Counting objects: 3, done.</span><br><span class="line">remote: Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">Unpacking objects: 100% (3/3), 221 bytes | 0 bytes/s, done.</span><br><span class="line">From 106.13.211.199:/home/git/test</span><br><span class="line">* [new branch]      master     -&gt; origin/master</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls -al</span></span><br><span class="line">total 9</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 19 16:21 ./</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 19 16:04 ../</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 19 16:21 .git/</span><br><span class="line">-rw-r--r-- 1 Administrator 197121 31  2月 19 16:21 aaa</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 简单修改文件（实际不建议直接修改master分支的内容）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;hello batman, I am superman&quot;</span> &gt;&gt; aaa</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将变更文件添加到暂存区</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add aaa</span></span><br><span class="line">warning: LF will be replaced by CRLF in aaa.</span><br><span class="line">The file will have its original line endings in your working directory</span><br><span class="line"><span class="meta">#</span><span class="bash"> 提交暂存区的文件并添加简单的提交信息（实际使用不建议使用<span class="string">&quot;git commit -m&quot;</span>，因为不能格式化输入提交信息）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">&quot;2nd commit:say hello to batman&quot;</span></span></span><br><span class="line">[master ebf69e2] 2nd commit:say hello to batman</span><br><span class="line">1 file changed, 1 insertion(+)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将本地更新推送到远程仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin</span></span><br><span class="line">Enumerating objects: 5, done.</span><br><span class="line">Counting objects: 100% (5/5), done.</span><br><span class="line">Delta compression using up to 4 threads</span><br><span class="line">Compressing objects: 100% (2/2), done.</span><br><span class="line">Writing objects: 100% (3/3), 292 bytes | 146.00 KiB/s, done.</span><br><span class="line">Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">To 106.13.211.199:/home/git/test.git</span><br><span class="line">ba6225d..ebf69e2  master -&gt; master</span><br></pre></td></tr></table></figure></li>
+<li><p>本地版本控制与基础操作练手</p>
+<p> 练手仓库路径：<code>E:\local</code></p>
+<p> git 仓库初始化/状态/添加/提交</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 仓库初始化</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git init</span></span><br><span class="line">Initialized empty Git repository in E:/local/.git/</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库文件列表（目前这是一个空仓库）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls -al</span></span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x 1 Administrator 197121 0  2月 19 17:04 ./</span><br><span class="line">drwxr-xr-x 1 Administrator 197121 0  2月 19 17:03 ../</span><br><span class="line">drwxr-xr-x 1 Administrator 197121 0  2月 19 17:04 .git/</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">No commits yet</span><br><span class="line">nothing to commit (create/copy files and use &quot;git add&quot; to track)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在该目录下新建一个文件之后，在其添加如下信息：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “create new file, file name:test.txt --- 1st commit”</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">No commits yet</span><br><span class="line">Untracked files: # 提示未追踪的文件，即该文件未在版本库中</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed) # 支持命令的提示</span><br><span class="line">        test.txt</span><br><span class="line">nothing added to commit but untracked files present (use &quot;git add&quot; to track)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 把文件添加到暂存区</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add test.txt</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">No commits yet</span><br><span class="line">Changes to be committed: # 提示改变但并未提交的文件</span><br><span class="line">(use &quot;git rm --cached &lt;file&gt;...&quot; to unstage) # 提示可以使用该命令将其从暂存区删除</span><br><span class="line">        new file:   test.txt</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 提交暂存区内容</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 以下为 vi编辑器 方式呈现，需要自行了解 vi编辑器 基础操作</span></span><br><span class="line">[feature] 1st commit</span><br><span class="line">[what] test local git test</span><br><span class="line">[why] nowhy</span><br><span class="line">[how]</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Please enter the commit message <span class="keyword">for</span> your changes. Lines starting</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> with <span class="string">&#x27;#&#x27;</span> will be ignored, and an empty message aborts the commit.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># On branch master</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Initial commit</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Changes to be committed:</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">       new file:   test.txt</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"></span></span><br><span class="line">[master (root-commit) bc42794] [feature] 1st commit [what] test local git test [why] nowhy [how]</span><br><span class="line">1 file changed, 1 insertion(+)</span><br><span class="line">create mode 100644 test.txt</span><br></pre></td></tr></table></figure>
+
+<p> git 比较/撤销/恢复</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 再次修改 test.txt 文件，添加如下内容：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “<span class="built_in">test</span> <span class="keyword">for</span> version control --- 2st commit”</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">(use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">        modified:   test.txt # 工作区与暂存器发生差异修改的文件</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看文件差异</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git diff test.txt</span></span><br><span class="line">diff --git a/test.txt b/test.txt</span><br><span class="line">index 11c6076..18e7cd8 100644</span><br><span class="line">--- a/test.txt</span><br><span class="line">+++ b/test.txt</span><br><span class="line">@@ -1 +1,3 @@</span><br><span class="line">-create new file, file name:test.txt --- 1st commit # &#x27;-&#x27; 为旧版本内容</span><br><span class="line">\ No newline at end of file</span><br><span class="line">+create new file, file name:test.txt --- 1st commit # &#x27;+&#x27; 为新版本内容</span><br><span class="line">+</span><br><span class="line">+test for version control --- 2st commit</span><br><span class="line">\ No newline at end of file</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时再次创建一个新的文件，文件名：2nd.txt，内容如下：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “create new file, file name:2nd.txt --- 2st commit”</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">(use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">        modified:   test.txt</span><br><span class="line">Untracked files:</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">        2nd.txt</span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 假设此时觉得 test.txt 的修改是多余的，现在需要撤销</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout -- test.txt</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看侧向后文件内容</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat test.txt</span></span><br><span class="line">create new file, file name:test.txt --- 1st commit</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">Untracked files:</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">        2nd.txt</span><br><span class="line">nothing added to commit but untracked files present (use &quot;git add&quot; to track)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时工作去 test.txt 文件已经被还原</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 再次修改 test.txt 添加如下内容并查看仓库状态：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="string">&quot;test for git reset&quot;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat test.txt</span></span><br><span class="line">create new file, file name:test.txt --- 1st commit</span><br><span class="line">test for git reset</span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">(use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">        modified:   test.txt</span><br><span class="line">Untracked files:</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">        2nd.txt</span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时眼疾手快的添加到暂存区并查看仓库状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add test.txt 2nd.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">Changes to be committed:</span><br><span class="line">(use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)</span><br><span class="line">        new file:   2nd.txt</span><br><span class="line">        modified:   test.txt</span><br><span class="line"><span class="meta">#</span><span class="bash"> 变更的内容已经添加到暂存区了，发现这两个修改不完全，还需要补充，需要还原到工作区</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 根据提示，可以使用 <span class="string">&quot;git restore&quot;</span> 还原，在旧版本 git 可以使用 <span class="string">&quot;git reset HEAD&quot;</span> 恢复</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git restore --staged test.txt 2nd.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">(use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">        modified:   test.txt</span><br><span class="line">Untracked files:</span><br><span class="line">(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">        2nd.txt</span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 再次修改 test.txt 后提交，此时内如如下：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat test.txt</span></span><br><span class="line">create new file, file name:test.txt --- 1st commit</span><br><span class="line">test for git reset --- 2st commit</span><br><span class="line"><span class="meta">$</span><span class="bash"> git add test.txt 2nd.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit</span></span><br><span class="line">[master 1aba0bc] test git command:git diff/checkout/restore --- 2nd commit</span><br><span class="line">2 files changed, 3 insertions(+), 1 deletion(-)</span><br><span class="line">create mode 100644 2nd.txt</span><br></pre></td></tr></table></figure>
+
+<p> git 日志/恢复</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看提交日志</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">log</span></span></span><br><span class="line">commit 1aba0bc1315ef4bac909fd6ab90a68e49df9aba8 (HEAD -&gt; master)    # HEAD 表示当前版本指向</span><br><span class="line">Author: superman &lt;superman@gmail.com&gt;                               # 版本提交人</span><br><span class="line">Date:   Thu Feb 20 15:21:15 2020 +0800                              # 版本提交实际</span><br><span class="line"></span><br><span class="line">    test git command:git diff/checkout/restore --- 2nd commit       # 版本提交备注</span><br><span class="line"></span><br><span class="line">commit bc42794d65e58cfa2cdc7637d8ce796002310275</span><br><span class="line">Author: superman &lt;superman@gmail.com&gt;</span><br><span class="line">Date:   Wed Feb 19 17:24:25 2020 +0800</span><br><span class="line"></span><br><span class="line">    [feature] 1st commit</span><br><span class="line">    [what] test local git test</span><br><span class="line">    [why] nowhy</span><br><span class="line">    [how]</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 版本恢复，详细内容参考：https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git reset --hard bc42794d65e58cfa2cdc7637d8ce796002310275</span></span><br><span class="line">HEAD is now at bc42794 [feature] 1st commit [what] test local git test [why] nowhy [how]</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库文件列表（目前已经恢复到第一次提交状态）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls -al</span></span><br><span class="line">total 9</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 20 16:41 ./</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 20 14:33 ../</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 20 16:41 .git/</span><br><span class="line">-rw-r--r-- 1 Administrator 197121 50  2月 20 16:41 test.txt</span><br><span class="line"><span class="meta">$</span><span class="bash"> cat test.txt</span></span><br><span class="line">create new file, file name:test.txt --- 1st commit</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 自行搜索讲解，详细内容参考：https://git-scm.com/docs/git-reflog</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git reflog</span></span><br><span class="line">bc42794 (HEAD -&gt; master) HEAD@&#123;0&#125;: reset: moving to bc42794d65e58cfa2cdc7637d8ce796002310275</span><br><span class="line">1aba0bc HEAD@&#123;1&#125;: commit: test git command:git diff/checkout/restore --- 2nd commit</span><br><span class="line">bc42794 (HEAD -&gt; master) HEAD@&#123;2&#125;: commit (initial): [feature] 1st commit</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 再次恢复到第二次提交</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git reset --hard 1aba0bc</span></span><br><span class="line">HEAD is now at 1aba0bc test git command:git diff/checkout/restore --- 2nd commit</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库文件列表（目前已经恢复到第二次提交状态）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls -al</span></span><br><span class="line">total 10</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 20 16:55 ./</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 20 14:33 ../</span><br><span class="line">drwxr-xr-x 1 Administrator 197121  0  2月 20 16:55 .git/</span><br><span class="line">-rw-r--r-- 1 Administrator 197121 49  2月 20 16:55 2nd.txt</span><br><span class="line">-rw-r--r-- 1 Administrator 197121 85  2月 20 16:55 test.txt</span><br><span class="line"><span class="meta">$</span><span class="bash"> cat test.txt</span></span><br><span class="line">create new file, file name:test.txt --- 1st commit</span><br><span class="line">test for git reset --- 2st commit</span><br><span class="line"><span class="meta">$</span><span class="bash"> cat 2nd.txt</span></span><br><span class="line">create new file, file name:2nd.txt --- 2st commit</span><br></pre></td></tr></table></figure></li>
+<li><p>分支管理与多人协作</p>
+<p> 分支合并没有冲突的情况：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 当前 git user 是 superman</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.name</span></span><br><span class="line">superman</span><br><span class="line"><span class="meta">#</span><span class="bash"> 从远程仓库更新本地仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br><span class="line">Already up to date.</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建切换一个分支，分支名:dev</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备注：新的 git 版本可以使用 <span class="string">&quot;git switch -c&quot;</span> 创建切换分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git switch -c dev</span></span><br><span class="line">Switched to a new branch &#x27;dev&#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 aaa 文件第二行，当前如下内容为：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “hello batman, I am superman, nice to meet you.”</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时文件 aaa 中的内容为</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “hello world 1st --- by batman”</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “hello batman, I am superman, nice to meet you.”</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加并提交</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add aaa</span></span><br><span class="line">warning: LF will be replaced by CRLF in aaa.</span><br><span class="line">The file will have its original line endings in your working directory</span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit aaa -m <span class="string">&quot;no conflict case --- 1st commit&quot;</span></span></span><br><span class="line">warning: LF will be replaced by CRLF in aaa.</span><br><span class="line">The file will have its original line endings in your working directory</span><br><span class="line">[dev 1a308d9] no conflict case --- 1st commit</span><br><span class="line">1 file changed, 1 insertion(+), 1 deletion(-)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 切换到主分支，新的 git 版本支持 <span class="string">&quot;git switch&quot;</span> 命令</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git switch master</span></span><br><span class="line">Switched to branch &#x27;master&#x27;</span><br><span class="line">Your branch is up to date with &#x27;origin/master&#x27;.</span><br><span class="line"><span class="meta">#</span><span class="bash"> 从远程仓库更新本地仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br><span class="line">Already up to date.</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将 dev 分支变更的内容合并到主分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git merge dev</span></span><br><span class="line">Updating ebf69e2..1a308d9</span><br><span class="line">Fast-forward</span><br><span class="line">aaa | 2 +-</span><br><span class="line">1 file changed, 1 insertion(+), 1 deletion(-)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">Your branch is ahead of &#x27;origin/master&#x27; by 1 commit.</span><br><span class="line">(use &quot;git push&quot; to publish your local commits)</span><br><span class="line">nothing to commit, working tree clean</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将本地更新推送到远程仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin</span></span><br><span class="line">Enumerating objects: 5, done.</span><br><span class="line">Counting objects: 100% (5/5), done.</span><br><span class="line">Delta compression using up to 4 threads</span><br><span class="line">Compressing objects: 100% (2/2), done.</span><br><span class="line">Writing objects: 100% (3/3), 309 bytes | 309.00 KiB/s, done.</span><br><span class="line">Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">To 106.13.211.199:/home/git/test.git</span><br><span class="line">ebf69e2..1a308d9  master -&gt; master</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除 dev 分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch -d dev</span></span><br><span class="line">Deleted branch dev (was 1a308d9).</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看当前分支状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch</span></span><br><span class="line">* master</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 当前 git user 是 batman</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.name</span></span><br><span class="line">batman</span><br><span class="line"><span class="meta">#</span><span class="bash"> 从远程仓库更新本地仓库（刚刚superman变更的内容已经更新到本地）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br><span class="line">remote: Counting objects: 3, done.</span><br><span class="line">remote: Compressing objects: 100% (2/2), done.</span><br><span class="line">remote: Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">Unpacking objects: 100% (3/3), done.</span><br><span class="line">From 106.13.211.199:/home/git</span><br><span class="line">ebf69e2..1a308d9  master     -&gt; origin/master</span><br><span class="line">Updating ebf69e2..1a308d9</span><br><span class="line">Fast-forward</span><br><span class="line">aaa | 2 +-</span><br><span class="line">1 file changed, 1 insertion(+), 1 deletion(-)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建切换一个分支，分支名:dev</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备注：这是较旧的 git 版本，所以分支创建的命令是 <span class="string">&quot;git checkout -b&quot;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout -b dev</span></span><br><span class="line">Switched to a new branch &#x27;dev&#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 aaa 文件第三行，添加如下内容为：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “hi, superman, nice to meet you too.”</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时文件 aaa 中的内容为</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “hello world 1st --- by batman”</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “hello batman, I am superman, nice to meet you.”</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> “hi, superman, nice to meet you too.”</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加并提交</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add aaa</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">&quot;no conflict case --- 2nd commit&quot;</span></span></span><br><span class="line">[dev d09bd2d] no conflict case --- 2nd commit</span><br><span class="line">1 file changed, 1 insertion(+)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 切换到主分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout master</span></span><br><span class="line">Switched to branch &#x27;master&#x27;</span><br><span class="line">Your branch is up to date with &#x27;origin/master&#x27;.</span><br><span class="line"><span class="meta">#</span><span class="bash"> 从远程仓库更新本地仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br><span class="line">Already up to date.</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将 dev 分支变更的内容合并到主分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git merge dev</span></span><br><span class="line">Updating 1a308d9..d09bd2d</span><br><span class="line">Fast-forward</span><br><span class="line">aaa | 1 +</span><br><span class="line">1 file changed, 1 insertion(+)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看仓库状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">Your branch is ahead of &#x27;origin/master&#x27; by 1 commit.</span><br><span class="line">(use &quot;git push&quot; to publish your local commits)</span><br><span class="line">nothing to commit, working tree clean</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将本地更新推送到远程仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin</span></span><br><span class="line">Counting objects: 3, done.</span><br><span class="line">Compressing objects: 100% (2/2), done.</span><br><span class="line">Writing objects: 100% (3/3), 314 bytes | 314.00 KiB/s, done.</span><br><span class="line">Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">To 106.13.211.199:/home/git.git</span><br><span class="line">1a308d9..d09bd2d  master -&gt; master</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除 dev 分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch -d dev</span></span><br><span class="line">Deleted branch dev (was d09bd2d).</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看当前分支状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch</span></span><br><span class="line">* master</span><br></pre></td></tr></table></figure>
+
+<p> 承接如上状态，查看出现冲突情况：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 当前远程仓库内容如下：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat aaa</span></span><br><span class="line">hello world 1st --- by batman</span><br><span class="line">hello batman, I am superman, nice to meet you.</span><br><span class="line">hi, superman, nice to meet you too.</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 当前 git user 是 superman</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.name</span></span><br><span class="line">superman</span><br><span class="line"><span class="meta">$</span><span class="bash"> cat aaa</span></span><br><span class="line">hello world 1st --- by batman</span><br><span class="line">hello batman, I am superman, nice to meet you.</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建切换一个分支，分支名:dev</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git switch -c dev</span></span><br><span class="line">Switched to a new branch &#x27;dev&#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 aaa 文件第三四行，添加如下内容为：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> are you online ??? --- by superman</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> answer me... --- by superman</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此时文件 aaa 中的内容为</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> hello world 1st --- by batman</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> hello batman, I am superman, nice to meet you.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> are you online ??? --- by superman</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> answer me... --- by superman</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加并提交</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -a -m <span class="string">&quot;request batman&#x27;s answer --- by superman&quot;</span></span></span><br><span class="line">[dev 079da0e] request batman&#x27;s answer --- by superman</span><br><span class="line">1 file changed, 2 insertions(+)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 切换到主分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git switch master</span></span><br><span class="line">Switched to branch &#x27;master&#x27;</span><br><span class="line">Your branch is up to date with &#x27;origin/master&#x27;.</span><br><span class="line"><span class="meta">#</span><span class="bash"> 从远程仓库更新本地仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br><span class="line">remote: Counting objects: 3, done.</span><br><span class="line">remote: Compressing objects: 100% (2/2), done.</span><br><span class="line">remote: Total 3 (delta 0), reused 0 (delta 0)</span><br><span class="line">Unpacking objects: 100% (3/3), 294 bytes | 1024 bytes/s, done.</span><br><span class="line">From 106.13.211.199:/home/git/test</span><br><span class="line">1a308d9..d09bd2d  master     -&gt; origin/master</span><br><span class="line">Updating 1a308d9..d09bd2d</span><br><span class="line">Fast-forward</span><br><span class="line">aaa | 1 +</span><br><span class="line">1 file changed, 1 insertion(+)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将 dev 分支变更的内容合并到主分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git merge dev</span></span><br><span class="line">Auto-merging aaa</span><br><span class="line">CONFLICT (content): Merge conflict in aaa</span><br><span class="line">Automatic merge failed; fix conflicts and then commit the result. # 自动合并失败，需要解决冲突</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看冲突文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vi aaa</span></span><br><span class="line">hello world 1st --- by batman</span><br><span class="line">hello batman, I am superman, nice to meet you.</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD    # 当前最新版本内容</span><br><span class="line">hi, superman, nice to meet you too.</span><br><span class="line">=======         # 分割线</span><br><span class="line">are you online ??? --- by superman</span><br><span class="line">answer me... --- by superman</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt;&gt;&gt;&gt;&gt; dev     <span class="comment"># dev分支版本</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">整改后的分支内容</span></span><br><span class="line">hello world 1st --- by batman</span><br><span class="line">hello batman, I am superman, nice to meet you.</span><br><span class="line">hi, superman, nice to meet you too.</span><br><span class="line">are you online ??? --- by superman</span><br><span class="line">answer me... --- by superman</span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加并提交</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -a -m <span class="string">&quot;fix conlicts --- by superman&quot;</span></span></span><br><span class="line">[master 0e0b607] fix conlicts --- by superman</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将本地更新推送到远程仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin</span></span><br><span class="line">Enumerating objects: 10, done.</span><br><span class="line">Counting objects: 100% (10/10), done.</span><br><span class="line">Delta compression using up to 4 threads</span><br><span class="line">Compressing objects: 100% (4/4), done.</span><br><span class="line">Writing objects: 100% (6/6), 599 bytes | 119.00 KiB/s, done.</span><br><span class="line">Total 6 (delta 1), reused 0 (delta 0)</span><br><span class="line">To 106.13.211.199:/home/git/test.git</span><br><span class="line">d09bd2d..0e0b607  master -&gt; master</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除 dev 分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch -d dev</span></span><br><span class="line">Deleted branch dev (was 079da0e).</span><br></pre></td></tr></table></figure></li>
+<li><p>其他</p>
+<p> git 思维导图：<a target="_blank" rel="noopener" href="https://github.com/Kuri-su/GitMindMap-command">https://github.com/Kuri-su/GitMindMap-command</a></p>
+<p> git 视频教程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av24441039/">https://www.bilibili.com/video/av24441039/</a></p>
+<p> gitee：<a target="_blank" rel="noopener" href="https://gitee.com/">https://gitee.com/</a></p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/14/git-server/" rel="prev" title="git server 基础操作">
+      <i class="fa fa-chevron-left"></i> git server 基础操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/22/ubuntu-ssh/" rel="next" title="ubuntu SSH Server 配置">
+      ubuntu SSH Server 配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">客户端操作</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

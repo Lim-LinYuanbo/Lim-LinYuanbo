@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="维基百科说明：面向对象设计 面向对象的三大特性：继承、封装、多态，虽然在重要的面向对象编程语言中没有C语言，但是很多代码实现中依然有面向对象设计的思想，以此记录一下学习笔记。 继承维基百科说明：继承  继承（英语：inheritance）是面向对象软件技术当中的一个概念。如果一个类别B“继承自”另一个类别A，就把这个B称为“A的子类”，而把A称为“B的父类别”也可以称“A是B的超类”。继承可以使得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象设计">
+<meta property="og:url" content="http://example.com/2021/05/01/object-oriented-design/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="维基百科说明：面向对象设计 面向对象的三大特性：继承、封装、多态，虽然在重要的面向对象编程语言中没有C语言，但是很多代码实现中依然有面向对象设计的思想，以此记录一下学习笔记。 继承维基百科说明：继承  继承（英语：inheritance）是面向对象软件技术当中的一个概念。如果一个类别B“继承自”另一个类别A，就把这个B称为“A的子类”，而把A称为“B的父类别”也可以称“A是B的超类”。继承可以使得">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T13:18:12.649Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/05/01/object-oriented-design/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>面向对象设计 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/01/object-oriented-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向对象设计
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-01T00:00:00+00:00">2021-05-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RTOS/" itemprop="url" rel="index"><span itemprop="name">RTOS</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>维基百科说明：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Object-oriented_programming">面向对象设计</a></p>
+<p>面向对象的三大特性：继承、封装、多态，虽然在重要的面向对象编程语言中没有C语言，但是很多代码实现中依然有面向对象设计的思想，以此记录一下学习笔记。</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>维基百科说明：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)">继承</a></p>
+<blockquote>
+<p>继承（英语：inheritance）是面向对象软件技术当中的一个概念。如果一个类别B“继承自”另一个类别A，就把这个B称为“A的子类”，而把A称为“B的父类别”也可以称“A是B的超类”。继承可以使得子类具有父类别的各种属性和方法，而不需要再次编写相同的代码。在令子类别继承父类别的同时，可以重新定义某些属性，并重写某些方法，即覆盖父类别的原有属性和方法，使其获得与父类别不同的功能。另外，为子类追加新的属性和方法也是常见的做法。 一般静态的面向对象编程语言，继承属于静态的，意即在子类的行为在编译期就已经决定，无法在运行期扩展。</p>
+<p>有些编程语言支持多重继承，即一个子类可以同时有多个父类，比如C++编程语言；而在有些编程语言中，一个子类只能继承自一个父类，比如Java编程语言，这时可以透过实现接口来实现与多重继承相似的效果。</p>
+<p>现今面向对象程序设计技巧中，继承并非以继承类别的“行为”为主，而是继承类别的“类型”，使得组件的类型一致。另外在设计模式中提到一个守则，“多用合成，少用继承”，此守则也是用来处理继承无法在运行期动态扩展行为的遗憾。</p>
+</blockquote>
+<p>个人理解：假设有两个相似数据结构，把他们共同的地方抽象出来作为基类，原来两个相似的数据结构包着这个基类数据结构，那么就是简单的继承了，以下是 rt-thread 的实现，多种通信方式都继承了 <code>struct rt_ipc_object</code> 这个数据结构。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_object</span> <span class="title">parent</span>;</span>                            <span class="comment">/**&lt; inherit from rt_object */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_list_t</span>        suspend_thread;                    <span class="comment">/**&lt; threads pended on this resource */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_semaphore</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span> <span class="title">parent</span>;</span>                        <span class="comment">/**&lt; inherit from ipc_object */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          value;                         <span class="comment">/**&lt; value of semaphore. */</span></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          reserved;                      <span class="comment">/**&lt; reserved field */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_mutex</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span> <span class="title">parent</span>;</span>                        <span class="comment">/**&lt; inherit from ipc_object */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          value;                         <span class="comment">/**&lt; value of mutex */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint8_t</span>           original_priority;             <span class="comment">/**&lt; priority of last thread hold the mutex */</span></span><br><span class="line">    <span class="keyword">rt_uint8_t</span>           hold;                          <span class="comment">/**&lt; numbers of thread hold the mutex */</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_thread</span>    *<span class="title">owner</span>;</span>                         <span class="comment">/**&lt; current owner of mutex */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_event</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span> <span class="title">parent</span>;</span>                        <span class="comment">/**&lt; inherit from ipc_object */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint32_t</span>          <span class="built_in">set</span>;                           <span class="comment">/**&lt; event set */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_mailbox</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span> <span class="title">parent</span>;</span>                        <span class="comment">/**&lt; inherit from ipc_object */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_ubase_t</span>          *msg_pool;                      <span class="comment">/**&lt; start address of message buffer */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          size;                          <span class="comment">/**&lt; size of message pool */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          entry;                         <span class="comment">/**&lt; index of messages in msg_pool */</span></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          in_offset;                     <span class="comment">/**&lt; input offset of the message buffer */</span></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          out_offset;                    <span class="comment">/**&lt; output offset of the message buffer */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_list_t</span>            suspend_sender_thread;         <span class="comment">/**&lt; sender thread suspended on this mailbox */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_messagequeue</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span> <span class="title">parent</span>;</span>                        <span class="comment">/**&lt; inherit from ipc_object */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span>                *msg_pool;                      <span class="comment">/**&lt; start address of message queue */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          msg_size;                      <span class="comment">/**&lt; message size of each message */</span></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          max_msgs;                      <span class="comment">/**&lt; max number of messages */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>          entry;                         <span class="comment">/**&lt; index of messages in the queue */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span>                *msg_queue_head;                <span class="comment">/**&lt; list head */</span></span><br><span class="line">    <span class="keyword">void</span>                *msg_queue_tail;                <span class="comment">/**&lt; list tail */</span></span><br><span class="line">    <span class="keyword">void</span>                *msg_queue_free;                <span class="comment">/**&lt; pointer indicated the free node of queue */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_list_t</span>            suspend_sender_thread;         <span class="comment">/**&lt; sender thread suspended on this message queue */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>维基百科说明：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)">封装</a></p>
+<blockquote>
+<p>在面向对象编程方法中，封装（英语：Encapsulation）是指，一种将抽象性函数接口的实现细节部分包装、隐藏起来的方法。同时，它也是一种防止外界调用端，去访问对象内部实现细节的手段，这个手段是由编程语言本身来提供的。封装被视为是面向对象的四项原则之一。</p>
+<p>适当的封装，可以将对象使用接口的程序实现部分隐藏起来，不让用户看到，同时确保用户无法任意更改对象内部的重要资料，若想接触资料只能通过公开接入方法（Publicly accessible methods）的方式（ 如：”getters” 和”setters”）。它可以让代码更容易理解与维护，也加强了代码的安全性。</p>
+</blockquote>
+<p>个人理解：内核中的原子操作具体实现如下（32位x86平台下atomic API在arch/x86/include/asm/atomic_32.h中实现），虽然C语言没有 private 的结构体成语描述方法，但是在原子操作中，应该也没有人直接访问结构体成员，而是通过系统的接口进行原子操作，具体实现如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int</span> counter; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">atomic_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ATOMIC_INIT(i) &#123; (i) &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">atomic_read</span><span class="params">(<span class="keyword">const</span> <span class="keyword">atomic_t</span> *v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v-&gt;counter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">atomic_set</span><span class="params">(<span class="keyword">atomic_t</span> *v, <span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    v-&gt;counter = i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>维基百科说明：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Polymorphism_(computer_science)">多态</a></p>
+<blockquote>
+<p>在编程语言和类型论中，多态（英语：polymorphism）指为不同数据类型的实体提供统一的接口，或使用一个单一的符号来表示多个不同的类型。</p>
+</blockquote>
+<p>个人理解：各种不同的继承者，调用他们各自不通的实现方式，以 rt-thread 中设备框架模型作为理解，代码实现如下：</p>
+<p>所有的设备的基类 <code>struct rt_device</code>， 串行数据设备 <code>struct rt_serial_device</code>， I2C总线设备 <code>struct rt_i2c_bus_device</code>， SPI总线设备 <code>struct rt_spi_bus</code>，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_device</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_object</span>          <span class="title">parent</span>;</span>                   <span class="comment">/**&lt; inherit from rt_object */</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">rt_device_class_type</span> <span class="title">type</span>;</span>                     <span class="comment">/**&lt; device type */</span></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>               flag;                     <span class="comment">/**&lt; device flag */</span></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>               open_flag;                <span class="comment">/**&lt; device open flag */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">rt_uint8_t</span>                ref_count;                <span class="comment">/**&lt; reference count */</span></span><br><span class="line">    <span class="keyword">rt_uint8_t</span>                device_id;                <span class="comment">/**&lt; 0 - 255 */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* device call back */</span></span><br><span class="line">    <span class="keyword">rt_err_t</span> (*rx_indicate)(<span class="keyword">rt_device_t</span> dev, <span class="keyword">rt_size_t</span> size);</span><br><span class="line">    <span class="keyword">rt_err_t</span> (*tx_complete)(<span class="keyword">rt_device_t</span> dev, <span class="keyword">void</span> *buffer);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> RT_USING_DEVICE_OPS</span></span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_device_ops</span> *<span class="title">ops</span>;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="comment">/* common device interface */</span></span><br><span class="line">    <span class="keyword">rt_err_t</span>  (*init)   (<span class="keyword">rt_device_t</span> dev);</span><br><span class="line">    <span class="keyword">rt_err_t</span>  (*open)   (<span class="keyword">rt_device_t</span> dev, <span class="keyword">rt_uint16_t</span> oflag);</span><br><span class="line">    <span class="keyword">rt_err_t</span>  (*close)  (<span class="keyword">rt_device_t</span> dev);</span><br><span class="line">    <span class="keyword">rt_size_t</span> (*read)   (<span class="keyword">rt_device_t</span> dev, <span class="keyword">rt_off_t</span> pos, <span class="keyword">void</span> *buffer, <span class="keyword">rt_size_t</span> size);</span><br><span class="line">    <span class="keyword">rt_size_t</span> (*write)  (<span class="keyword">rt_device_t</span> dev, <span class="keyword">rt_off_t</span> pos, <span class="keyword">const</span> <span class="keyword">void</span> *buffer, <span class="keyword">rt_size_t</span> size);</span><br><span class="line">    <span class="keyword">rt_err_t</span>  (*control)(<span class="keyword">rt_device_t</span> dev, <span class="keyword">int</span> cmd, <span class="keyword">void</span> *args);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(RT_USING_POSIX)</span></span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">dfs_file_ops</span> *<span class="title">fops</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_wqueue</span> <span class="title">wait_queue</span>;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span>                     *user_data;                <span class="comment">/**&lt; device private data */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_serial_device</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_device</span>          <span class="title">parent</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_uart_ops</span> *<span class="title">ops</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">serial_configure</span>   <span class="title">config</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> *serial_rx;</span><br><span class="line">    <span class="keyword">void</span> *serial_tx;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_i2c_bus_device</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_device</span> <span class="title">parent</span>;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_i2c_bus_device_ops</span> *<span class="title">ops</span>;</span></span><br><span class="line">    <span class="keyword">rt_uint16_t</span>  flags;</span><br><span class="line">    <span class="keyword">rt_uint16_t</span>  addr;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_mutex</span> <span class="title">lock</span>;</span></span><br><span class="line">    <span class="keyword">rt_uint32_t</span>  timeout;</span><br><span class="line">    <span class="keyword">rt_uint32_t</span>  retries;</span><br><span class="line">    <span class="keyword">void</span> *priv;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_spi_bus</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_device</span> <span class="title">parent</span>;</span></span><br><span class="line">    <span class="keyword">rt_uint8_t</span> mode;</span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_spi_ops</span> *<span class="title">ops</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_mutex</span> <span class="title">lock</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rt_spi_device</span> *<span class="title">owner</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在 rt-thread 中，虽然应用层调用一样的方法，但是因为数据结构的不一样，他对于底层实现的方法也不一样，所以实现的功能也不一样，使用方法顺序如下：</p>
+<ol>
+<li>通过寻找设备句柄 <code>rt_device_t rt_device_find(const char* name);</code>；</li>
+<li>打开设备 <code>rt_err_t rt_device_open(rt_device_t dev, rt_uint16_t oflags);</code>；</li>
+<li>控制设备 <code>rt_err_t rt_device_control(rt_device_t dev, rt_uint8_t cmd, void* arg);</code>；</li>
+<li>关闭设备 <code>rt_err_t rt_device_close(rt_device_t dev);</code>；</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/08/stm32-upgrade/" rel="prev" title="STM32 的三种升级方式比较与记录">
+      <i class="fa fa-chevron-left"></i> STM32 的三种升级方式比较与记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/03/observer-parttern/" rel="next" title="观察者模式">
+      观察者模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">1.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%80%81"><span class="nav-number">3.</span> <span class="nav-text">多态</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

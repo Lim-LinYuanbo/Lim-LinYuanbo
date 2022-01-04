@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近正在找工作，每个网站都按指定格式填写实在麻烦，所以使用 markdown 写好之后，转成 PDF 然后上传，让网站自己识别就简单而且方便很多了。 visual studio code 插件：  Markdown All in One：实时预览工具 Markdown Emoji：让 markdown 支持 emoji Markdown PDF：将 md 转 pdf markdownlint：格">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 markdown 编写简历">
+<meta property="og:url" content="http://example.com/2020/06/03/the-markdown-resume/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最近正在找工作，每个网站都按指定格式填写实在麻烦，所以使用 markdown 写好之后，转成 PDF 然后上传，让网站自己识别就简单而且方便很多了。 visual studio code 插件：  Markdown All in One：实时预览工具 Markdown Emoji：让 markdown 支持 emoji Markdown PDF：将 md 转 pdf markdownlint：格">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-03T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T13:18:12.649Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MISC">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/06/03/the-markdown-resume/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>使用 markdown 编写简历 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/03/the-markdown-resume/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 markdown 编写简历
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-06-03 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-03T00:00:00+00:00">2020-06-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MISC/" itemprop="url" rel="index"><span itemprop="name">MISC</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>最近正在找工作，每个网站都按指定格式填写实在麻烦，所以使用 markdown 写好之后，转成 PDF 然后上传，让网站自己识别就简单而且方便很多了。</p>
+<p>visual studio code 插件：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one">Markdown All in One</a>：实时预览工具</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji">Markdown Emoji</a>：让 markdown 支持 emoji</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=yzane.markdown-pdf">Markdown PDF</a>：将 md 转 pdf</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint">markdownlint</a>：格式检查</li>
+</ol>
+<p>chrome 插件：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk">Markdown Viewer</a>：让 chrome 支持 md 文件实时预览</li>
+</ol>
+</blockquote>
+<hr>
+<h2 id="姓名"><a href="#姓名" class="headerlink" title="姓名"></a><strong>姓名</strong></h2><p>性别 | 年龄 | 本科 | X年工作经验</p>
+<p>:iphone: 135xxxxxxxx | :email: <a href="mailto:&#101;&#x78;&#97;&#109;&#x70;&#x6c;&#101;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#101;&#x78;&#97;&#109;&#x70;&#x6c;&#101;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a> | :house: blog.example.com</p>
+<p>籍贯：广西贺州 | 政治面貌：群众</p>
+<h2 id="教育经历"><a href="#教育经历" class="headerlink" title="教育经历"></a><strong>教育经历</strong></h2><p><strong>20xx.xx - 20xx.xx</strong> <strong>学位一</strong> <strong>大学一</strong> <strong>专业一</strong></p>
+<p><strong>20xx.xx - 20xx.xx</strong> <strong>学位二</strong> <strong>大学二</strong> <strong>专业二</strong></p>
+<h2 id="校内经历"><a href="#校内经历" class="headerlink" title="校内经历"></a><strong>校内经历</strong></h2><p><strong>20xx.xx - 20xx.xx</strong> <strong>xx社团一</strong></p>
+<p style="text-indent:2em">社团一工作与经历</p>
+
+<p><strong>20xx.xx - 20xx.xx</strong> <strong>xx社团二</strong></p>
+<p style="text-indent:2em">社团二工作与经历</p>
+
+<p><strong>20xx.xx</strong> <strong>xx竞赛一</strong> <strong>x等奖</strong></p>
+<p><strong>20xx.xx</strong> <strong>xx竞赛二</strong> <strong>x等奖</strong></p>
+<h2 id="工作经历"><a href="#工作经历" class="headerlink" title="工作经历"></a><strong>工作经历</strong></h2><p><strong>20xx.xx - 20xx.xx</strong> <strong>公司名称一</strong></p>
+<ol>
+<li>工作职责一；</li>
+<li>工作职责二；</li>
+<li>工作职责三；</li>
+</ol>
+<p><strong>20xx.xx - 20xx.xx</strong> <strong>公司名称二</strong></p>
+<ol>
+<li>工作职责一；</li>
+<li>工作职责二；</li>
+<li>工作职责三；</li>
+</ol>
+<h2 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a><strong>项目经历</strong></h2><p><strong>20xx.xx - 20xx.xx</strong> <strong>项目名称一</strong> <strong>项目职能一</strong></p>
+<p>项目描述：</p>
+<p style="text-indent:2em">项目描述。</p>
+
+<p>责任描述：</p>
+<ol>
+<li>项目工作描述一；</li>
+<li>项目工作描述二。</li>
+<li>项目工作描述三。</li>
+</ol>
+<p><strong>20xx.xx - 20xx.xx</strong> <strong>项目名称二</strong> <strong>项目职能二</strong></p>
+<p>项目描述：</p>
+<p style="text-indent:2em">项目描述。</p>
+
+<p>责任描述：</p>
+<ol>
+<li>项目工作描述一；</li>
+<li>项目工作描述二。</li>
+<li>项目工作描述三。</li>
+</ol>
+<h2 id="获奖情况"><a href="#获奖情况" class="headerlink" title="获奖情况"></a><strong>获奖情况</strong></h2><p><strong>20xx.xx</strong> <strong>年度优秀员工</strong></p>
+<p><strong>20xx.xx</strong> <strong>年度优秀员工</strong></p>
+<h2 id="个人技能"><a href="#个人技能" class="headerlink" title="个人技能"></a><strong>个人技能</strong></h2><ol>
+<li>个人技能一。</li>
+<li>个人技能二。</li>
+<li>个人技能三。</li>
+</ol>
+<h2 id="自我评价"><a href="#自我评价" class="headerlink" title="自我评价"></a><strong>自我评价</strong></h2><p>喜欢接触新事物，学习新知识，总结所学，记录于博客，同时分享给大家。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MISC/" rel="tag"># MISC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/23/jekyll-install/" rel="prev" title="jekyll 安装笔记">
+      <i class="fa fa-chevron-left"></i> jekyll 安装笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/03/cmd-update-alternatives/" rel="next" title="update-alternatives（python版本替换实例）">
+      update-alternatives（python版本替换实例） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A7%93%E5%90%8D"><span class="nav-number">1.</span> <span class="nav-text">姓名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%99%E8%82%B2%E7%BB%8F%E5%8E%86"><span class="nav-number">2.</span> <span class="nav-text">教育经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%A1%E5%86%85%E7%BB%8F%E5%8E%86"><span class="nav-number">3.</span> <span class="nav-text">校内经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E7%BB%8F%E5%8E%86"><span class="nav-number">4.</span> <span class="nav-text">工作经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%8F%E5%8E%86"><span class="nav-number">5.</span> <span class="nav-text">项目经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%A5%96%E6%83%85%E5%86%B5"><span class="nav-number">6.</span> <span class="nav-text">获奖情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%8A%80%E8%83%BD"><span class="nav-number">7.</span> <span class="nav-text">个人技能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E6%88%91%E8%AF%84%E4%BB%B7"><span class="nav-number">8.</span> <span class="nav-text">自我评价</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

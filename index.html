@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/04/jlink-gdb-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/04/jlink-gdb-server/" class="post-title-link" itemprop="url">JLink GDB Server 常用操作记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-04T00:00:00+00:00">2021-12-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="JLink-GDB-Server-常用操作记录"><a href="#JLink-GDB-Server-常用操作记录" class="headerlink" title="JLink GDB Server 常用操作记录"></a>JLink GDB Server 常用操作记录</h2><h3 id="JLink-安装"><a href="#JLink-安装" class="headerlink" title="JLink 安装"></a>JLink 安装</h3><p>主机系统：Ubuntu 20.04.3 LTS</p>
+<p>目标主板：<a target="_blank" rel="noopener" href="http://www.openedv.com/docs/boards/stm32/zdyz_stm32f103_warship.html">stm32f103战舰开发板</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.segger.com/downloads/jlink/">https://www.segger.com/downloads/jlink/</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/04/jlink-gdb-server/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/29/jlink-commander/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/29/jlink-commander/" class="post-title-link" itemprop="url">JLink Commander 常用操作记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-11-29 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-29T00:00:00+00:00">2021-11-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Link-Commander-常用操作记录"><a href="#Link-Commander-常用操作记录" class="headerlink" title="Link Commander 常用操作记录"></a>Link Commander 常用操作记录</h2><h3 id="JLink-安装"><a href="#JLink-安装" class="headerlink" title="JLink 安装"></a>JLink 安装</h3><p>主机系统：Ubuntu 20.04.3 LTS</p>
+<p>目标主板：<a target="_blank" rel="noopener" href="http://www.openedv.com/docs/boards/stm32/zdyz_stm32f103_warship.html">stm32f103战舰开发板</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.segger.com/downloads/jlink/">https://www.segger.com/downloads/jlink/</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下载 &amp; 安装 (略)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认安装路径：/opt/SEGGER</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 连接 JLink V2 之后查看,查看 USB 列表</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lsusb</span></span><br><span class="line">Bus 003 Device 016: ID 1366:0105 SEGGER J-Link_J-Link V9.3 Plus</span><br></pre></td></tr></table></figure>
+
+<h3 id="JLinkExe-常用指令与备注"><a href="#JLinkExe-常用指令与备注" class="headerlink" title="JLinkExe 常用指令与备注"></a>JLinkExe 常用指令与备注</h3><p>参考：<a target="_blank" rel="noopener" href="https://wiki.segger.com/J-Link_Commander">J-Link Commander</a></p>
+<table>
+<thead>
+<tr>
+<th>命令(long)</th>
+<th>命令(short)</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Connect</td>
+<td>Con</td>
+<td>连接设备</td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Device</td>
+<td>选择模板芯片，可选择芯片见<code>JLinkDevices.xml</code>文件</td>
+</tr>
+<tr>
+<td>SelectInterface</td>
+<td>SI</td>
+<td>选择连接接口，例如：SWD，JTAG等等</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Speed</td>
+<td>设置连接速度，单位：KHz</td>
+</tr>
+<tr>
+<td>Halt</td>
+<td>H</td>
+<td>暂停CPU，似乎可以用于已经正常运作的情况</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>G</td>
+<td>Start CPU if halted</td>
+</tr>
+<tr>
+<td>Reset</td>
+<td>R</td>
+<td>Reset CPU</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>S</td>
+<td>单步运行，单步运行汇编指令</td>
+</tr>
+<tr>
+<td>Regs</td>
+<td>Regs</td>
+<td>Display CPU register contents</td>
+</tr>
+<tr>
+<td>RReg</td>
+<td>RReg</td>
+<td>读取CPU寄存器，例如：RReg 0，读取R0寄存器</td>
+</tr>
+<tr>
+<td>Mem</td>
+<td>Mem</td>
+<td>读取内存，例如：Mem 0x8000000 8，读取 0x8000000 8字节</td>
+</tr>
+<tr>
+<td>Erase</td>
+<td>Erase</td>
+<td>略，<code>Syntax:Erase [&lt;SAddr&gt;, &lt;EAddr&gt;]</code></td>
+</tr>
+<tr>
+<td>LoadFile</td>
+<td>LoadFile</td>
+<td>略，<code>Syntax:LoadFile &lt;FileName&gt;, [&lt;Addr(.bin only)&gt;]</code></td>
+</tr>
+<tr>
+<td>SaveBin</td>
+<td>SaveBin</td>
+<td>略，<code>Syntax:SaveBin &lt;filename&gt;, &lt;addr&gt;, &lt;NumBytes&gt;</code></td>
+</tr>
+<tr>
+<td>VerifyBin</td>
+<td>VerifyBin</td>
+<td>略，<code>Syntax:VerifyBin &lt;filename&gt;, &lt;addr&gt;</code></td>
+</tr>
+</tbody></table>
+<h3 id="实操测试记录"><a href="#实操测试记录" class="headerlink" title="实操测试记录"></a>实操测试记录</h3><ol>
+<li><p>连接 J-Link 查看是否连接正常</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入 J-Link Commander</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> JLinkExe</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">?</span></span><br><span class="line">Available commands are:</span><br><span class="line">----------------------</span><br><span class="line">f          Firmware info # 查看固件信息,通过这条指令也可以判断 J-Link 是否连接正常</span><br><span class="line">hwinfo     Show hardware info # 查看硬件(J-Link)信息</span><br><span class="line"><span class="meta">#</span><span class="bash"> 实例</span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">f</span></span><br><span class="line">Firmware: J-Link V9 compiled May  7 2021 16:26:12</span><br><span class="line">Hardware: V9.20</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">hwinfo</span></span><br><span class="line">HWInfo[00] = Target power is enabled</span><br><span class="line">HWInfo[02] = 74mA       (ITarget)</span><br><span class="line">HWInfo[03] = 328mA      (ITargetPeak)</span><br><span class="line">HWInfo[04] = 328mA      (ITargetPeakOperation)</span><br><span class="line">HWInfo[10] = 0ms        (ITargetMaxTime0)</span><br><span class="line">HWInfo[11] = 0ms        (ITargetMaxTime1)</span><br><span class="line">HWInfo[12] = 0ms        (ITargetMaxTime2)</span><br><span class="line">HWInfo[13] = 0x00012189</span><br></pre></td></tr></table></figure></li>
+<li><p>连接目标设备</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 导出支持的设备列表,路径似乎需要使用绝对路径,</span></span><br><span class="line">ExpDevList Exports the device names from the DLL internal</span><br><span class="line">           device list to a text file</span><br><span class="line">             Syntax: ExpDevList &lt;Filename&gt;</span><br><span class="line">ExpDevListXML Exports the device names from the DLL internal</span><br><span class="line">           device list to a text file in XML format</span><br><span class="line">             Syntax: ExpDevListXML &lt;Filename&gt;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 实例</span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">ExpDevList /home/linyuanbo/device_list</span></span><br><span class="line">Opening text file for writing... [/home/linyuanbo/device_list]</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 连接目标设备</span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">connect</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 选择设备类型,支持的设备可以通过 ExpDevList 导出的文件查看</span></span><br><span class="line">Please specify device / core. &lt;Default&gt;: STM32F103ZE</span><br><span class="line">Type &#x27;?&#x27; for selection dialog</span><br><span class="line"><span class="meta">Device&gt;</span><span class="bash">STM32F103ZE</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 选择连接接口</span></span><br><span class="line">Please specify target interface:</span><br><span class="line">  J) JTAG (Default)</span><br><span class="line">  S) SWD</span><br><span class="line">  T) cJTAG</span><br><span class="line"><span class="meta">TIF&gt;</span><span class="bash">S</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 连接速率</span></span><br><span class="line">Specify target interface speed [kHz]. &lt;Default&gt;: 4000 kHz</span><br><span class="line"><span class="meta">Speed&gt;</span><span class="bash"></span></span><br><span class="line"><span class="bash">Device <span class="string">&quot;STM32F103ZE&quot;</span> selected.</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
+<li><p>目标设备控制</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">erase      Erase internal flash of selected device. Syntax: Erase # 擦除芯片</span><br><span class="line">loadfile   Load data file into target memory.</span><br><span class="line">             Syntax: loadfile &lt;filename&gt;, [&lt;addr&gt;]</span><br><span class="line">             Supported extensions: *.bin, *.mot, *.hex, *.srec</span><br><span class="line">             &lt;addr&gt; is needed for bin files only.</span><br><span class="line">loadbin    Load *.bin file into target memory. # 加载文件</span><br><span class="line">             Syntax: loadbin &lt;filename&gt;, &lt;addr&gt;</span><br><span class="line">savebin    Saves target memory into binary file. # 读取文件</span><br><span class="line">             Syntax: savebin &lt;filename&gt;, &lt;addr&gt;, &lt;NumBytes&gt;</span><br><span class="line">verifybin  Verfies if the specified binary is already in the target memory at the specified     address. #校验文件</span><br><span class="line">             Syntax: verifybin &lt;filename&gt;, &lt;addr&gt;</span><br><span class="line">r          Reset target         (RESET) # 复位芯片</span><br><span class="line">g          go # 启动</span><br><span class="line">mem        Read memory. Syntax: mem  [&lt;Zone&gt;:]&lt;Addr&gt;, &lt;NumBytes&gt; (hex) # 读取内存</span><br><span class="line">q          Quit</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 实例</span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">erase</span></span><br><span class="line">Erasing device...</span><br><span class="line">Comparing flash   [100%] Done.</span><br><span class="line">Erasing flash     [100%] Done.</span><br><span class="line">Verifying flash   [100%] Done.</span><br><span class="line">J-Link: Flash download: Total time needed: 5.714s (Prepare: 0.019s, Compare: 0.000s, Erase: 5.    693s, Program: 0.000s, Verify: 0.000s, Restore: 0.002s)</span><br><span class="line">Erasing done.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">loadbin /home/linyuanbo/Desktop/rt-thread/bsp/stm32/stm32f103-atk-warshipv3/rtthread.bin     0x8000000</span></span><br><span class="line">Downloading file [/home/linyuanbo/Desktop/rt-thread/bsp/stm32/stm32f103-atk-warshipv3/rtthread.    bin]...</span><br><span class="line">Comparing flash   [100%] Done.</span><br><span class="line">Erasing flash     [100%] Done.</span><br><span class="line">Programming flash [100%] Done.</span><br><span class="line">Verifying flash   [100%] Done.</span><br><span class="line">J-Link: Flash download: Bank 0 @ 0x08000000: 1 range affected (67584 bytes)</span><br><span class="line">J-Link: Flash download: Total time needed: 1.909s (Prepare: 0.046s, Compare: 0.006s, Erase: 0.    000s, Program: 1.828s, Verify: 0.001s, Restore: 0.026s)</span><br><span class="line">O.K.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">r</span></span><br><span class="line">Reset delay: 0 ms</span><br><span class="line">Reset type NORMAL: Resets core &amp; peripherals via SYSRESETREQ &amp; VECTRESET bit.</span><br><span class="line">Reset: Halt core after reset via DEMCR.VC_CORERESET.</span><br><span class="line">Reset: Reset device via AIRCR.SYSRESETREQ.</span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">g</span></span><br><span class="line"><span class="meta">J-Link&gt;</span><span class="bash">q</span></span><br></pre></td></tr></table></figure>
+<h3 id="一键烧录脚本"><a href="#一键烧录脚本" class="headerlink" title="一键烧录脚本"></a>一键烧录脚本</h3></li>
+</ol>
+<blockquote>
+<p>每次敲指令也是麻烦的，把所有指令集合起来，让 JLink 自己运行。</p>
+</blockquote>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect # 连接仿真器</span><br><span class="line">device N32G452RC # 选择目标芯片</span><br><span class="line">si SWD # 选择接口方式</span><br><span class="line">speed 4000 # 选择速率</span><br><span class="line">h # 暂停CPU</span><br><span class="line">r # 复位CPU</span><br><span class="line">erase # 擦除</span><br><span class="line"></span><br><span class="line">loadfile rtthread.bin 0x8000000 # 写入 文件 地址</span><br><span class="line">verifybin rtthread.bin 0x8000000 # 简易 文件 地址</span><br><span class="line">r # 复位CPU</span><br><span class="line">go # 启动</span><br><span class="line">q # 退出</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># JLink ... -CommanderScript 脚本名</span><br><span class="line">JLink -device N32G452RC -<span class="keyword">if</span> swd -speed <span class="number">4000</span> -CommanderScript program.jlink</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/01/stlink-in-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/01/stlink-in-linux/" class="post-title-link" itemprop="url">STLink in Linux 常用操作记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-10-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-10-01T00:00:00+00:00">2021-10-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="STLink-in-Linux-常用操作记录"><a href="#STLink-in-Linux-常用操作记录" class="headerlink" title="STLink in Linux 常用操作记录"></a>STLink in Linux 常用操作记录</h2><h3 id="STLink-安装"><a href="#STLink-安装" class="headerlink" title="STLink 安装"></a>STLink 安装</h3><blockquote>
+<p>其他安装方式参考<a target="_blank" rel="noopener" href="https://github.com/stlink-org/stlink">https://github.com/stlink-org/stlink</a></p>
+</blockquote>
+<p>主机系统：Ubuntu 20.04.3 LTS</p>
+<p>目标主板：<a target="_blank" rel="noopener" href="http://www.openedv.com/docs/boards/stm32/zdyz_stm32f103_warship.html">stm32f103战舰开发板</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用 apt 直接安装 stlink-tools</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install stlink-tools</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 连接 STLink V2 之后查看,查看 USB 列表</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lsusb</span></span><br><span class="line">Bus 003 Device 014: ID 0483:3748 STMicroelectronics ST-LINK/V2</span><br></pre></td></tr></table></figure>
+
+<h3 id="st-info"><a href="#st-info" class="headerlink" title="st-info"></a>st-info</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Display amount of flash memory available <span class="keyword">in</span> the device</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 flash 容量</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> st-info --flash</span></span><br><span class="line">0x80000</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Display amount of sram memory available <span class="keyword">in</span> device</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 sram 容量</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> st-info --sram</span></span><br><span class="line">0x10000</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Display the summarized information of the connected programmers and devices</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看概览</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> st-info --probe</span></span><br><span class="line">Found 1 stlink programmers</span><br><span class="line"> serial: 523f6e06657055511630123f</span><br><span class="line">openocd: &quot;\x52\x3f\x6e\x06\x65\x70\x55\x51\x16\x30\x12\x3f&quot;</span><br><span class="line">  flash: 524288 (pagesize: 2048)</span><br><span class="line">   sram: 65536</span><br><span class="line"> chipid: 0x0414</span><br><span class="line">  descr: F1 High-density device</span><br></pre></td></tr></table></figure>
+
+<h3 id="st-flash"><a href="#st-flash" class="headerlink" title="st-flash"></a>st-flash</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 常用操作:写入,读取,擦除,复位</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> man st-flash</span></span><br><span class="line">COMMANDS</span><br><span class="line">       write FILE ADDR</span><br><span class="line">              Write firmware FILE to device starting from ADDR</span><br><span class="line"></span><br><span class="line">       read FILE ADDR SIZE</span><br><span class="line">              Read firmware from device starting from ADDR up to SIZE bytes to FILE</span><br><span class="line"></span><br><span class="line">       erase  Perform a mass erasing of the device firmware</span><br><span class="line"></span><br><span class="line">       reset  Reset the target</span><br><span class="line">EXAMPLES</span><br><span class="line">       Flash firmware.bin to device</span><br><span class="line"></span><br><span class="line">              $ st-flash write firmware.bin 0x8000000</span><br><span class="line"></span><br><span class="line">       Read firmware from device (4096 bytes)</span><br><span class="line"></span><br><span class="line">              $ st-flash read firmware.bin 0x8000000 4096</span><br><span class="line"></span><br><span class="line">       Erase firmware from device</span><br><span class="line"></span><br><span class="line">              $ st-flash erase</span><br></pre></td></tr></table></figure>
+
+<h3 id="st-util"><a href="#st-util" class="headerlink" title="st-util"></a>st-util</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 最常用的应该只有设置 GDB server 端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> man st-util</span></span><br><span class="line">OPTIONS</span><br><span class="line">       -p 4242, --listen_port=1234</span><br><span class="line">              Set the gdb server listen port.  (default port: 4242)</span><br><span class="line">EXAMPLES</span><br><span class="line">       Run GDB server on port 4500 and connect to it</span><br><span class="line"></span><br><span class="line">              $ st-util -p 4500</span><br><span class="line">              $ gdb</span><br><span class="line">              (gdb) target extended-remote localhost:4500</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/28/soft-skills-chapter-40/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/28/soft-skills-chapter-40/" class="post-title-link" itemprop="url">软技能-第四十章</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-28 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-28T00:00:00+00:00">2021-09-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E8%A7%88%E7%BE%A4%E4%B9%A6/" itemprop="url" rel="index"><span itemprop="name">博览群书</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="对自己负责"><a href="#对自己负责" class="headerlink" title="对自己负责"></a>对自己负责</h2><p>让人们完成工作主要有两大动机——内部动机（来自内心的动机）和外部动机（来自外部奖励或惩罚的动机）。<br>内部动机要比外部动机有效得多。在内部动机的激励下工作时，我们能完成更多的工作，也更倾向于把工作做得更好。所以，秘诀是让你的主要动机来自内心而非外部。</p>
+<h3 id="责任感"><a href="#责任感" class="headerlink" title="责任感"></a>责任感</h3><p>培养出在没有人监督自己的时候也能高效工作的自我责任感非常重要。你也可以把这称为是具有一种性格或者具有一种素质，它们都是同一个概念。如果缺乏对自己的责任感，你将永远依赖外部动机来驱使你努力工作。你容易折服于一根胡萝卜的诱惑，也容易屈从于一根大棒的威胁（如果你胆敢越轨）。</p>
+<p>自我控制是一门自我激励的艺术，而自我激励的核心则是自我责任感。如果你想不再依赖别人的影响，获得稳定、可预测的结果，你就要学会对自己负责。</p>
+<h3 id="对自己负责-1"><a href="#对自己负责-1" class="headerlink" title="对自己负责"></a>对自己负责</h3><p>要培养“对自己负责”的精神，首先要让自己的生活井然有序。如果不知道应该做的事情是什么，就不能真正为自己所做的任何事情承担责任。当你去工作的时候，哪天需要上班是固定的，几点上班几点下班也是固定的。尽管有些事情可以变通，但这些都是刚性的，有明确规定。你知道如果违反了这些规定，会被自己的上司问责。</p>
+<p>你必须通过为自己设定规则，将这种条理性自愿地应用于自己的生活中。你需要创建自己的规则来管理自己的生活，并且要在自己思维清晰、大脑尚未被错误的判断蒙蔽的时候，提前制订好这些规则。</p>
+<h3 id="外部问责"><a href="#外部问责" class="headerlink" title="外部问责"></a>外部问责</h3><p>你可能会发现，只对自己负责的时候很容易违反自己制订的规则。在这种情况下，需要借助一点儿外力。你仍然可以制订自己的规则，因此动机还是来自内部——因为你还是规则的制订者，只是你可以让别人帮你强制执行这些规则。</p>
+<p>请别人来监督自己履行责任，完成自己的承诺，并没有坏处。找到责任监督伙伴——理想情况下，最好是跟你有类似目标的人，这样会很有帮助。你可以告诉他你给自己制订的规则，或者你想达成的目标，通过定期互相汇报进度（不论成败），可以互相帮助对方强化责任感。</p>
+<p>通常，想到要告诉自己的责任监督伙伴自己没能完成设定的目标，就足以阻止自己不够自律的行为。在关键点作出正确的选择还是错误的选择会有极大的区别。另外，当你要做出重要决定的时候，可以听取责任监督伙伴的意见，从而确保你做出的决定符合你的长期最佳利益，而不是笼罩在短期利益的阴影之下。</p>
+<blockquote>
+<p>采取行动</p>
+<ul>
+<li>抉择一下：你想如何度过自己的一生。花点儿时间创建一些自己的规则，确保自己朝着正确的方向前进。</li>
+<li>创建自己的责任制度，帮助自己严格执行规则。</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/14/git-cz/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/14/git-cz/" class="post-title-link" itemprop="url">git cz</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-14 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-14T00:00:00+00:00">2021-09-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="git-cz"><a href="#git-cz" class="headerlink" title="git cz"></a>git cz</h2><blockquote>
+<p>规范代码提交日志非常有必要，但是自己定义格式感觉思考不够全面，通过阅读<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog">阮一峰的网络日志</a>的一些文章，果然发现了宝藏。</p>
+</blockquote>
+<p>参考：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog">阮一峰的网络日志</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/commitizen/cz-cli">cz-cli</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codenong.com/cs105816929/">Ubuntu安装commitizen工具</a></li>
+</ol>
+<h3 id="cz-cli-安装与配置"><a href="#cz-cli-安装与配置" class="headerlink" title="cz-cli 安装与配置"></a>cz-cli 安装与配置</h3><p>参考：<a target="_blank" rel="noopener" href="https://github.com/commitizen/cz-cli#conventional-commit-messages-as-a-global-utility">https://github.com/commitizen/cz-cli#conventional-commit-messages-as-a-global-utility</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 首先安装 npm</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install npm</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> node不要安装最新版本，不然会报warning，确认8.10.0版本是没什么问题的</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo npm install -g n</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo n 8.10.0</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装commitizen</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo npm install -g commitizen</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装conventional-changelog（非必须）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 这个工具是用来自动生成CHANGELOG.md文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过查询目前 conventional-changelog 安装已经替换如下</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo npm install -g conventional-changelog-cli</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加全局配置(这是最简单直接的办法)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&#x27;&#123; &quot;path&quot;: &quot;cz-conventional-changelog&quot; &#125;&#x27;</span> &gt; ~/.czrc</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="cz-cli-测试与使用"><a href="#cz-cli-测试与使用" class="headerlink" title="cz-cli 测试与使用"></a>cz-cli 测试与使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建仓库-&gt;添加文件-&gt;加入暂存区</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir <span class="built_in">test</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> <span class="built_in">test</span>/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git init .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> touch 111</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add 111</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line">On branch master</span><br><span class="line">No commits yet</span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)</span><br><span class="line">        new file:   111</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 git cz 提交</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git cz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过上下按键选择,详细提交描述可以使用 <span class="string">&#x27;\n&#x27;</span> 换行</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看提交日志</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">log</span></span></span><br><span class="line">commit ... (HEAD -&gt; master)</span><br><span class="line">Author: ... &lt;...&gt;</span><br><span class="line">Date:   Tue Sep 14 16:41:45 2021 +0800</span><br><span class="line"></span><br><span class="line">    feat: add 111 file</span><br><span class="line"></span><br><span class="line">    1. add 111 file.</span><br><span class="line">    2.test git cz.</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/rtt-n32-porting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/12/rtt-n32-porting/" class="post-title-link" itemprop="url">RT-Thread N32G452XX 移植笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-12 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-12T00:00:00+00:00">2021-09-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RTOS/" itemprop="url" rel="index"><span itemprop="name">RTOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="RT-Thread-N32G452XX-移植笔记"><a href="#RT-Thread-N32G452XX-移植笔记" class="headerlink" title="RT-Thread N32G452XX 移植笔记"></a>RT-Thread N32G452XX 移植笔记</h2><p>测试硬件平台：N32G452RC</p>
+<p>源码版本：<a target="_blank" rel="noopener" href="https://github.com/RT-Thread/rt-thread">RT-Thread master</a></p>
+<p>长裤地址：<a target="_blank" rel="noopener" href="https://github.com/RT-Thread/rt-thread/tree/master/bsp/n32g452xx">https://github.com/RT-Thread/rt-thread/tree/master/bsp/n32g452xx</a></p>
+<p>工作环境：</p>
+<pre><code>1. Win10 64bit (MDK533)
+2. Ubuntu 20.04 (GCC 6.2.1 20161205 (release))
+</code></pre>
+<h3 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h3><h4 id="Win10-64bit"><a href="#Win10-64bit" class="headerlink" title="Win10 64bit"></a>Win10 64bit</h4><ol>
+<li><p>搭建好 N32G452XX 裸机开发环境</p>
+</li>
+<li><p>下载 RTT ENV，参考<a target="_blank" rel="noopener" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/application-note/setup/standard-project/an0017-standard-project">使用 Env 创建 RT-Thread 项目工程</a></p>
+</li>
+<li><p>下载 RTT 源码</p>
+</li>
+</ol>
+<h4 id="Ubuntu-20-04"><a href="#Ubuntu-20-04" class="headerlink" title="Ubuntu 20.04"></a>Ubuntu 20.04</h4><ol>
+<li><p>下载安装<a target="_blank" rel="noopener" href="https://www.segger.com/downloads/jlink/">J-flash</a></p>
+</li>
+<li><p>根据官方教程即可，参考<a target="_blank" rel="noopener" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/application-note/setup/qemu/ubuntu/an0005-qemu-ubuntu">在 Ubuntu 平台开发 RT-Thread</a></p>
+</li>
+<li><p>下载 RTT 源码</p>
+</li>
+</ol>
+<h3 id="二、移植步骤"><a href="#二、移植步骤" class="headerlink" title="二、移植步骤"></a>二、移植步骤</h3><blockquote>
+<p>个人思路：</p>
+<ol>
+<li>选择已有并且接近芯片进行移植</li>
+<li>了解该 BSP 的目录结构与编译流程</li>
+<li>通过 grep 搜索相关关键词进行替换</li>
+</ol>
+</blockquote>
+<h4 id="1-对比选择"><a href="#1-对比选择" class="headerlink" title="1. 对比选择"></a>1. 对比选择</h4><blockquote>
+<p>经过对比国产的XXX32，我发现已有的 BSP 中，AT32 的目录和 STM32 比较接近，也比较清晰。</p>
+</blockquote>
+<p>具体芯片对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>硬件</th>
+<th>描述</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>芯片型号</td>
+<td>N32G452RCL7</td>
+<td>AT32F407VGT7</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>ARM Cortex M4</td>
+<td>ARM Cortex M4</td>
+</tr>
+<tr>
+<td>主频</td>
+<td>144M</td>
+<td>240M</td>
+</tr>
+<tr>
+<td>片内SRAM</td>
+<td>80K可扩展144K</td>
+<td>96K可扩展224K</td>
+</tr>
+<tr>
+<td>片内FLASH</td>
+<td>256K</td>
+<td>1024K</td>
+</tr>
+</tbody></table>
+<h4 id="2-BSP-目录结构"><a href="#2-BSP-目录结构" class="headerlink" title="2.BSP 目录结构"></a>2.BSP 目录结构</h4><pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 目录路径：rt-thread/bsp/at32</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tree -d -L 1</span></span><br><span class="line">.</span><br><span class="line">├── Libraries # 库文件</span><br><span class="line">├── at32f403a-start # 具体 芯片 与 BSP 目录</span><br><span class="line">├── at32f407-start</span><br><span class="line">└── tools # 脚本</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 目录路径：rt-thread/bsp/at32/Libraries</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tree -L 2</span></span><br><span class="line">.</span><br><span class="line">├── AT32_Std_Driver</span><br><span class="line">│   ├── AT32F4xx_StdPeriph_Driver</span><br><span class="line">│   ├── CMSIS</span><br><span class="line">│   └── SConscript # 不知如何描述...你懂的...</span><br><span class="line">├── Kconfig # menuconfig 对应的配置文件</span><br><span class="line">└── rt_drivers</span><br><span class="line">    ├── SConscript # 同上</span><br><span class="line">    ...</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 目录路径：rt-thread/bsp/at32/at32f407-start</span></span><br><span class="line">.</span><br><span class="line">├── Kconfig # menuconfig 对应的配置文件</span><br><span class="line">├── README.md # 本 BSP 描述文件</span><br><span class="line">├── SConscript # 不知如何描述...你懂的...</span><br><span class="line">├── SConstruct # 执行 scons 时运行的构建文件</span><br><span class="line">├── applications</span><br><span class="line">│   ├── SConscript # 同上</span><br><span class="line">│   └── main.c # component init 最后调用的 main 在这里</span><br><span class="line">├── board</span><br><span class="line">│   ├── Kconfig # 同上</span><br><span class="line">│   ├── SConscript # 同上</span><br><span class="line">│   ├── board.c # 板子初始化的</span><br><span class="line">│   ├── board.h # 包含一些 FLASH 与 堆栈 相关大小描述</span><br><span class="line">│   ├── linker_scripts # 链接文件</span><br><span class="line">│   │   ├── link.icf # IAR...</span><br><span class="line">│   │   ├── link.lds # GCC使用的链接文件</span><br><span class="line">│   │   └── link.sct # ARMCC使用的链接文件</span><br><span class="line">│   └── msp # MCU Specific Package 可以理解为与具体板子相关的初始化文件</span><br><span class="line">│       ├── at32_msp.c # 更多的是一些 GPIO 是否复用的初始化</span><br><span class="line">│       ├── at32_msp.h # 头文件</span><br><span class="line">│       └── system_at32f4xx.c # 芯片 .s 启动文件调用的始终初始化代码</span><br><span class="line">├── rtconfig.h # 执行 menuconfig 读取与生成，以及 RTT 的配置</span><br><span class="line">├── rtconfig.py # 包括编译器选择与编译链接相关选项</span><br><span class="line">├── template.uvopt # keil 相关不多说</span><br><span class="line">├── template.uvoptx # keil 相关不多说</span><br><span class="line">├── template.uvproj # keil 相关不多说</span><br><span class="line">└── template.uvprojx # keil 相关不多说</span><br></pre></td></tr></table></figure>
+</code></pre>
+<h4 id="3-SCONS-运作文件顺序"><a href="#3-SCONS-运作文件顺序" class="headerlink" title="3.SCONS 运作文件顺序"></a>3.SCONS 运作文件顺序</h4><pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── SConscript # 2. 遍历子目录的 SConscript</span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 运行 SConstruct 文件，由于引用 rtconfig.py 所以会看 rtconfig.py 添加的打印</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 5. 追加完了所有源码(包括Libraries)之后，进行构建</span></span><br><span class="line">├── SConstruct </span><br><span class="line">├── applications</span><br><span class="line">│   ├── SConscript # 3. 追加 applications 中的源码</span><br><span class="line">├── board</span><br><span class="line">│   ├── SConscript # 4. 追加 board 中的源码</span><br><span class="line">├── rtconfig.py</span><br><span class="line">├── template.ewd</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p>个人理解：</p>
+<ol>
+<li><code>rtconfig.py</code>定义编译器之后，指定了编译选项</li>
+<li>通过<code>SConscript</code>文件遍历所有需要编译的文件</li>
+<li>最后执行<code>SConstruct</code>文件中的<code>DoBuilding(TARGET, objs)</code></li>
+<li>方法<code>DoBuilding</code>位于<code>RTT_ROOT/tools/building.py</code></li>
+</ol>
+<h3 id="三、开始移植"><a href="#三、开始移植" class="headerlink" title="三、开始移植"></a>三、开始移植</h3><blockquote>
+<p>个人认为，这个过程比较简单粗暴，主要分两种情况：</p>
+<ol>
+<li><p>对于源码文件，<code>.c</code>、<code>.h</code>和<code>*.s</code>直接替换或修改内部与<code>at32</code>相关库接口</p>
+</li>
+<li><p>对于配置文件，</p>
+</li>
+</ol>
+</blockquote>
+<p>通过搜索，可以快速检索与<code>at32</code>相关的文件，主要修改配置文件如下：</p>
+<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看 Libraries 与 at32 相关的配置文件</span></span><br><span class="line"><span class="meta">rt-thread/bsp/at32/Libraries$</span><span class="bash"> grep -irn <span class="string">&#x27;at32&#x27;</span> . --exclude <span class="string">&quot;*.c&quot;</span> --exclude <span class="string">&quot;*.h&quot;</span> --exclude-dir=AT32_Std_Driver</span></span><br><span class="line">./Kconfig:1:config SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:4:config SOC_SERIES_AT32F403</span><br><span class="line">./Kconfig:7:    select SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:9:config SOC_SERIES_AT32F413</span><br><span class="line">./Kconfig:12:    select SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:14:config SOC_SERIES_AT32F415</span><br><span class="line">./Kconfig:17:    select SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:19:config SOC_SERIES_AT32F403A</span><br><span class="line">./Kconfig:22:    select SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:24:config SOC_SERIES_AT32F407</span><br><span class="line">./Kconfig:27:    select SOC_FAMILY_AT32</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 at32f407-start 与 at32 相关的配置文件</span></span><br><span class="line"><span class="meta">rt-thread/bsp/at32/at32f407-start$</span><span class="bash"> grep -irn <span class="string">&#x27;at32&#x27;</span> . --exclude <span class="string">&quot;*.c&quot;</span> --exclude <span class="string">&quot;*.h&quot;</span></span></span><br><span class="line">./.config:504:CONFIG_SOC_FAMILY_AT32=y</span><br><span class="line">./.config:505:CONFIG_SOC_SERIES_AT32F407=y</span><br><span class="line">./.config:510:CONFIG_SOC_AT32F407VGT7=y</span><br><span class="line">./board/Kconfig:3:config SOC_AT32F407VGT7</span><br><span class="line">./board/Kconfig:5:    select SOC_SERIES_AT32F407</span><br><span class="line">./board/linker_scripts/link.lds:2: * linker script for AT32 with GNU ld</span><br><span class="line">./board/SConscript:12:msp/at32_msp.c</span><br><span class="line">./board/SConscript:13:msp/system_at32f4xx.c</span><br><span class="line">./board/SConscript:22:    src += [startup_path_prefix + &#x27;/AT32_Std_Driver/CMSIS/AT32/AT32F4xx/src/gcc/startup_at32f407vgt7.s&#x27;]</span><br><span class="line">./board/SConscript:24:    src += [startup_path_prefix + &#x27;/AT32_Std_Driver/CMSIS/AT32/AT32F4xx/src/mdk/startup_at32f407vgt7.s&#x27;]</span><br><span class="line">./board/SConscript:26:    src += [startup_path_prefix + &#x27;/AT32_Std_Driver/CMSIS/AT32/AT32F4xx/src/iar/startup_at32f407vgt7.s&#x27;]</span><br><span class="line">./board/SConscript:28:CPPDEFINES = [&#x27;AT32F407VGT7&#x27;]</span><br><span class="line">./README.md:1:# AT32F407 AT-START 开发板 BSP 说明</span><br><span class="line">./README.md:5:AT32F407 AT-START是雅特力推出的一款AT32F407系列的评估板，其搭载的MCU主要资源参数如下：</span><br><span class="line">./README.md:9:| 芯片型号  | AT32F407VGT7  |</span><br><span class="line">./README.md:17:AT32F407-START板级包支持MDK4﹑MDK5﹑IAR开发环境和GCC编译器，以下是具体版本信息：</span><br><span class="line">./README.md:28:- MCU：AT32F407VGT7，主频 240MHz，1024KB FLASH ，96KB可扩展到224KB RAM</span><br><span class="line">./README.md:140:AT32F407使用Ethernet且PHY时钟由MCO输出提供时，主频最好采用200Mhz。</span><br><span class="line">./SConstruct:49:at32_library = &#x27;AT32_Std_Driver&#x27;</span><br><span class="line">./SConstruct:50:rtconfig.BSP_LIBRARY_TYPE = at32_library</span><br><span class="line">./SConstruct:53:objs.extend(SConscript(os.path.join(libraries_path_prefix, at32_library, &#x27;SConscript&#x27;)))</span><br></pre></td></tr></table></figure>
+</code></pre>
+<h4 id="公共库：Libraries-AT32-Std-Driver"><a href="#公共库：Libraries-AT32-Std-Driver" class="headerlink" title="公共库：Libraries/AT32_Std_Driver"></a>公共库：<code>Libraries/AT32_Std_Driver</code></h4><ol>
+<li>将<code>AT32_Std_Driver</code>改名，个人认为改成<code>Std_Driver</code>将更通用</li>
+<li>将<code>AT32_Std_Driver</code>中<code>SConscript</code>的相关依赖修改为正确的路径</li>
+<li>将<code>AT32_Std_Driver</code>中具体的库替换</li>
+</ol>
+<h4 id="公共库：Libraries-rt-drivers"><a href="#公共库：Libraries-rt-drivers" class="headerlink" title="公共库：Libraries/rt_drivers"></a>公共库：<code>Libraries/rt_drivers</code></h4><ol>
+<li>将<code>rt_drivers</code>中具体驱动根据该芯片的标准库修改</li>
+<li>检查<code>rt_drivers</code>中<code>SConscript</code>是否存在与具体芯片相关的描述</li>
+</ol>
+<h4 id="链接脚本at32f407-start-board-linker-scripts"><a href="#链接脚本at32f407-start-board-linker-scripts" class="headerlink" title="链接脚本at32f407-start/board/linker_scripts"></a>链接脚本<code>at32f407-start/board/linker_scripts</code></h4><ol>
+<li>主要修改一些<code>RAM</code>与<code>ROM</code>相关的大小，其他无需修改</li>
+</ol>
+<h4 id="板子初始化文件at32f407-start-board-msp"><a href="#板子初始化文件at32f407-start-board-msp" class="headerlink" title="板子初始化文件at32f407-start/board/msp"></a>板子初始化文件<code>at32f407-start/board/msp</code></h4><ol>
+<li>将<code>at32_msp.*</code>更名，将内容相关的<code>at32</code>替换</li>
+<li>将<code>system_at32f4xx.c</code>替换为对于芯片的具体时钟替换一下就行</li>
+</ol>
+<h4 id="其他文件at32f407-start-board"><a href="#其他文件at32f407-start-board" class="headerlink" title="其他文件at32f407-start/board"></a>其他文件<code>at32f407-start/board</code></h4><ol>
+<li>将<code>Kconfig</code>中的<code>at32</code>相关替换一下</li>
+<li>将<code>SConscript</code>中源码路径替换</li>
+<li>将<code>board.*</code>中头文件与宏定义替换</li>
+</ol>
+<h4 id="关于工程文件"><a href="#关于工程文件" class="headerlink" title="关于工程文件"></a>关于工程文件</h4><p>此处使用 keil 打开，重新选择一下芯片类型保存即可</p>
+<h3 id="四、编译与测试"><a href="#四、编译与测试" class="headerlink" title="四、编译与测试"></a>四、编译与测试</h3><h4 id="1-编译"><a href="#1-编译" class="headerlink" title="1. 编译"></a>1. 编译</h4><ol>
+<li>主要关注缺少了哪些文件与<code>Sconscript</code>相关</li>
+<li>编译错误，这个就与源码<code>.c</code>相关</li>
+<li>缺少的定义大多数与<code>Kconfig</code>相关</li>
+</ol>
+<h4 id="2-烧录与仿真"><a href="#2-烧录与仿真" class="headerlink" title="2. 烧录与仿真"></a>2. 烧录与仿真</h4><ol>
+<li>首先设置启动文件断点<code>*.s</code>，说明程序烧录正确已经从复位开始启动</li>
+<li>然后在<code>int $Sub$$main(void)</code>中设置断点，确保启动函数已经调用<code>__main</code></li>
+<li>最后在<code>int rtthread_startup(void)</code>中设置断点，确保各类初始化通过</li>
+</ol>
+<h4 id="3-其他补充"><a href="#3-其他补充" class="headerlink" title="3. 其他补充"></a>3. 其他补充</h4><ol>
+<li>根据原厂FAE提供的信息，芯片掉电会比较慢，所以按复位按键有时无法复位。解决方案：使用keil下载设置下载后复位，使用J-Flash下载也记得设置下载后复位。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/04/soft-skills-chapter-36/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/04/soft-skills-chapter-36/" class="post-title-link" itemprop="url">软技能-第三十六章</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-04T00:00:00+00:00">2021-09-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E8%A7%88%E7%BE%A4%E4%B9%A6/" itemprop="url" rel="index"><span itemprop="name">博览群书</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="一切始于专注"><a href="#一切始于专注" class="headerlink" title="一切始于专注"></a>一切始于专注</h2><h3 id="专注的魔力"><a href="#专注的魔力" class="headerlink" title="专注的魔力"></a>专注的魔力</h3><p>我坚信专注是提高生产力的灵丹妙药。如果能买到专注，我会刷爆信用卡，有多少买多少，因为我知道这笔投资的回报完全有保障。专注就是如此重要。</p>
+<p>缺乏专注，任务会被拖延很长一段时间。各种干扰分散了我们的注意力，或者让我们无法进入专注状态，最后不只是消耗了我们大量的时间。在第41章中讨论多任务并行的时候，我们会更具体地讨论这一问题，但我们所承担的很多任务都有“环境切换”的成本。当我们从一个任务切换到另一个任务时，我们必须要唤醒某些记忆之后才可以重新开始工作。</p>
+<p>专注非常重要，因为它可以让我们在处理任务的时候不必一遍又一遍地重复基础部分。我们的思维模式是这样的：花一些时间先把所有的事务在脑子里过一遍，然后才能达到思维高峰以完成任务。你可以把这个过程想象为汽车在高速公路上行驶时的提速过程。车子在进入高速行驶之前需要更换几个挡位。如果你总是不断地起步停车，那么你的整体速度就会很慢很慢。要让车回到高速，换到五挡，需要花点儿时间。但是，一旦你开到五挡，那就能轻松巡航了。</p>
+<h3 id="如何更专注"><a href="#如何更专注" class="headerlink" title="如何更专注"></a>如何更专注</h3><p>要进入专注模式，必须要克服将自己的思绪集中于单一任务时的那种痛感。除非你完全享受完成这项任务，否则这种痛感一开始会很强烈。但是，这正是关键所在。你必须要意识到，这种痛苦和不适只是暂时的，不会持续很久。</p>
+<h3 id="没有听起来那么容易"><a href="#没有听起来那么容易" class="headerlink" title="没有听起来那么容易"></a>没有听起来那么容易</h3><p>现在我可能已经让专注看起来比实际情况更容易点儿了。专注并不像坐下来在键盘上打字那么简单。你要激发自己的斗志，对抗各种让你分心的事情，只有打败它们，你才能升挡到“高速”，将自己送入巡航状态。与分心作战需要一些深思熟虑。</p>
+<p>在开始一项任务之前，确保你已经做好一切可以让自己免受干扰的措施，不管是内部干扰还是外部干扰。将手机调成静音状态，关掉分散注意力的浏览器窗口，禁用屏幕上的弹出窗口，甚至可以考虑在你的门上或者工位入口挂一个“正在忙，勿打扰”的牌子。你可能觉得我说的“挂上招牌”是开玩笑，其实我是绝对认真的。刚开始时，你的同事和老板可能对此有些抵触，但当你像疯子一样疯狂工作的时候，他们就会理解。其实，他们也想买到你的这剂良药。</p>
+<blockquote>
+<p>采取行动</p>
+<ul>
+<li>想一想自己极度专注于工作的时候。那是一种什么感觉？是什么令你进入这种专注模式？又是什么最终打破了你的专注？</li>
+<li>时不时实践一下专注。选一项大概需要占用你半小时或者更长时间的任务，给完成这项任务分配一个完整的时间段，完全专注于这项任务。迫使自己只集中精力在这一项任务上。当你进入专注状态时，在心里记住是什么感觉。</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/04/soft-skills-chapter-37/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/04/soft-skills-chapter-37/" class="post-title-link" itemprop="url">软技能-第三十七章</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-04T00:00:00+00:00">2021-09-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E8%A7%88%E7%BE%A4%E4%B9%A6/" itemprop="url" rel="index"><span itemprop="name">博览群书</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="我的私房“生产力提升计划”"><a href="#我的私房“生产力提升计划”" class="headerlink" title="我的私房“生产力提升计划”"></a>我的私房“生产力提升计划”</h2><h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><p>我的生产力提升计划的基本思路就是，我把一周的时间分配给一个一个用时不超过两小时的小任务。我使用看板来安排自己的一周活动。看板是一个简单的白板，它有几个列，你可以轻松地在各列之间移动任务项。在敏捷方法的世界里，看板通常还包含展示这些任务项所处的不同状态，典型的状态有“未启动”“进行中”和“已完成”。</p>
+<h3 id="日计划及执行"><a href="#日计划及执行" class="headerlink" title="日计划及执行"></a>日计划及执行</h3><p>每天，在坐下来工作之前，我都会做一些健身活动。之所以这样做，是因为我不希望中途有事情打断我专注的状态。一旦我做好准备坐下来工作，我做的第一件事就是计划我的这一天。</p>
+<p>要计划好这一天，我首先要把对应日期里的卡片移到“今天”这一栏，并把它们按照重要性排序。我要保证自己优先完成最重要的事情。我也会对当天的任务进行调整，如果卡片上对该项任务的描述不够细致，我还会添加细节。我要确保自己在开始工作之前就确切地知道自己在做什么，这项任务完成的标准又是什么。这样做可以避免因为任务定义不清晰而导致的拖延和时间浪费。</p>
+<p>将当天计划要做的每件事插入各个时间窗内之后，我会回顾本周计划，对本周剩余的任务进行一些小的改动。有时候，我完成的任务比计划的要多，我就需要把一些卡片向前移动，或者添加新的卡片。有时候，我的工作进度会落后于计划，我可能就需要进行调整，将一些任务卡片移到下一周。</p>
+<p>至此，我已经做好准备工作。我会在下一章中更详细地介绍番茄工作法。每天，我都会用番茄工作法在某一时间段内专注于某项任务，以此来完成工作列表上的每一项任务。</p>
+<h3 id="与干扰作斗争"><a href="#与干扰作斗争" class="headerlink" title="与干扰作斗争"></a>与干扰作斗争</h3><p>每一天你都会受到很多干扰。只要一坐下，电话就会响起，邮件通知在屏幕上弹出，有人又在Facebook上给你点赞，赶上世界末日再次来临，还得查看一下CNN看看到底是怎么回事。有些干扰是不可避免的，但我发现，只要愿意付出努力，我们还是可以排除大部分干扰的。</p>
+<p>白天我会尽量避免受到干扰，因为我知道它们是工作效率的最大杀手。我在家办公，所以尽管比在小隔间环境中工作更容易避免干扰，但仍然是挑战重重。白天，我的手机从来不响，一直处于静音状态；我的妻子和女儿也知道在我工作的一个番茄钟内不要来打扰我。如果需要找我，她们可以发邮件给我，或者在门边探个头，这样我在休息的时候就会去找她们。当然，紧急情况另当别论。</p>
+<p>为了免受干扰，另一件大事就是，在白天我基本上会忽略电子邮件。我只在休息的时候检查电子邮件，这也只是为了确保不会耽搁必须要马上处理的紧急邮件。但是，除非一些事情确实紧急，否则我一般只在晚上统一回复电子邮件。通过在集中的时间段内统一回复邮件，我可以大幅提升邮件回复效率。（如果能彻底摆脱检查电子邮件的习惯，我可能会生产效率更高。但可惜，我只是个普通人。）</p>
+<p>另外，我还会退出所有会让自己不断分心的聊天软件，或者保持隐身状态。我觉得聊天软件完全就是浪费时间。在大多数情况下，电子邮件更为合适，因为我可以在闲暇时间回复，而不会在正专注工作的时候被打断。</p>
+<h3 id="休息和休假"><a href="#休息和休假" class="headerlink" title="休息和休假"></a>休息和休假</h3><p>每天都像机器一样高强度工作可不是长久之计，所以我要确保自己有一些休息时间，或者有那么几周我会称之为“无工作周”，基本上在这几周里，我不会使用番茄钟，也不会把整周都排满。在无工作周里，我只做一些我喜欢的工作。这些周通常毫无成效，我迫不及待地想回到正常的运转轨道上去（紧张工作），但是这种清闲让我可以在单调的忙碌中休息一下，也会帮我牢记按照自己设定的轨道运转对富有成效地工作是多么重要。</p>
+<p>每隔一段时间，我也会休息一天，充充电，陪陪家人。我只是相应地对周计划进行调整。明天我要带我女儿去迪士尼世界，所以我会在回家之后完成相当于三个番茄钟的工作任务。每隔几个月，我就会安排一次两周或者一个月的休假。在长假期间，我要么会把博客和播客这类任务挂起，要么只做最小量的工作，来维持自己每周的承诺。我发现，在长时间努力工作之后，这种休息是必需的。（完成本书之后，我会休息一段时间。）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/soft-skills-chapter-34/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/02/soft-skills-chapter-34/" class="post-title-link" itemprop="url">软技能-第三十四章</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-02T00:00:00+00:00">2021-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E8%A7%88%E7%BE%A4%E4%B9%A6/" itemprop="url" rel="index"><span itemprop="name">博览群书</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="你需要一个学位吗，还是可以对此忽略不计"><a href="#你需要一个学位吗，还是可以对此忽略不计" class="headerlink" title="你需要一个学位吗，还是可以对此忽略不计"></a>你需要一个学位吗，还是可以对此忽略不计</h2><h3 id="获得成功必须要有学位吗"><a href="#获得成功必须要有学位吗" class="headerlink" title="获得成功必须要有学位吗"></a>获得成功必须要有学位吗</h3><p>以我的经验，我发现，拥有学位并不是成功所必需的，但它肯定是一个限制性因素，它限制了可以提供给你的职位数量，并且某种程度上也限制了你的晋升，特别是在大公司中。没有学位可能会让你的简历被过滤掉，连被人看到的机会都没有。许多公司，特别是大公司，会根据受教育水平来过滤求职申请。事实上，一些公司的招聘政策中明确要求软件开发人员拥有大学学位。当然，这并不意味着你就不能从这些公司获得工作机会，总有一些例外，但是肯定会难上加难。</p>
+<p>我不想在这里过分强调学位的重要性，但我希望你能明白，没有学位会限制你的选择。在这个大前提下，我确信，学位并不是成功的必备条件。</p>
+<p>与其他行业相比，软件开发最大的不同就是：该领域总是不断变化。每天都有新的框架和技术问世。在教育机构中培养能适应真实工作环境的软件开发人员几乎是不可能的。等到教材出版、课表排好的时候，很多东西已经改变。</p>
+<p>但是，这并不意味着，在软件开发中不存在永恒不变的核心领域。许多计算机科学课程中包含的算法、操作系统、关系型数据库理论和其他主题都是永恒的。然而最简单的事实是，当你坐在办公桌前开始写代码的时候，你极少会用到在学校学到的技能。身为软件开发人员，我们所做的大部分工作，都是如何使用新技术，学会如何用它们完成工作。我们很少需要回溯到计算机科学的本源。</p>
+<p>同样，这并不意味基础的计算机科学教育毫无价值。能够深入挖掘问题并理解问题（而不是停留在表面上）的能力更具价值。对大多数软件开发人员来说，在工作中取得成功的更直接因素还是相关工作经验。</p>
+<h3 id="拥有学历的优势"><a href="#拥有学历的优势" class="headerlink" title="拥有学历的优势"></a>拥有学历的优势</h3><table>
+<thead>
+<tr>
+<th>学位的好处</th>
+<th>学位的缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>接受有关软件开发的全面系统教育</td>
+<td>花费原本可以赚钱的时间去学习</td>
+</tr>
+<tr>
+<td>无需经验就可以入行</td>
+<td>可能会受困于思维定势，难以打破</td>
+</tr>
+<tr>
+<td>有更多选择，更容易转换到行政或管理岗位</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="没有学历又当如何"><a href="#没有学历又当如何" class="headerlink" title="没有学历又当如何"></a>没有学历又当如何</h3><p>如果没有学历，你就不得不更多地依靠经验来证明自己的能力。学位至少可以让雇主相信你具了解某些软件开发的知识，那么如果你没有学位的话，你就要能够证明自己有这些能力。</p>
+<p>证明自己的能力的最好的办法就是以往的工作经验。如果在过去五年中你一直从事软件开发的工作，那么即使没有学位也能说明你会写代码。但是，如果你刚刚踏入职场，那你的求职之路会很艰难，你不得不去证明自己确实能够做到你自己所说的那些。因此准备一份作品集是最好的方法。</p>
+<blockquote>
+<p>采取行动</p>
+<ul>
+<li>如果你没有学位，看看有哪些网上课程或者业余课程可以参加。看看它会花费多少，多久会让你毕业。</li>
+<li>如果你决定完全放弃学位教育，那么一定要确保自己有一个非常出色的作品集。花时间把写过的代码整理一下，证明你了解你所做的工作。</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/soft-skills-chapter-35/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/02/soft-skills-chapter-35/" class="post-title-link" itemprop="url">软技能-第三十五章</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-02T00:00:00+00:00">2021-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E8%A7%88%E7%BE%A4%E4%B9%A6/" itemprop="url" rel="index"><span itemprop="name">博览群书</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="发现自己的知识短板"><a href="#发现自己的知识短板" class="headerlink" title="发现自己的知识短板"></a>发现自己的知识短板</h2><h3 id="找出你的短板"><a href="#找出你的短板" class="headerlink" title="找出你的短板"></a>找出你的短板</h3><p>你的知识短板并不全都显而易见。事实上，大多数的知识短板，你只能隐约觉察到。对于自己不知道的，你很难清楚地意识到，也很容易忽略。</p>
+<p>知识短板会阻碍你进步。准确识别它们的最佳方式之一就是看看自己在哪些工作上花费了大量的时间，或者一直进行重复性劳动。通常，你会发现，自己的知识短板使工作速度放缓，额外需要大量的时间完成任务。由于理解得不彻底，你只能摸索着前进。</p>
+<p>重复性工作也是如此。任何你所做的重复性工作都值得彻查一番，看看是否有自己不理解的地方，如果你这样做了，可能会提高你的工作效率。想想键盘快捷键。你一直重复使用某个应用，但是并没那么高效，原因是你不得不手动在屏幕上拖曳鼠标并点击。键盘快捷键可能就是你的知识短板。花点儿时间学习每天会用几个小时的应用（提示：你的IDE编程环境）的快捷键，一周能给你节约好几个小时的时间。</p>
+<p>另一种识别知识短板的方法就是，时刻都要试图了解自己不理解或不清楚的事物。你可以维护一份清单，列出自己需要去研究或者自己不清楚的所有事物，追踪有哪些主题总是不断出现在这个清单上。你会惊讶地发现这份清单的增长速度有多快。你只要对自己坦诚：如果遇到不理解的知识，不需要马上就学会，但是一定要把它添加到清单中，这样你至少可以找出自己的知识短板。</p>
+<h3 id="消除短板"><a href="#消除短板" class="headerlink" title="消除短板"></a>消除短板</h3><p>通常情况下，你可以通过“提问题”来快速填补自己知识上的短板。你可能会因自己在某方面的无知而感到尴尬，但是如果你能够克服尴尬，在自己不明白的时候提问，你会发现自己可以毫不费力地填补很多知识上的短板。当你在谈话或者讨论中遇到自己不能完全理解的部分，不要掩饰它，通过提问来弄明白。</p>
+<h3 id="没有学历又当如何"><a href="#没有学历又当如何" class="headerlink" title="没有学历又当如何"></a>没有学历又当如何</h3><p>如果没有学历，你就不得不更多地依靠经验来证明自己的能力。学位至少可以让雇主相信你具了解某些软件开发的知识，那么如果你没有学位的话，你就要能够证明自己有这些能力。</p>
+<p>证明自己的能力的最好的办法就是以往的工作经验。如果在过去五年中你一直从事软件开发的工作，那么即使没有学位也能说明你会写代码。但是，如果你刚刚踏入职场，那你的求职之路会很艰难，你不得不去证明自己确实能够做到你自己所说的那些。因此准备一份作品集是最好的方法。</p>
+<blockquote>
+<p>采取行动</p>
+<ul>
+<li>在接下来的几天里随身带着一个记事本，把自己遇到的不明白的地方都记下来。</li>
+<li>在谈话中遇到自己不明白的地方，即使觉得尴尬，也要有意识地提问。</li>
+<li>明确自己一天中的某些“痛点”，通过弥补自己知识上的短板，找出消除痛点的方法。</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

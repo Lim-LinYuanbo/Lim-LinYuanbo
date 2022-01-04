@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目前STM32最常用的升级基本都是将新的固件下载到下载区域，然后下次重启在BOOTLOADER进行搬运。 由于公司产品按键开机的供电电路是短暂供电的，需要在应用中使能供电，所以升级重启之后用户需要长按几秒才能正常升级和开机，造成使用困扰，所以只能思考尝试有没有其他的方法。  方式一（目前最常用的方式）方式一分区表   分区名称 分区大小 备注    bootloader 自定义 引导区   da">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32 的三种升级方式比较与记录">
+<meta property="og:url" content="http://example.com/2021/02/08/stm32-upgrade/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目前STM32最常用的升级基本都是将新的固件下载到下载区域，然后下次重启在BOOTLOADER进行搬运。 由于公司产品按键开机的供电电路是短暂供电的，需要在应用中使能供电，所以升级重启之后用户需要长按几秒才能正常升级和开机，造成使用困扰，所以只能思考尝试有没有其他的方法。  方式一（目前最常用的方式）方式一分区表   分区名称 分区大小 备注    bootloader 自定义 引导区   da">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-08T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T13:18:12.649Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MISC">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/02/08/stm32-upgrade/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>STM32 的三种升级方式比较与记录 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/08/stm32-upgrade/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          STM32 的三种升级方式比较与记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-02-08 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-08T00:00:00+00:00">2021-02-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MISC/" itemprop="url" rel="index"><span itemprop="name">MISC</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>目前STM32最常用的升级基本都是将新的固件下载到下载区域，然后下次重启在BOOTLOADER进行搬运。</p>
+<p>由于公司产品按键开机的供电电路是短暂供电的，需要在应用中使能供电，所以升级重启之后用户需要长按几秒才能正常升级和开机，造成使用困扰，所以只能思考尝试有没有其他的方法。</p>
+</blockquote>
+<h2 id="方式一（目前最常用的方式）"><a href="#方式一（目前最常用的方式）" class="headerlink" title="方式一（目前最常用的方式）"></a>方式一（目前最常用的方式）</h2><h3 id="方式一分区表"><a href="#方式一分区表" class="headerlink" title="方式一分区表"></a>方式一分区表</h3><table>
+<thead>
+<tr>
+<th align="center">分区名称</th>
+<th align="center">分区大小</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">bootloader</td>
+<td align="center">自定义</td>
+<td align="center">引导区</td>
+</tr>
+<tr>
+<td align="center">data</td>
+<td align="center">自定义</td>
+<td align="center">数据区</td>
+</tr>
+<tr>
+<td align="center">factory-firmware</td>
+<td align="center">自定义</td>
+<td align="center">出厂固件区</td>
+</tr>
+<tr>
+<td align="center">iteration-firmware</td>
+<td align="center">自定义</td>
+<td align="center">迭代固件区</td>
+</tr>
+<tr>
+<td align="center">download</td>
+<td align="center">自定义</td>
+<td align="center">固件下载区</td>
+</tr>
+</tbody></table>
+<h3 id="方式一-Bootloader-工作流程"><a href="#方式一-Bootloader-工作流程" class="headerlink" title="方式一 Bootloader 工作流程"></a>方式一 Bootloader 工作流程</h3><div class="mermaid">
+graph TD;
+    startup-->check_data_area;
+    check_data_area-->upgrade_flow;
+    check_data_area-->goto_factory_fm;
+    upgrade_flow-->check_download;
+    check_download-->move_download_to_iteration;
+    move_download_to_iteration-->check_iteration;
+    check_iteration-->goto_iteration_fm;
+</div>
+
+<h3 id="方式一-upgrade-工作流程"><a href="#方式一-upgrade-工作流程" class="headerlink" title="方式一 upgrade 工作流程"></a>方式一 upgrade 工作流程</h3><div class="mermaid">
+graph TD;
+    upgrade_flow-->erase_download_area;
+    erase_download_area-->receive_iteration_fm;
+    receive_iteration_fm-->receive_finish;
+    receive_finish-->check_iteration_fm;
+    check_iteration_fm-->change_data_area;
+    change_data_area-->response_success_or_fail;
+    check_iteration_fm-->response_success_or_fail;
+</div>
+
+<h3 id="方式一-总结"><a href="#方式一-总结" class="headerlink" title="方式一 总结"></a>方式一 总结</h3><p>这种方式目前看问题不大，但是也是有缺点的：</p>
+<ol>
+<li>升级失败就直接回到出厂区运行了。</li>
+<li>在程序较大的情况下，BOOTLOAD搬运的时间就比较长，在引言所说的情况下就不适合这种场景了。</li>
+<li>需要额外的下载区，感觉有点浪费空间。</li>
+</ol>
+<h2 id="方式二（专用的升级区）"><a href="#方式二（专用的升级区）" class="headerlink" title="方式二（专用的升级区）"></a>方式二（专用的升级区）</h2><h3 id="方式二-分区表"><a href="#方式二-分区表" class="headerlink" title="方式二 分区表"></a>方式二 分区表</h3><table>
+<thead>
+<tr>
+<th align="center">分区名称</th>
+<th align="center">分区大小</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">bootloader</td>
+<td align="center">自定义</td>
+<td align="center">引导区</td>
+</tr>
+<tr>
+<td align="center">data</td>
+<td align="center">自定义</td>
+<td align="center">数据区</td>
+</tr>
+<tr>
+<td align="center">factory-firmware</td>
+<td align="center">自定义</td>
+<td align="center">出厂固件区</td>
+</tr>
+<tr>
+<td align="center">iteration-firmware</td>
+<td align="center">自定义</td>
+<td align="center">迭代固件区</td>
+</tr>
+<tr>
+<td align="center">upgrade-firmware</td>
+<td align="center">自定义</td>
+<td align="center">升级运行固件区</td>
+</tr>
+</tbody></table>
+<h3 id="方式二-Bootloader-工作流程"><a href="#方式二-Bootloader-工作流程" class="headerlink" title="方式二 Bootloader 工作流程"></a>方式二 Bootloader 工作流程</h3><div class="mermaid">
+graph TD;
+    startup-->check_data_area;
+    check_data_area-->goto_factory_fm;
+    check_data_area-->goto_iteration_fm;
+    check_data_area-->upgrade_flow;
+    upgrade_flow-->check_iteration_fm;
+    check_iteration_fm-->change_data_area;
+    change_data_area-->goto_iteration_fm;
+</div>
+
+<h3 id="方式二-upgrade-工作流程"><a href="#方式二-upgrade-工作流程" class="headerlink" title="方式二 upgrade 工作流程"></a>方式二 upgrade 工作流程</h3><div class="mermaid">
+graph TD;
+    receive_upgrade_request-->goto_upgrade_area;
+    goto_upgrade_area-->erase_iteration_area;
+    erase_iteration_area-->receive_to_iteration_area;
+    receive_to_iteration_area-->receive_finish;
+    receive_finish-->check_iteration_area;
+    check_iteration_area-->change_data_area;
+    change_data_area-->response_success_or_fail;
+</div>
+
+<h3 id="方式二-总结"><a href="#方式二-总结" class="headerlink" title="方式二 总结"></a>方式二 总结</h3><p>经过验证，可以实现，但是缺点明显：</p>
+<ol>
+<li>任何一个过程出错，程序都将回到出厂固件。</li>
+<li>在升级区，以来比较稳定的升级流程，不能跟随最新的固件更新而更新，但是同时也与应用解除耦合了。</li>
+<li>需要分开编译与编写固件区与升级区，管理固件似乎不太方便。</li>
+</ol>
+<h2 id="方式三（参考A-B系统方式）"><a href="#方式三（参考A-B系统方式）" class="headerlink" title="方式三（参考A/B系统方式）"></a>方式三（参考A/B系统方式）</h2><h3 id="方式三-分区表"><a href="#方式三-分区表" class="headerlink" title="方式三 分区表"></a>方式三 分区表</h3><table>
+<thead>
+<tr>
+<th align="center">分区名称</th>
+<th align="center">分区大小</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">bootloader</td>
+<td align="center">自定义</td>
+<td align="center">引导区</td>
+</tr>
+<tr>
+<td align="center">data</td>
+<td align="center">自定义</td>
+<td align="center">数据区</td>
+</tr>
+<tr>
+<td align="center">factory-firmware</td>
+<td align="center">自定义</td>
+<td align="center">出厂固件区</td>
+</tr>
+<tr>
+<td align="center">firmware-A</td>
+<td align="center">自定义</td>
+<td align="center">固件A区</td>
+</tr>
+<tr>
+<td align="center">firmware-B</td>
+<td align="center">自定义</td>
+<td align="center">固件B区</td>
+</tr>
+</tbody></table>
+<h3 id="方式三-Bootloader-工作流程"><a href="#方式三-Bootloader-工作流程" class="headerlink" title="方式三 Bootloader 工作流程"></a>方式三 Bootloader 工作流程</h3><div class="mermaid">
+graph TD;
+    startup-->check_data_area;
+    check_data_area-->select_factory;
+    select_factory-->goto_factory;
+    check_data_area-->select_a_b_area;
+    select_a_b_area-->check_a_b_valid;
+    check_a_b_valid-->goto_a_b_fm;
+    check_a_b_valid-->select_other_fm;
+</div>
+
+<h3 id="方式三-upgrade-工作流程"><a href="#方式三-upgrade-工作流程" class="headerlink" title="方式三 upgrade 工作流程"></a>方式三 upgrade 工作流程</h3><div class="mermaid">
+graph TD;
+    upgrade_flow-->response_next_run;
+    response_next_run-->erase_next_run;
+    erase_next_run-->receive_to_next_run;
+    receive_to_next_run-->change_data_area;
+</div>
+
+<h3 id="方式三-总结"><a href="#方式三-总结" class="headerlink" title="方式三 总结"></a>方式三 总结</h3><p>参考A/B系统的升级方式，目前这种升级方式解决了以上两种方式的大部分问题，但是依然有疏漏：</p>
+<ol>
+<li>进入升级状态时，必须上报下次运行的分区，让发送方知道需要发送分区的固件，所以每个版本要存放两份。</li>
+<li>从分区角度看，似乎出厂区的程序用处不大，除非有恢复到出厂固件的需求，不然也可以去掉了。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MISC/" rel="tag"># MISC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/08/v2ray-server/" rel="prev" title="v2ray Linux 服务端配置">
+      <i class="fa fa-chevron-left"></i> v2ray Linux 服务端配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/01/object-oriented-design/" rel="next" title="面向对象设计">
+      面向对象设计 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%88%E7%9B%AE%E5%89%8D%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">方式一（目前最常用的方式）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">方式一分区表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80-Bootloader-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">方式一 Bootloader 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80-upgrade-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">方式一 upgrade 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80-%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">方式一 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%88%E4%B8%93%E7%94%A8%E7%9A%84%E5%8D%87%E7%BA%A7%E5%8C%BA%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">方式二（专用的升级区）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C-%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="nav-number">2.1.</span> <span class="nav-text">方式二 分区表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C-Bootloader-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">方式二 Bootloader 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C-upgrade-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">方式二 upgrade 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C-%E6%80%BB%E7%BB%93"><span class="nav-number">2.4.</span> <span class="nav-text">方式二 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%88%E5%8F%82%E8%80%83A-B%E7%B3%BB%E7%BB%9F%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">方式三（参考A&#x2F;B系统方式）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89-%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="nav-number">3.1.</span> <span class="nav-text">方式三 分区表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89-Bootloader-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">方式三 Bootloader 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89-upgrade-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.3.</span> <span class="nav-text">方式三 upgrade 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89-%E6%80%BB%E7%BB%93"><span class="nav-number">3.4.</span> <span class="nav-text">方式三 总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

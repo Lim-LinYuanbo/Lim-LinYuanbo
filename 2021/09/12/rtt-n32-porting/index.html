@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="RT-Thread N32G452XX 移植笔记测试硬件平台：N32G452RC 源码版本：RT-Thread master 长裤地址：https:&#x2F;&#x2F;github.com&#x2F;RT-Thread&#x2F;rt-thread&#x2F;tree&#x2F;master&#x2F;bsp&#x2F;n32g452xx 工作环境： 1. Win10 64bit (MDK533) 2. Ubuntu 20.04 (GCC 6.2.1 20161205 (">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RT-Thread N32G452XX 移植笔记">
+<meta property="og:url" content="http://example.com/2021/09/12/rtt-n32-porting/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RT-Thread N32G452XX 移植笔记测试硬件平台：N32G452RC 源码版本：RT-Thread master 长裤地址：https:&#x2F;&#x2F;github.com&#x2F;RT-Thread&#x2F;rt-thread&#x2F;tree&#x2F;master&#x2F;bsp&#x2F;n32g452xx 工作环境： 1. Win10 64bit (MDK533) 2. Ubuntu 20.04 (GCC 6.2.1 20161205 (">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-12T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T13:18:12.649Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="RTOS">
+<meta property="article:tag" content="RT-Thread">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/09/12/rtt-n32-porting/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>RT-Thread N32G452XX 移植笔记 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/rtt-n32-porting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RT-Thread N32G452XX 移植笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-12 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-12T00:00:00+00:00">2021-09-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-04 13:18:12" itemprop="dateModified" datetime="2022-01-04T13:18:12+00:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RTOS/" itemprop="url" rel="index"><span itemprop="name">RTOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="RT-Thread-N32G452XX-移植笔记"><a href="#RT-Thread-N32G452XX-移植笔记" class="headerlink" title="RT-Thread N32G452XX 移植笔记"></a>RT-Thread N32G452XX 移植笔记</h2><p>测试硬件平台：N32G452RC</p>
+<p>源码版本：<a target="_blank" rel="noopener" href="https://github.com/RT-Thread/rt-thread">RT-Thread master</a></p>
+<p>长裤地址：<a target="_blank" rel="noopener" href="https://github.com/RT-Thread/rt-thread/tree/master/bsp/n32g452xx">https://github.com/RT-Thread/rt-thread/tree/master/bsp/n32g452xx</a></p>
+<p>工作环境：</p>
+<pre><code>1. Win10 64bit (MDK533)
+2. Ubuntu 20.04 (GCC 6.2.1 20161205 (release))
+</code></pre>
+<h3 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h3><h4 id="Win10-64bit"><a href="#Win10-64bit" class="headerlink" title="Win10 64bit"></a>Win10 64bit</h4><ol>
+<li><p>搭建好 N32G452XX 裸机开发环境</p>
+</li>
+<li><p>下载 RTT ENV，参考<a target="_blank" rel="noopener" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/application-note/setup/standard-project/an0017-standard-project">使用 Env 创建 RT-Thread 项目工程</a></p>
+</li>
+<li><p>下载 RTT 源码</p>
+</li>
+</ol>
+<h4 id="Ubuntu-20-04"><a href="#Ubuntu-20-04" class="headerlink" title="Ubuntu 20.04"></a>Ubuntu 20.04</h4><ol>
+<li><p>下载安装<a target="_blank" rel="noopener" href="https://www.segger.com/downloads/jlink/">J-flash</a></p>
+</li>
+<li><p>根据官方教程即可，参考<a target="_blank" rel="noopener" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/application-note/setup/qemu/ubuntu/an0005-qemu-ubuntu">在 Ubuntu 平台开发 RT-Thread</a></p>
+</li>
+<li><p>下载 RTT 源码</p>
+</li>
+</ol>
+<h3 id="二、移植步骤"><a href="#二、移植步骤" class="headerlink" title="二、移植步骤"></a>二、移植步骤</h3><blockquote>
+<p>个人思路：</p>
+<ol>
+<li>选择已有并且接近芯片进行移植</li>
+<li>了解该 BSP 的目录结构与编译流程</li>
+<li>通过 grep 搜索相关关键词进行替换</li>
+</ol>
+</blockquote>
+<h4 id="1-对比选择"><a href="#1-对比选择" class="headerlink" title="1. 对比选择"></a>1. 对比选择</h4><blockquote>
+<p>经过对比国产的XXX32，我发现已有的 BSP 中，AT32 的目录和 STM32 比较接近，也比较清晰。</p>
+</blockquote>
+<p>具体芯片对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>硬件</th>
+<th>描述</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>芯片型号</td>
+<td>N32G452RCL7</td>
+<td>AT32F407VGT7</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>ARM Cortex M4</td>
+<td>ARM Cortex M4</td>
+</tr>
+<tr>
+<td>主频</td>
+<td>144M</td>
+<td>240M</td>
+</tr>
+<tr>
+<td>片内SRAM</td>
+<td>80K可扩展144K</td>
+<td>96K可扩展224K</td>
+</tr>
+<tr>
+<td>片内FLASH</td>
+<td>256K</td>
+<td>1024K</td>
+</tr>
+</tbody></table>
+<h4 id="2-BSP-目录结构"><a href="#2-BSP-目录结构" class="headerlink" title="2.BSP 目录结构"></a>2.BSP 目录结构</h4><pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 目录路径：rt-thread/bsp/at32</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tree -d -L 1</span></span><br><span class="line">.</span><br><span class="line">├── Libraries # 库文件</span><br><span class="line">├── at32f403a-start # 具体 芯片 与 BSP 目录</span><br><span class="line">├── at32f407-start</span><br><span class="line">└── tools # 脚本</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 目录路径：rt-thread/bsp/at32/Libraries</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tree -L 2</span></span><br><span class="line">.</span><br><span class="line">├── AT32_Std_Driver</span><br><span class="line">│   ├── AT32F4xx_StdPeriph_Driver</span><br><span class="line">│   ├── CMSIS</span><br><span class="line">│   └── SConscript # 不知如何描述...你懂的...</span><br><span class="line">├── Kconfig # menuconfig 对应的配置文件</span><br><span class="line">└── rt_drivers</span><br><span class="line">    ├── SConscript # 同上</span><br><span class="line">    ...</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 目录路径：rt-thread/bsp/at32/at32f407-start</span></span><br><span class="line">.</span><br><span class="line">├── Kconfig # menuconfig 对应的配置文件</span><br><span class="line">├── README.md # 本 BSP 描述文件</span><br><span class="line">├── SConscript # 不知如何描述...你懂的...</span><br><span class="line">├── SConstruct # 执行 scons 时运行的构建文件</span><br><span class="line">├── applications</span><br><span class="line">│   ├── SConscript # 同上</span><br><span class="line">│   └── main.c # component init 最后调用的 main 在这里</span><br><span class="line">├── board</span><br><span class="line">│   ├── Kconfig # 同上</span><br><span class="line">│   ├── SConscript # 同上</span><br><span class="line">│   ├── board.c # 板子初始化的</span><br><span class="line">│   ├── board.h # 包含一些 FLASH 与 堆栈 相关大小描述</span><br><span class="line">│   ├── linker_scripts # 链接文件</span><br><span class="line">│   │   ├── link.icf # IAR...</span><br><span class="line">│   │   ├── link.lds # GCC使用的链接文件</span><br><span class="line">│   │   └── link.sct # ARMCC使用的链接文件</span><br><span class="line">│   └── msp # MCU Specific Package 可以理解为与具体板子相关的初始化文件</span><br><span class="line">│       ├── at32_msp.c # 更多的是一些 GPIO 是否复用的初始化</span><br><span class="line">│       ├── at32_msp.h # 头文件</span><br><span class="line">│       └── system_at32f4xx.c # 芯片 .s 启动文件调用的始终初始化代码</span><br><span class="line">├── rtconfig.h # 执行 menuconfig 读取与生成，以及 RTT 的配置</span><br><span class="line">├── rtconfig.py # 包括编译器选择与编译链接相关选项</span><br><span class="line">├── template.uvopt # keil 相关不多说</span><br><span class="line">├── template.uvoptx # keil 相关不多说</span><br><span class="line">├── template.uvproj # keil 相关不多说</span><br><span class="line">└── template.uvprojx # keil 相关不多说</span><br></pre></td></tr></table></figure>
+</code></pre>
+<h4 id="3-SCONS-运作文件顺序"><a href="#3-SCONS-运作文件顺序" class="headerlink" title="3.SCONS 运作文件顺序"></a>3.SCONS 运作文件顺序</h4><pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── SConscript # 2. 遍历子目录的 SConscript</span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 运行 SConstruct 文件，由于引用 rtconfig.py 所以会看 rtconfig.py 添加的打印</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 5. 追加完了所有源码(包括Libraries)之后，进行构建</span></span><br><span class="line">├── SConstruct </span><br><span class="line">├── applications</span><br><span class="line">│   ├── SConscript # 3. 追加 applications 中的源码</span><br><span class="line">├── board</span><br><span class="line">│   ├── SConscript # 4. 追加 board 中的源码</span><br><span class="line">├── rtconfig.py</span><br><span class="line">├── template.ewd</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p>个人理解：</p>
+<ol>
+<li><code>rtconfig.py</code>定义编译器之后，指定了编译选项</li>
+<li>通过<code>SConscript</code>文件遍历所有需要编译的文件</li>
+<li>最后执行<code>SConstruct</code>文件中的<code>DoBuilding(TARGET, objs)</code></li>
+<li>方法<code>DoBuilding</code>位于<code>RTT_ROOT/tools/building.py</code></li>
+</ol>
+<h3 id="三、开始移植"><a href="#三、开始移植" class="headerlink" title="三、开始移植"></a>三、开始移植</h3><blockquote>
+<p>个人认为，这个过程比较简单粗暴，主要分两种情况：</p>
+<ol>
+<li><p>对于源码文件，<code>.c</code>、<code>.h</code>和<code>*.s</code>直接替换或修改内部与<code>at32</code>相关库接口</p>
+</li>
+<li><p>对于配置文件，</p>
+</li>
+</ol>
+</blockquote>
+<p>通过搜索，可以快速检索与<code>at32</code>相关的文件，主要修改配置文件如下：</p>
+<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看 Libraries 与 at32 相关的配置文件</span></span><br><span class="line"><span class="meta">rt-thread/bsp/at32/Libraries$</span><span class="bash"> grep -irn <span class="string">&#x27;at32&#x27;</span> . --exclude <span class="string">&quot;*.c&quot;</span> --exclude <span class="string">&quot;*.h&quot;</span> --exclude-dir=AT32_Std_Driver</span></span><br><span class="line">./Kconfig:1:config SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:4:config SOC_SERIES_AT32F403</span><br><span class="line">./Kconfig:7:    select SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:9:config SOC_SERIES_AT32F413</span><br><span class="line">./Kconfig:12:    select SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:14:config SOC_SERIES_AT32F415</span><br><span class="line">./Kconfig:17:    select SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:19:config SOC_SERIES_AT32F403A</span><br><span class="line">./Kconfig:22:    select SOC_FAMILY_AT32</span><br><span class="line">./Kconfig:24:config SOC_SERIES_AT32F407</span><br><span class="line">./Kconfig:27:    select SOC_FAMILY_AT32</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 at32f407-start 与 at32 相关的配置文件</span></span><br><span class="line"><span class="meta">rt-thread/bsp/at32/at32f407-start$</span><span class="bash"> grep -irn <span class="string">&#x27;at32&#x27;</span> . --exclude <span class="string">&quot;*.c&quot;</span> --exclude <span class="string">&quot;*.h&quot;</span></span></span><br><span class="line">./.config:504:CONFIG_SOC_FAMILY_AT32=y</span><br><span class="line">./.config:505:CONFIG_SOC_SERIES_AT32F407=y</span><br><span class="line">./.config:510:CONFIG_SOC_AT32F407VGT7=y</span><br><span class="line">./board/Kconfig:3:config SOC_AT32F407VGT7</span><br><span class="line">./board/Kconfig:5:    select SOC_SERIES_AT32F407</span><br><span class="line">./board/linker_scripts/link.lds:2: * linker script for AT32 with GNU ld</span><br><span class="line">./board/SConscript:12:msp/at32_msp.c</span><br><span class="line">./board/SConscript:13:msp/system_at32f4xx.c</span><br><span class="line">./board/SConscript:22:    src += [startup_path_prefix + &#x27;/AT32_Std_Driver/CMSIS/AT32/AT32F4xx/src/gcc/startup_at32f407vgt7.s&#x27;]</span><br><span class="line">./board/SConscript:24:    src += [startup_path_prefix + &#x27;/AT32_Std_Driver/CMSIS/AT32/AT32F4xx/src/mdk/startup_at32f407vgt7.s&#x27;]</span><br><span class="line">./board/SConscript:26:    src += [startup_path_prefix + &#x27;/AT32_Std_Driver/CMSIS/AT32/AT32F4xx/src/iar/startup_at32f407vgt7.s&#x27;]</span><br><span class="line">./board/SConscript:28:CPPDEFINES = [&#x27;AT32F407VGT7&#x27;]</span><br><span class="line">./README.md:1:# AT32F407 AT-START 开发板 BSP 说明</span><br><span class="line">./README.md:5:AT32F407 AT-START是雅特力推出的一款AT32F407系列的评估板，其搭载的MCU主要资源参数如下：</span><br><span class="line">./README.md:9:| 芯片型号  | AT32F407VGT7  |</span><br><span class="line">./README.md:17:AT32F407-START板级包支持MDK4﹑MDK5﹑IAR开发环境和GCC编译器，以下是具体版本信息：</span><br><span class="line">./README.md:28:- MCU：AT32F407VGT7，主频 240MHz，1024KB FLASH ，96KB可扩展到224KB RAM</span><br><span class="line">./README.md:140:AT32F407使用Ethernet且PHY时钟由MCO输出提供时，主频最好采用200Mhz。</span><br><span class="line">./SConstruct:49:at32_library = &#x27;AT32_Std_Driver&#x27;</span><br><span class="line">./SConstruct:50:rtconfig.BSP_LIBRARY_TYPE = at32_library</span><br><span class="line">./SConstruct:53:objs.extend(SConscript(os.path.join(libraries_path_prefix, at32_library, &#x27;SConscript&#x27;)))</span><br></pre></td></tr></table></figure>
+</code></pre>
+<h4 id="公共库：Libraries-AT32-Std-Driver"><a href="#公共库：Libraries-AT32-Std-Driver" class="headerlink" title="公共库：Libraries/AT32_Std_Driver"></a>公共库：<code>Libraries/AT32_Std_Driver</code></h4><ol>
+<li>将<code>AT32_Std_Driver</code>改名，个人认为改成<code>Std_Driver</code>将更通用</li>
+<li>将<code>AT32_Std_Driver</code>中<code>SConscript</code>的相关依赖修改为正确的路径</li>
+<li>将<code>AT32_Std_Driver</code>中具体的库替换</li>
+</ol>
+<h4 id="公共库：Libraries-rt-drivers"><a href="#公共库：Libraries-rt-drivers" class="headerlink" title="公共库：Libraries/rt_drivers"></a>公共库：<code>Libraries/rt_drivers</code></h4><ol>
+<li>将<code>rt_drivers</code>中具体驱动根据该芯片的标准库修改</li>
+<li>检查<code>rt_drivers</code>中<code>SConscript</code>是否存在与具体芯片相关的描述</li>
+</ol>
+<h4 id="链接脚本at32f407-start-board-linker-scripts"><a href="#链接脚本at32f407-start-board-linker-scripts" class="headerlink" title="链接脚本at32f407-start/board/linker_scripts"></a>链接脚本<code>at32f407-start/board/linker_scripts</code></h4><ol>
+<li>主要修改一些<code>RAM</code>与<code>ROM</code>相关的大小，其他无需修改</li>
+</ol>
+<h4 id="板子初始化文件at32f407-start-board-msp"><a href="#板子初始化文件at32f407-start-board-msp" class="headerlink" title="板子初始化文件at32f407-start/board/msp"></a>板子初始化文件<code>at32f407-start/board/msp</code></h4><ol>
+<li>将<code>at32_msp.*</code>更名，将内容相关的<code>at32</code>替换</li>
+<li>将<code>system_at32f4xx.c</code>替换为对于芯片的具体时钟替换一下就行</li>
+</ol>
+<h4 id="其他文件at32f407-start-board"><a href="#其他文件at32f407-start-board" class="headerlink" title="其他文件at32f407-start/board"></a>其他文件<code>at32f407-start/board</code></h4><ol>
+<li>将<code>Kconfig</code>中的<code>at32</code>相关替换一下</li>
+<li>将<code>SConscript</code>中源码路径替换</li>
+<li>将<code>board.*</code>中头文件与宏定义替换</li>
+</ol>
+<h4 id="关于工程文件"><a href="#关于工程文件" class="headerlink" title="关于工程文件"></a>关于工程文件</h4><p>此处使用 keil 打开，重新选择一下芯片类型保存即可</p>
+<h3 id="四、编译与测试"><a href="#四、编译与测试" class="headerlink" title="四、编译与测试"></a>四、编译与测试</h3><h4 id="1-编译"><a href="#1-编译" class="headerlink" title="1. 编译"></a>1. 编译</h4><ol>
+<li>主要关注缺少了哪些文件与<code>Sconscript</code>相关</li>
+<li>编译错误，这个就与源码<code>.c</code>相关</li>
+<li>缺少的定义大多数与<code>Kconfig</code>相关</li>
+</ol>
+<h4 id="2-烧录与仿真"><a href="#2-烧录与仿真" class="headerlink" title="2. 烧录与仿真"></a>2. 烧录与仿真</h4><ol>
+<li>首先设置启动文件断点<code>*.s</code>，说明程序烧录正确已经从复位开始启动</li>
+<li>然后在<code>int $Sub$$main(void)</code>中设置断点，确保启动函数已经调用<code>__main</code></li>
+<li>最后在<code>int rtthread_startup(void)</code>中设置断点，确保各类初始化通过</li>
+</ol>
+<h4 id="3-其他补充"><a href="#3-其他补充" class="headerlink" title="3. 其他补充"></a>3. 其他补充</h4><ol>
+<li>根据原厂FAE提供的信息，芯片掉电会比较慢，所以按复位按键有时无法复位。解决方案：使用keil下载设置下载后复位，使用J-Flash下载也记得设置下载后复位。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RTOS/" rel="tag"># RTOS</a>
+              <a href="/tags/RT-Thread/" rel="tag"># RT-Thread</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/04/soft-skills-chapter-36/" rel="prev" title="软技能-第三十六章">
+      <i class="fa fa-chevron-left"></i> 软技能-第三十六章
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/14/git-cz/" rel="next" title="git cz">
+      git cz <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RT-Thread-N32G452XX-%E7%A7%BB%E6%A4%8D%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">RT-Thread N32G452XX 移植笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">一、环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Win10-64bit"><span class="nav-number">1.1.1.</span> <span class="nav-text">Win10 64bit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu-20-04"><span class="nav-number">1.1.2.</span> <span class="nav-text">Ubuntu 20.04</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%A7%BB%E6%A4%8D%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.2.</span> <span class="nav-text">二、移植步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AF%B9%E6%AF%94%E9%80%89%E6%8B%A9"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 对比选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-BSP-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.BSP 目录结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-SCONS-%E8%BF%90%E4%BD%9C%E6%96%87%E4%BB%B6%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.SCONS 运作文件顺序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BC%80%E5%A7%8B%E7%A7%BB%E6%A4%8D"><span class="nav-number">1.3.</span> <span class="nav-text">三、开始移植</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E5%BA%93%EF%BC%9ALibraries-AT32-Std-Driver"><span class="nav-number">1.3.1.</span> <span class="nav-text">公共库：Libraries&#x2F;AT32_Std_Driver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E5%BA%93%EF%BC%9ALibraries-rt-drivers"><span class="nav-number">1.3.2.</span> <span class="nav-text">公共库：Libraries&#x2F;rt_drivers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E8%84%9A%E6%9C%ACat32f407-start-board-linker-scripts"><span class="nav-number">1.3.3.</span> <span class="nav-text">链接脚本at32f407-start&#x2F;board&#x2F;linker_scripts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%BF%E5%AD%90%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%87%E4%BB%B6at32f407-start-board-msp"><span class="nav-number">1.3.4.</span> <span class="nav-text">板子初始化文件at32f407-start&#x2F;board&#x2F;msp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%87%E4%BB%B6at32f407-start-board"><span class="nav-number">1.3.5.</span> <span class="nav-text">其他文件at32f407-start&#x2F;board</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.6.</span> <span class="nav-text">关于工程文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%BC%96%E8%AF%91%E4%B8%8E%E6%B5%8B%E8%AF%95"><span class="nav-number">1.4.</span> <span class="nav-text">四、编译与测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%BC%96%E8%AF%91"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%83%A7%E5%BD%95%E4%B8%8E%E4%BB%BF%E7%9C%9F"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 烧录与仿真</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%85%B6%E4%BB%96%E8%A1%A5%E5%85%85"><span class="nav-number">1.4.3.</span> <span class="nav-text">3. 其他补充</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
