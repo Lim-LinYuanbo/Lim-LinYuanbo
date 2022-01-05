@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
+title: Lim's blog
+subtitle: 'sub blog'
+description: 'A embedded programer'
 keywords:
-author: John Doe
+author: Lin Yuanbo
 language: en
 timezone: ''
 
