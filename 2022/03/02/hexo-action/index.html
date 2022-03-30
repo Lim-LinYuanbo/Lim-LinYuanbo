@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="简单理解学习一下 Hexo Action 这个仓库工作流程，顺便复习一下 Github Action。  脚本概览与相关注释参考：  Hexo Action Workflow syntax for GitHub Actions  123456789101112131415161718192021222324252627282930313233343536373839404142name: Dep">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo Action">
+<meta property="og:url" content="http://example.com/2022/03/02/hexo-action/index.html">
+<meta property="og:site_name" content="Lim&#39;s blog">
+<meta property="og:description" content="简单理解学习一下 Hexo Action 这个仓库工作流程，顺便复习一下 Github Action。  脚本概览与相关注释参考：  Hexo Action Workflow syntax for GitHub Actions  123456789101112131415161718192021222324252627282930313233343536373839404142name: Dep">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-02T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-30T01:25:30.430Z">
+<meta property="article:author" content="Lin Yuanbo">
+<meta property="article:tag" content="运维">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/03/02/hexo-action/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Hexo Action | Lim's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Lim's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">sub blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/02/hexo-action/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lin Yuanbo">
+      <meta itemprop="description" content="A embedded programer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lim's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo Action
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-02 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-02T00:00:00+00:00">2022-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>简单理解学习一下 Hexo Action 这个仓库工作流程，顺便复习一下 Github Action。</p>
+</blockquote>
+<h3 id="脚本概览与相关注释"><a href="#脚本概览与相关注释" class="headerlink" title="脚本概览与相关注释"></a>脚本概览与相关注释</h3><p>参考：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/hexo-action">Hexo Action</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions">Workflow syntax for GitHub Actions</a></li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span> [<span class="string">push</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">A</span> <span class="string">job</span> <span class="string">to</span> <span class="string">deploy</span> <span class="string">blog.</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@v1</span> <span class="comment"># 使用 `https://github.com/marketplace/actions/checkout` 克隆该脚本仓库，使用 V1 版本，参考：jobs.&lt;job_id&gt;.uses</span></span><br><span class="line">      <span class="attr">with:</span> <span class="comment"># actions/checkout 输入参数</span></span><br><span class="line">        <span class="attr">submodules:</span> <span class="literal">true</span> <span class="comment"># Checkout private submodules(themes or something else).</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Cache</span> <span class="string">node</span> <span class="string">modules</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/cache@v1</span> <span class="comment"># 这里使用的是 `https://github.com/marketplace/actions/cache`，目前未搞懂 cache 的作用。</span></span><br><span class="line">      <span class="attr">id:</span> <span class="string">cache</span></span><br><span class="line">      <span class="attr">with:</span> <span class="comment"># 这里使用的例子是 `https://github.com/actions/cache/blob/main/examples.md#node---npm` 相关参数。</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">node_modules</span></span><br><span class="line">        <span class="attr">key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-node-$&#123;&#123;</span> <span class="string">hashFiles(&#x27;**/package-lock.json&#x27;)</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          $&#123;&#123; runner.os &#125;&#125;-node-</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">    <span class="comment"># 安装依赖</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">Dependencies</span></span><br><span class="line">      <span class="attr">if:</span> <span class="string">steps.cache.outputs.cache-hit</span> <span class="type">!=</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Deploy hexo blog website.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">id:</span> <span class="string">deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">sma11black/hexo-action@v1.0.3</span> <span class="comment"># 核心业务逻辑，跟进该作者仓库了解流程</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">deploy_key:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DEPLOY_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">user_name:</span> <span class="string">your</span> <span class="string">github</span> <span class="string">username</span>  <span class="comment"># (or delete this input setting to use bot account)</span></span><br><span class="line">        <span class="attr">user_email:</span> <span class="string">your</span> <span class="string">github</span> <span class="string">useremail</span>  <span class="comment"># (or delete this input setting to use bot account)</span></span><br><span class="line">        <span class="attr">commit_msg:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.event.head_commit.message</span> <span class="string">&#125;&#125;</span>  <span class="comment"># (or delete this input setting to use hexo default settings)</span></span><br><span class="line">    <span class="comment"># Use the output from the `deploy` step(use for test action)</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Get</span> <span class="string">the</span> <span class="string">output</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line">        <span class="string">echo</span> <span class="string">&quot;$<span class="template-variable">&#123;&#123; steps.deploy.outputs.notify &#125;&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Hexo-Action-的-actions-yml"><a href="#Hexo-Action-的-actions-yml" class="headerlink" title="Hexo Action 的 actions.yml"></a>Hexo Action 的 <code>actions.yml</code></h3><p>参考：<a target="_blank" rel="noopener" href="https://github.com/sma11black/hexo-action/blob/master/action.yml">https://github.com/sma11black/hexo-action/blob/master/action.yml</a></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">&#x27;Hexo Action&#x27;</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;Hexo CI/CD action for automating deployment.&#x27;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">&#x27;sma11black&#x27;</span></span><br><span class="line"><span class="attr">inputs:</span> <span class="comment"># 输入参数</span></span><br><span class="line">  <span class="attr">user_name:</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">&#x27;Github user name&#x27;</span></span><br><span class="line">    <span class="attr">required:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">default:</span> <span class="string">&#x27;github-actions[bot]&#x27;</span> <span class="comment"># 未设置的默认参数</span></span><br><span class="line">  <span class="attr">user_email:</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">&#x27;Github email&#x27;</span></span><br><span class="line">    <span class="attr">required:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">default:</span> <span class="string">&#x27;41898282+github-actions[bot]@users.noreply.github.com&#x27;</span></span><br><span class="line">  <span class="attr">deploy_key:</span> <span class="comment"># 根据该仓库说明，这个是必须设置的，为可访问部署仓库的私钥</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">&#x27;The deploy key for Github Pages repo&#x27;</span></span><br><span class="line">    <span class="attr">required:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">default:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">commit_msg:</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">&#x27;Git commit messages to your GitHub Pages repository.&#x27;</span></span><br><span class="line">    <span class="attr">required:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">default:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="attr">outputs:</span></span><br><span class="line">  <span class="attr">notify:</span> <span class="comment"># id of output</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">&#x27;The notification of deployment result&#x27;</span></span><br><span class="line"><span class="attr">runs:</span> <span class="comment"># 最终运行执行命令与设置</span></span><br><span class="line">  <span class="attr">using:</span> <span class="string">&#x27;docker&#x27;</span> <span class="comment"># 基于 docker 运行</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">&#x27;Dockerfile&#x27;</span> <span class="comment"># dockerfile 运行环境的配置与设置</span></span><br><span class="line">  <span class="attr">args:</span> <span class="comment"># 输入参数</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">$&#123;&#123;</span> <span class="string">inputs.user_name</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">$&#123;&#123;</span> <span class="string">inputs.user_email</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">$&#123;&#123;</span> <span class="string">inputs.deploy_key</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">$&#123;&#123;</span> <span class="string">inputs.commit_msg</span> <span class="string">&#125;&#125;</span></span><br><span class="line"><span class="attr">branding:</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">&#x27;package&#x27;</span>  </span><br><span class="line">  <span class="attr">color:</span> <span class="string">&#x27;blue&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Hexo-Action-的-Dockerfile"><a href="#Hexo-Action-的-Dockerfile" class="headerlink" title="Hexo Action 的 Dockerfile"></a>Hexo Action 的 <code>Dockerfile</code></h3><p>参考：<a target="_blank" rel="noopener" href="https://github.com/sma11black/hexo-action/blob/master/Dockerfile">https://github.com/sma11black/hexo-action/blob/master/Dockerfile</a></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker 基于的镜像</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">12</span>-buster-slim</span><br><span class="line"></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> version=<span class="string">&quot;1.0.3&quot;</span></span></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> repository=<span class="string">&quot;https://github.com/sma11black/hexo-action&quot;</span></span></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> homepage=<span class="string">&quot;https://sma11black.github.io&quot;</span></span></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=<span class="string">&quot;sma11black &lt;smallblack@outlook.com&gt;&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝 宿主路径-&gt;容器路径</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> entrypoint.sh /entrypoint.sh</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> sync_deploy_history.js /sync_deploy_history.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docker 容器启动时执行的命令</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &gt; /dev/null &amp;&amp; \</span></span><br><span class="line"><span class="bash">    apt-get install -y git openssh-client &gt; /dev/null ; \</span></span><br><span class="line"><span class="bash">    chmod +x /entrypoint.sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 没完全理解该命令 :( ，但是一定执行了 `entrypoint.sh` 这个脚本 :)</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;/entrypoint.sh&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Hexo-Action-的-entrypoint-sh"><a href="#Hexo-Action-的-entrypoint-sh" class="headerlink" title="Hexo Action 的 entrypoint.sh"></a>Hexo Action 的 <code>entrypoint.sh</code></h3><p>参考：<a target="_blank" rel="noopener" href="https://github.com/sma11black/hexo-action/blob/master/entrypoint.sh">https://github.com/sma11black/hexo-action/blob/master/entrypoint.sh</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">set -e</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 从这里可以清晰的看出，使用私钥的作用，其他都是常规操作</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> setup ssh-private-key</span></span><br><span class="line">mkdir -p /root/.ssh/</span><br><span class="line">echo &quot;$INPUT_DEPLOY_KEY&quot; &gt; /root/.ssh/id_rsa</span><br><span class="line">chmod 600 /root/.ssh/id_rsa</span><br><span class="line">ssh-keyscan -t rsa github.com &gt;&gt; /root/.ssh/known_hosts</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> setup deploy git account</span></span><br><span class="line">git config --global user.name &quot;$INPUT_USER_NAME&quot;</span><br><span class="line">git config --global user.email &quot;$INPUT_USER_EMAIL&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> install hexo env</span></span><br><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> deployment</span></span><br><span class="line">if [ &quot;$INPUT_COMMIT_MSG&quot; = &quot;none&quot; ]</span><br><span class="line">then</span><br><span class="line">    hexo g -d</span><br><span class="line">elif [ &quot;$INPUT_COMMIT_MSG&quot; = &quot;&quot; ] || [ &quot;$INPUT_COMMIT_MSG&quot; = &quot;default&quot; ]</span><br><span class="line">then</span><br><span class="line">    # pull original publish repo</span><br><span class="line">    NODE_PATH=$NODE_PATH:$(pwd)/node_modules node /sync_deploy_history.js</span><br><span class="line">    hexo g -d</span><br><span class="line">else</span><br><span class="line">    NODE_PATH=$NODE_PATH:$(pwd)/node_modules node /sync_deploy_history.js</span><br><span class="line">    hexo g -d -m &quot;$INPUT_COMMIT_MSG&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo ::set-output name=notify::&quot;Deploy complate.&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h3><ol>
+<li>设置 Github Action 触发条件<code>push on</code>；</li>
+<li>Github Action 运行环境 ubuntu-latest，并设置相应环境;</li>
+<li>执行 <code>https://github.com/sma11black/hexo-action/blob/master/action.yml</code> 完成部署。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag"># 运维</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/17/hexo-github-pages-actions/" rel="prev" title="Hexo + Github Pages + Github Actions">
+      <i class="fa fa-chevron-left"></i> Hexo + Github Pages + Github Actions
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%A6%82%E8%A7%88%E4%B8%8E%E7%9B%B8%E5%85%B3%E6%B3%A8%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text">脚本概览与相关注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-Action-%E7%9A%84-actions-yml"><span class="nav-number">2.</span> <span class="nav-text">Hexo Action 的 actions.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-Action-%E7%9A%84-Dockerfile"><span class="nav-number">3.</span> <span class="nav-text">Hexo Action 的 Dockerfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-Action-%E7%9A%84-entrypoint-sh"><span class="nav-number">4.</span> <span class="nav-text">Hexo Action 的 entrypoint.sh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">整体思路</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lin Yuanbo</p>
+  <div class="site-description" itemprop="description">A embedded programer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Yuanbo</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

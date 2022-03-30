@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="A embedded programer">
@@ -116,29 +116,9 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-commonweal">
-
-    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
 
   </li>
   </ul>
@@ -168,10 +148,420 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/21/ymodem-transmit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lin Yuanbo">
+      <meta itemprop="description" content="A embedded programer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lim's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/21/ymodem-transmit/" class="post-title-link" itemprop="url">Xshell/secureCRT Ymodem 发送文件笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-21T00:00:00+00:00">2020-10-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>使用 Xshell 和 secureCRT 发送文件的时候，发相同的文件，但是效果不太一样，所以使用逻辑分析仪抓了一下波形，记录一下。</p>
+</blockquote>
+<h2 id="Xshell-记录"><a href="#Xshell-记录" class="headerlink" title="Xshell 记录"></a>Xshell 记录</h2><table>
+<thead>
+<tr>
+<th align="center">Xshell</th>
+<th align="center">方向</th>
+<th align="center">Receiver</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">准备就绪</td>
+<td align="center">无</td>
+<td align="center">准备就绪</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">‘C’</td>
+<td align="center">请求发送</td>
+</tr>
+<tr>
+<td align="center">0x72,0x62,0x20,0x2D,0x45,0x0D</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">这是啥?字符串:rb -E\n</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">CAN</td>
+<td align="center">无效数据,回复CAN,<br>或者忽略</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">‘C’</td>
+<td align="center">超时请求发送</td>
+</tr>
+<tr>
+<td align="center">0x01,0x00,0xFF,file_name,0x00,file_size,0x00,CRC,CRC</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">发送文件名+文件大小</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK,’C’</td>
+<td align="center">应答</td>
+</tr>
+<tr>
+<td align="center">0x01,0x01,0xFE,file_data,CRC,CRC</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">文件数据</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK</td>
+<td align="center">应答</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+<tr>
+<td align="center">0x01,SEQ,~SEQ,file_data,0x1A,…,CRC,CRC</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">文件数据最后部分,不够128字节以0x1A填充</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK</td>
+<td align="center">应答</td>
+</tr>
+<tr>
+<td align="center">EOT</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">传输结束</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">NAK</td>
+<td align="center">拒绝接收</td>
+</tr>
+<tr>
+<td align="center">EOT</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">传输结束</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK</td>
+<td align="center">应答</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">‘C’</td>
+<td align="center">超时请求发送</td>
+</tr>
+<tr>
+<td align="center">0x01,0x00,0xFF,0x00,…,0x4F,0x4F</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">结束帧数据包,这个校验不对?<br>或者不检验这最后一桢</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">NAK</td>
+<td align="center">拒绝接收,检验不通过,<br>或者直接回复ACK</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">‘C’</td>
+<td align="center">超时请求发送,<br>或者可以直接退出了</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">Xshell传输界面依然保留,接收端超时退出,<br>或者可以直接退出了</td>
+</tr>
+</tbody></table>
+<h2 id="SecureCRT-记录"><a href="#SecureCRT-记录" class="headerlink" title="SecureCRT 记录"></a>SecureCRT 记录</h2><table>
+<thead>
+<tr>
+<th align="center">SecureCRT</th>
+<th align="center">方向</th>
+<th align="center">Receiver</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">准备就绪</td>
+<td align="center">无</td>
+<td align="center">准备就绪</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">‘C’</td>
+<td align="center">请求发送</td>
+</tr>
+<tr>
+<td align="center">0x01,0x00,0xFF,file_name,0x00,file_size,0x00,CRC,CRC</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">发送文件名+文件大小</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK,’C’</td>
+<td align="center">应答</td>
+</tr>
+<tr>
+<td align="center">0x01,0x01,0xFE,file_data,CRC,CRC</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">文件数据</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK</td>
+<td align="center">应答</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+<tr>
+<td align="center">0x01,SEQ,~SEQ,file_data,0x1A,…,CRC,CRC</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">文件数据最后部分,不够128字节以0x1A填充</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK</td>
+<td align="center">应答</td>
+</tr>
+<tr>
+<td align="center">EOT</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">传输结束</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">NAK</td>
+<td align="center">拒绝接收</td>
+</tr>
+<tr>
+<td align="center">EOT</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">传输结束</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK</td>
+<td align="center">应答</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">‘C’</td>
+<td align="center">超时请求发送</td>
+</tr>
+<tr>
+<td align="center">0x01,0x00,0xFF,0x00,0x30,0x20,0x30,0x20,0x30,0x00,…,CRC,CRC</td>
+<td align="center">—&gt;</td>
+<td align="center"></td>
+<td align="center">结束帧数据包,这不是空包?不过检验是对的,<br>解析为字符串:0 0 0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">&lt;—</td>
+<td align="center">ACK</td>
+<td align="center">应答,可以直接退出了</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>Xshell:开头会发一串字符串:”rb -E\n”;结束发送的空包校验值是:0x4F,0x4F,待重新确认Ymodem协议细节.</li>
+<li>SecureCRT:结束发送的应该是空包,但是实际发送的数据包是一小段字符串:”0 0 0”,待重新确认Ymodem协议细节.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/05/cmd-tcpdump/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lin Yuanbo">
+      <meta itemprop="description" content="A embedded programer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lim's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/05/cmd-tcpdump/" class="post-title-link" itemprop="url">tcpdump 基础使用笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-09-05 00:00:00" itemprop="dateCreated datePublished" datetime="2020-09-05T00:00:00+00:00">2020-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>Tcpdump  prints  out  a  description  of the contents of packets on a network interface that match the boolean expression; the description is preceded by a time stamp, printed, by default, as hours, minutes, seconds,  and fractions of a second since midnight.</p>
+<h2 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -h</span></span><br><span class="line">tcpdump version 4.9.2</span><br><span class="line">libpcap version 1.8.1</span><br><span class="line">OpenSSL 1.1.1  11 Sep 2018</span><br><span class="line">Usage: tcpdump [-aAbdDefhHIJKlLnNOpqStuUvxX#] [ -B size ] [ -c count ]</span><br><span class="line">                [ -C file_size ] [ -E algo:secret ] [ -F file ] [ -G seconds ]</span><br><span class="line">                [ -i interface ] [ -j tstamptype ] [ -M secret ] [ --number ]</span><br><span class="line">                [ -Q in|out|inout ]</span><br><span class="line">                [ -r file ] [ -s snaplen ] [ --time-stamp-precision precision ]</span><br><span class="line">                [ --immediate-mode ] [ -T type ] [ --version ] [ -V file ]</span><br><span class="line">                [ -w file ] [ -W filecount ] [ -y datalinktype ] [ -z postrotate-command ]</span><br><span class="line">                [ -Z user ] [ expression ]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><ol>
+<li><p>查看当前系统状态</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看当前版本</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lsb_release -a</span></span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID: Ubuntu</span><br><span class="line">Description:    Ubuntu 18.04.1 LTS</span><br><span class="line">Release:        18.04</span><br><span class="line">Codename:       bionic</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看现在查看当前网络设备状态</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ifconfig</span></span><br></pre></td></tr></table></figure></li>
+<li><p>简单使用案例</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 参数说明:-i 指定网卡名, -s 数据包大小(0:表示抓取整个数据包), -s 指定抓取内容写入文件名</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -i eth0 -s 0 -w test.cap</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 参数说明:-X 以16进制呈现 -r 读取数据包名称</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -X -r test.cap</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 内容略,看过TCP/IP协议的人应该都可以看懂</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 参数说明:-n 不把主机的网络地址转换成名字, ip/icmp 指定抓取网络协议类型</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -i eth0 -n ip</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -i eth0 -n icmp</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 参数说明:src/dst host 113.92.130.87:数据包来源/目的 主机名 IP地址</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -i eth0 -n host 113.92.130.87</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -i eth0 -n src host 113.92.130.87</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -i eth0 -n dst host 113.92.130.87</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 参数说明:-n 不把主机的网络地址转换成名字, tcp 指定抓取协议类型, port 80 指定抓取端口号</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -i eth0 -n tcp port 80</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 参数说明:port ! 80 表示抓取非80端口数据包</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo tcpdump -i eth0 -n tcp port ! 80</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
+<li><p>wireshark 也是一款有名的图形化抓包工具,可以将抓取的数据包内容使用该软件打开</p>
+</li>
+<li><p>目前发现,在 WSL 下似乎无法使用 tcpdump,提示如下(目前没有解决):<code>tcpdump: socket: Socket type not supported</code></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/24/putty-color/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Lin Yuanbo">
       <meta itemprop="description" content="A embedded programer">
     </span>
@@ -199,7 +589,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +646,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/03/cmd-update-alternatives/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Lin Yuanbo">
       <meta itemprop="description" content="A embedded programer">
     </span>
@@ -284,7 +674,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -344,7 +734,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/03/the-markdown-resume/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Lin Yuanbo">
       <meta itemprop="description" content="A embedded programer">
     </span>
@@ -372,7 +762,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -411,7 +801,7 @@
 </blockquote>
 <hr>
 <h2 id="姓名"><a href="#姓名" class="headerlink" title="姓名"></a><strong>姓名</strong></h2><p>性别 | 年龄 | 本科 | X年工作经验</p>
-<p>:iphone: 135xxxxxxxx | :email: <a href="mailto:&#101;&#120;&#97;&#x6d;&#112;&#x6c;&#x65;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">&#101;&#120;&#97;&#x6d;&#112;&#x6c;&#x65;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;</a> | :house: blog.example.com</p>
+<p>:iphone: 135xxxxxxxx | :email: <a href="mailto:&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#64;&#103;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#109;">&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#64;&#103;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#109;</a> | :house: blog.example.com</p>
 <p>籍贯：广西贺州 | 政治面貌：群众</p>
 <h2 id="教育经历"><a href="#教育经历" class="headerlink" title="教育经历"></a><strong>教育经历</strong></h2><p><strong>20xx.xx - 20xx.xx</strong> <strong>学位一</strong> <strong>大学一</strong> <strong>专业一</strong></p>
 <p><strong>20xx.xx - 20xx.xx</strong> <strong>学位二</strong> <strong>大学二</strong> <strong>专业二</strong></p>
@@ -485,7 +875,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/23/jekyll-install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Lin Yuanbo">
       <meta itemprop="description" content="A embedded programer">
     </span>
@@ -513,7 +903,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -565,7 +955,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/05/git-hooks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Lin Yuanbo">
       <meta itemprop="description" content="A embedded programer">
     </span>
@@ -593,7 +983,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -647,7 +1037,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/05/git-ls-remote/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Lin Yuanbo">
       <meta itemprop="description" content="A embedded programer">
     </span>
@@ -675,7 +1065,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -725,7 +1115,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/30/jenkins-install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Lin Yuanbo">
       <meta itemprop="description" content="A embedded programer">
     </span>
@@ -753,7 +1143,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -903,7 +1293,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/07/deepin-configuration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Lin Yuanbo">
       <meta itemprop="description" content="A embedded programer">
     </span>
@@ -931,7 +1321,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
+                <time title="Modified: 2022-03-30 01:25:30" itemprop="dateModified" datetime="2022-03-30T01:25:30+00:00">2022-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -963,198 +1353,6 @@
 <li><p>安装 xrdp</p>
 </li>
 <li><p>注销当前登录用户（否则似乎无法登录）</p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/07/gitlab-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Lin Yuanbo">
-      <meta itemprop="description" content="A embedded programer">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lim's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/07/gitlab-install/" class="post-title-link" itemprop="url">gitlab 安装笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-07T00:00:00+00:00">2020-04-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>系统版本：ubuntu 18.04 LTS</p>
-</blockquote>
-<h3 id="安装记录"><a href="#安装记录" class="headerlink" title="安装记录"></a>安装记录</h3><p>参考:<a target="_blank" rel="noopener" href="https://about.gitlab.com/install/#ubuntu">https://about.gitlab.com/install/#ubuntu</a></p>
-<ol>
-<li><p>查看当前系统版本</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /proc/version</span></span><br><span class="line">Linux version 5.3.0-46-generic (buildd@lcy01-amd64-013) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #38~18.04.1-Ubuntu SMP Tue Mar 31 04:17:56 UTC 2020</span><br></pre></td></tr></table></figure>
-
-<p> 内核版本：5.3.0</p>
-<p> 发行版：ubuntu 18.04</p>
-</li>
-<li><p>选择 Gitlab 适配版本</p>
-<p> 选择 清华大学开源软件镜像源 路径：<code>/gitlab-ce/ubuntu/pool/bionic/main/g/gitlab-ce</code></p>
-</li>
-<li><p>安装</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装必要依赖</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install -y curl openssh-server openssh-client</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install -y ca-certificates</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install -y postfix</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 选择 Internet Site 填写邮箱</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 填写邮箱（目前我是瞎填的）</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 开机启动与使能 SSH 服务</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl <span class="built_in">enable</span> ssh &amp;&amp; sudo systemctl start ssh</span></span><br><span class="line">Synchronizing state of ssh.service with SysV service script with /lib/systemd/systemd-sysv-install.</span><br><span class="line">Executing: /lib/systemd/systemd-sysv-install enable ssh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 开机启动与使能 POSTFIX 服务</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl <span class="built_in">enable</span> postfix &amp;&amp; sudo systemctl start postfix</span></span><br><span class="line">Synchronizing state of postfix.service with SysV service script with /lib/systemd/systemd-sysv-install.</span><br><span class="line">Executing: /lib/systemd/systemd-sysv-install enable postfix</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/bionic/main/g/gitlab-ce/gitlab-ce_12.9.0-ce.0_amd64.deb</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo dpkg -i gitlab-ce_12.9.0-ce.0_amd64.deb</span></span><br><span class="line">...</span><br><span class="line">Thank you for installing GitLab!</span><br><span class="line">GitLab was unable to detect a valid hostname for your instance.</span><br><span class="line">Please configure a URL for your GitLab instance by setting `external_url`</span><br><span class="line">configuration in /etc/gitlab/gitlab.rb file.</span><br><span class="line">Then, you can start your GitLab instance by running the following command:</span><br><span class="line">  sudo gitlab-ctl reconfigure</span><br><span class="line">...</span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置路径：/etc/gitlab/gitlab.rb</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启配置命令：sudo gitlab-ctl reconfigure</span></span><br></pre></td></tr></table></figure></li>
-<li><p>配置</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo vi /etc/gitlab/gitlab.rb</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 随意选择一个没有被占用的端口</span></span><br><span class="line">external_url &#x27;http://10.1.1.90:8888&#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存后退出</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启配置</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo gitlab-ctl reconfigure</span></span><br><span class="line">...</span><br><span class="line">Running handlers:</span><br><span class="line">Running handlers complete</span><br><span class="line">Chef Client finished, 9/738 resources updated in 24 seconds</span><br><span class="line">gitlab Reconfigured!</span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo gitlab-ctl start</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 开机启动</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl <span class="built_in">enable</span> gitlab-runsvdir.service</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 关闭防火墙（懒得添加端口）</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ufw <span class="built_in">disable</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 打开浏览器登录本机IP测试</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/23/nginx-virtual-host/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Lin Yuanbo">
-      <meta itemprop="description" content="A embedded programer">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lim's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/23/nginx-virtual-host/" class="post-title-link" itemprop="url">Nginx 虚拟主机搭建记录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-23 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-23T00:00:00+00:00">2020-03-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-06 12:23:29" itemprop="dateModified" datetime="2022-01-06T12:23:29+00:00">2022-01-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>Nginx版本：nginx/1.14.0 (Ubuntu)</p>
-<p>服务端环境：Ubuntu 18.04.1 LTS</p>
-<p>客户端环境：Windows 10</p>
-</blockquote>
-<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ol>
-<li><p>搭建两个虚拟主机，域名分别为：hello.com，world.com</p>
-</li>
-<li><p>两台虚拟主机网页内容分别显示:hello，world</p>
-</li>
-</ol>
-<h3 id="实操记录"><a href="#实操记录" class="headerlink" title="实操记录"></a>实操记录</h3><ol>
-<li><p>虚拟主机 hello：</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建配置文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/hello.conf</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改内容，参考 default 配置中的虚拟主机介绍</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo vi /etc/nginx/sites-available/hello.conf</span></span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        listen [::]:80;</span><br><span class="line"></span><br><span class="line">        # 域名</span><br><span class="line">        server_name hello.com;</span><br><span class="line">        #目录</span><br><span class="line">        root /var/www/html/hello.com;</span><br><span class="line">        index index.html;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                try_files $uri $uri/ =404;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建链接</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ln -s /etc/nginx/sites-available/hello.conf /etc/nginx/sites-enabled/</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mkdir /var/www/html/hello.com</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建主页&amp;&amp;添加主页内容</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo vi /var/www/html/hello.com/index.html</span></span><br><span class="line">&lt;html&gt;&lt;body&gt;hello&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>虚拟主机 world：</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建配置文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/world.conf</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改内容，参考 default 配置中的虚拟主机介绍</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo vi /etc/nginx/sites-available/world.conf</span></span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        listen [::]:80;</span><br><span class="line"></span><br><span class="line">        # 域名</span><br><span class="line">        server_name world.com;</span><br><span class="line">        #目录</span><br><span class="line">        root /var/www/html/world.com;</span><br><span class="line">        index index.html;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                try_files $uri $uri/ =404;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建链接</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ln -s /etc/nginx/sites-available/world.conf /etc/nginx/sites-enabled/</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mkdir /var/www/html/world.com</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建主页&amp;&amp;添加主页内容</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo vi /var/www/html/world.com/index.html</span></span><br><span class="line">&lt;html&gt;&lt;body&gt;world&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>配置完成，重新读取配置：<code>sudo systemctl reload nginx.service</code></p>
-</li>
-</ol>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
-<li><p>修改客户端hosts</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 服务器IP      域名</span></span><br><span class="line">192.168.0.103   hello.com</span><br><span class="line">192.168.0.103   world.com</span><br></pre></td></tr></table></figure></li>
-<li><p>浏览器访问测试</p>
 </li>
 </ol>
 
@@ -1233,8 +1431,6 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Lin Yuanbo"
-      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Lin Yuanbo</p>
   <div class="site-description" itemprop="description">A embedded programer</div>
 </div>
@@ -1243,19 +1439,17 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-count">68</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-          
         <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-          
         <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
@@ -1287,9 +1481,9 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">1111111</span>
+  <span class="author" itemprop="copyrightHolder">Lin Yuanbo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
         
@@ -1315,7 +1509,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/pisces.js"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
